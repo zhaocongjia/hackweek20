@@ -1,0 +1,985 @@
+#+BEGIN_SRC axiom :results none
+)set message prompt plain
+)boot $IOindex := nil
+#+END_SRC
+
+* 2 Integration of Rational Functions
+The algorithms and theorems of this chapter are special cases of the
+Risch algorithm.
+
+** Introduction
+The problem of computing the transcendental part of the integral
+without factoring remained open for over a century, and was finally
+solved in recent papers [56, [[cite:rothstein1977new][83]], 89].
+
+** 2.1 The Bernoulli Algorithm
+*** Example 2.1.1
+#+BEGIN_SRC axiom
+)expose INTRAT
+F ==> FRAC INT; UUP ==> UP(x, F); FFR ==> FRAC UUP;
+f : FFR := 1/(x^3+x)
+
+partialFraction f
+
+integrate univariate(f, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )expose INTRAT
+   RationalIntegration is already explicitly exposed in frame initial
+-> F ==> FRAC INT; UUP ==> UP(x, F); FFR ==> FRAC UUP;
+                                                                    Type: Void
+-> f : FFR := 1/(x^3+x)
+
+      1
+   ──────
+    3
+   x  + x
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> partialFraction f
+
+   1      x
+   ─ - ──────
+   x    2
+       x  + 1
+             Type: PartialFraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> integrate univariate(f, x)
+
+     1      2
+   - ─ log(?  + 1) + log(?)
+     2
+Type: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Polynomial(Fraction(Integer))))))
+
+#+end_example
+
+*** Example 2.1.2
+#+BEGIN_SRC axiom
+f := 1/(x^2+1)^2;
+
+partialFraction f
+
+integrate(f::EXPR INT, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f := 1/(x^2+1)^2;
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> partialFraction f
+
+       1
+   ─────────
+     2     2
+   (x  + 1)
+             Type: PartialFraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> integrate(f::EXPR INT, x)
+
+     2
+   (x  + 1)atan(x) + x
+   ───────────────────
+            2
+         2 x  + 2
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+*** Example 2.1.3
+#+BEGIN_SRC axiom
+f1 : FRAC UP(y, FRAC COMPLEX INT) := 1/(y^3+y)
+
+partialFraction f1
+
+reduce(+, map(integrate, fractionalTerms %))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f1 : FRAC UP(y, FRAC COMPLEX INT) := 1/(y^3+y)
+
+      1
+   ──────
+    3
+   y  + y
+           Type: Fraction(UnivariatePolynomial(y,Fraction(Complex(Integer))))
+-> partialFraction f1
+
+        1        1
+        ─        ─
+        2        2     1
+   - ────── - ────── + ─
+     y - %i   y + %i   y
+    Type: PartialFraction(UnivariatePolynomial(y,Fraction(Complex(Integer))))
+-> reduce(+, map(integrate, fractionalTerms %))
+
+            1               1
+   log(y) - ─ log(y + %i) - ─ log(y - %i)
+            2               2
+Type: IntegrationResult(Fraction(UnivariatePolynomial(y,Fraction(Complex(Integer)))))
+
+#+end_example
+
+An algorithm that never makes an unnecessary algebraic extension and
+does not compute irreducible factorizations over K will be called
+"rational".
+
+** 2.2 The Hermite Reduction
+*** Example 2.2.1 HermiteIntegrate
+#+BEGIN_SRC axiom
+f := (x^7 - 24*x^4 - 4*x^2 + 8*x - 8)/(x^8 + 6*x^6 + 12*x^4 + 8*x^2);
+
+squareFree denom f
+
+partialFraction f
+
+HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+-- Or ')expose TranscendentalHermiteIntegration' and the '$'
+-- selector can be omitted.
+
+integrate univariate(f, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f := (x^7 - 24*x^4 - 4*x^2 + 8*x - 8)/(x^8 + 6*x^6 + 12*x^4 + 8*x^2);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> squareFree denom f
+
+    2  2     3
+   x (x  + 2)
+                    Type: Factored(UnivariatePolynomial(x,Fraction(Integer)))
+-> partialFraction f
+
+            4      3       2
+   x - 1   x  - 6 x  - 18 x  - 12 x + 8
+   ───── + ────────────────────────────
+      2                2     3
+     x               (x  + 2)
+             Type: PartialFraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+                3      2
+             3 x  + 8 x  + 6 x + 4            1
+   [answer = ─────────────────────, logpart = ─, specpart = 0, polypart = 0]
+                 5      3                     x
+                x  + 4 x  + 4 x
+Type: Record(answer: Fraction(UnivariatePolynomial(x,Fraction(Integer))),logpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-> -- Or ')expose TranscendentalHermiteIntegration' and the '$'
+-> -- selector can be omitted.
+-> integrate univariate(f, x)
+
+      3      2
+   3 ?  + 8 ?  + 6 ? + 4
+   ───────────────────── + log(?)
+       5      3
+      ?  + 4 ?  + 4 ?
+Type: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Polynomial(Fraction(Integer))))))
+
+#+end_example
+
+*** Example 2.2.2
+*** Algorithm: HermiteReduce(A, D) (* Hermite Reduction -- Mack's linear version *)
+[[~/github/fricas/src/algebra/intrf.spad::272]]
+
+#+BEGIN_SRC sh :results verbatim :exports both
+cd ~/github/fricas
+grep -A25 'Hermite Reduction' src/algebra/intrf.spad
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-- Hermite Reduction on f, every squarefree factor of denom(f) is normal wrt D
+-- this is really a "parallel" Hermite reduction, in the sense that
+-- every multiple factor of the denominator gets reduced at each pass
+-- so if the denominator is P1 P2^2 ... Pn^n, this requires O(n)
+-- reduction steps instead of O(n^2), like Mack's algorithm
+-- (D.Mack, On Rational Integration, Univ. of Utah C.S. Tech.Rep. UCP-38, 1975)
+-- returns [g, b, d] s.t. f = g' + b/d and d is squarefree and normal wrt D
+    normalHermiteIntegrate(f, derivation, d0) ==
+      a := numer f
+      q := denom f
+      p : UP    := 0
+      mult : UP := 1
+      qhat := (q exquo (g0 := g := gcd(q, differentiate q)))::UP
+      while(degree(qbar := g) > 0) repeat
+        qbarhat := (qbar exquo (g := gcd(qbar, differentiate qbar)))::UP
+        qtil := - ((qhat * (derivation qbar)) exquo qbar)::UP
+        bc :=
+         extendedEuclidean(qtil, qbarhat, a)::Record(coef1 : UP, coef2 : UP)
+        qr := divide(bc.coef1, qbarhat)
+        qr_rem := qr.remainder
+        a  := bc.coef2 + qtil * qr.quotient - (derivation(qr_rem)
+                + d0*qr_rem)*(qhat exquo qbarhat)::UP
+        p  := p + mult*qr_rem
+        mult := mult * qbarhat
+      [p / g0, a, qhat]
+
+#+end_example
+
+We remark that it is possible to perform all the variants of Hermite's
+reduction over a UFD rather than a field.
+
+#+BEGIN_ASCII
+NOTES BY ME:
+
+FriCAS is over Field.
+#+END_ASCII
+
+*** Example 2.2.3
+** 2.3 The Horowitz-Ostrogradsky Algorithm
+While the complexity of this algorithm is very good for rational
+functions [ 45 ], it does not generalize as easily as the Hermite
+reduction to larger classes of functions, so we use the linear Hermite
+reduction in the general algorithm later.
+
+** 2.4 The Rothstein-Trager Algorithm
+With appropriate modifications, the Rothstein-Trager algorithm can, like the
+Hermite reduction, be applied to rational functions over a UFD rather than a
+field. Part (iii) of Theorem 2.4.1 shows that the splitting field of R is the
+minimal algebraic extension of K necessary to express the integral of =A/D=
+using logarithms, thereby essentially answering question Q2.
+
+*** Algorithm: IntRationalLogPart(A, D) (* Rothstein-Trager algorithm *)
+See bellow Lazard-Rioboo-Trager algorithm.
+
+*** Example 2.4.1
+#+BEGIN_SRC axiom
+f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+A := numer f; D := denom f;
+
+HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+t := monomial(1, 1)$SUP F
+T ==> UP(x, SUP F)
+factor resultant(D, A - t * differentiate D)$T
+
+a | 4*a^2 + 1 = 0
+gcd(D, A - a * differentiate D)
+
+monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+integrate(f::EXPR INT, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> A := numer f; D := denom f;
+
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+                               4      2
+                              x  - 3 x  + 6
+   [answer = 0, logpart = ────────────────────, specpart = 0, polypart = 0]
+                           6      4      2
+                          x  - 5 x  + 5 x  + 4
+Type: Record(answer: Fraction(UnivariatePolynomial(x,Fraction(Integer))),logpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-> t := monomial(1, 1)$SUP F
+
+   ?
+                          Type: SparseUnivariatePolynomial(Fraction(Integer))
+-> T ==> UP(x, SUP F)
+                                                                    Type: Void
+-> factor resultant(D, A - t * differentiate D)$T
+
+             2   1 3
+   2930944 (?  + ─)
+                 4
+                Type: Factored(SparseUnivariatePolynomial(Fraction(Integer)))
+-> a | 4*a^2 + 1 = 0
+    Your statement has resulted in the following assignments and
+      declaration:
+
+   SAEa := SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),4*a^2+1)
+   a : SAEa := a
+
+   a
+Type: SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),4*a^2+1)
+-> gcd(D, A - a * differentiate D)
+
+    3        2
+   x  + 2 a x  - 3 x - 4 a
+Type: UnivariatePolynomial(x,SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),4*a^2+1))
+-> monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+             ──┐                 2           3
+   [ir =     >        %M log((2 x  - 4)%M + x  - 3 x), specpart = 0,
+             ──┘
+           2   1
+         %M  + ─ = 0
+               4
+    polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer)))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-> integrate(f::EXPR INT, x)
+
+         5      3
+        x  - 3 x  + x          3
+   atan(─────────────) + atan(x ) + atan(x)
+              2
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+** 2.5 The Lazard-Rioboo-Trager Algorithm
+#+BEGIN_ASCII
+NOTES BY ME:
+
+Renaud Rioboo is also the author of several AXIOM packages.
+#+END_ASCII
+
+Although he did not publish it, Trager programmed this algorithm in
+his AXIOM implementation of rational function integration.
+
+As long as the result is returned as a formal sum over the roots of some
+polynomials, all the calculations are done over K, no algebraic extensions is
+required, and the formal algebraic numbers introduced by the sum are in the
+smallest possible algebraic extension needed to express the integral.
+
+*** Algorithm: IntRationalLogPart(A, D) (* Lazard-Rioboo-Trager algorithm *)
+[[~/github/fricas/src/algebra/intrf.spad::405]]
+
+#+BEGIN_SRC sh :results verbatim
+cd ~/github/fricas
+grep -A29 -B1 '  monomialIntegrate1(f : RF' src/algebra/intrf.spad
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-- works in any monomial extension
+    monomialIntegrate1(f : RF, denint : RF -> DREC, derivation : UP -> UP
+                      ) : REC ==
+      zero? f => [0, 0, 0]
+      r := HermiteIntegrate(f, derivation)
+      zero?(numer(r.logpart)) => [r.answer::IR, r.specpart, r.polypart]
+      dr := denint(r.logpart)
+      ans1 := r.answer + dr.answer
+      inum := numer(dr.logpart)
+      iden  := denom(dr.logpart)
+      x := monomial(1, 1)$UP
+      resultvec := subresultantVector(UP2UP2 inum -
+                                 (x::UP2) * UP2UP2 derivation iden, UP2UP2 iden)
+      respoly := primitivePart leadingCoefficient resultvec 0
+      rec := splitSquarefree(respoly, x1+->kappa(x1, derivation))
+      logs : List(LOG) := [
+              [1, UP2UPR(term.factor),
+               UP22UPR swap primitivePart(resultvec(term.exponent), term.factor)]
+                     for term in factors(rec.special)]
+      dlog :=
+--           one? derivation x => dr.logpart
+           ((derivation x) = 1) => dr.logpart
+           differentiate(mkAnswer(0, logs, empty()),
+                         (x1 : RF) : RF+->differentiate(x1, derivation))
+      (u := retractIfCan(p := dr.logpart - dlog)@Union(UP, "failed")) case UP =>
+        [mkAnswer(ans1, logs, empty) + dr.ir, r.specpart, r.polypart + u::UP]
+      [mkAnswer(ans1, logs, [[p, dummy]]) + dr.ir, r.specpart, r.polypart]
+
+    monomialIntegrate(f, derivation) ==
+        monomialIntegrate1(f, denint_dummy, derivation)
+
+#+end_example
+
+*** Example 2.5.1
+#+BEGIN_SRC axiom
+)expose SubResultantPackage
+subresultantVector(D::T, (A - t * differentiate D)::T)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )expose SubResultantPackage
+   SubResultantPackage is already explicitly exposed in frame initial
+-> subresultantVector(D::T, (A - t * differentiate D)::T)
+
+            6           4          2
+   [2930944?  + 2198208?  + 549552?  + 45796,
+              5         3                   4         2
+    (- 119840?  - 59920?  - 7490?)x - 23968?  - 11984?  - 1498,
+             4        2       2         4        2
+    (- 11200?  - 2604?  + 49)x  + 25600?  + 5952?  - 112,
+         3        3          2      2           3               2
+    (800?  - 14?)x  + (- 400?  + 7)x  + (- 2440?  + 32?)x + 792?  - 16,
+          2      4       3        2      2               2
+    (- 60?  + 1)x  + 2? x  + (120?  - 3)x  + 26? x + 144?  + 6,
+          5    4        3     2               6     4     2
+    - 6? x  + x  + 20? x  - 3x  - 10? x + 6, x  - 5x  + 5x  + 4, 0]
+Type: PrimitiveArray(UnivariatePolynomial(x,SparseUnivariatePolynomial(Fraction(Integer))))
+
+#+end_example
+
+*** Example 2.5.2
+#+BEGIN_SRC axiom
+f := 36/(x^5 - 2*x^4 - 2*x^3 + 4*x^2 + x - 2);
+
+HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+integrate univariate(f, x)
+
+integrate(f::EXPR INT, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f := 36/(x^5 - 2*x^4 - 2*x^3 + 4*x^2 + x - 2);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+             12x + 6               12
+   [answer = ───────,logpart = ──────────,specpart = 0,polypart = 0]
+               2                2
+              x  - 1           x  - x - 2
+Type: Record(answer: Fraction(UnivariatePolynomial(x,Fraction(Integer))),logpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-> monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+         12x + 6       ──┐                3          1
+   [ir = ─────── +     >         %R log(- ─ %R + x - ─), specpart = 0,
+           2           ──┘                8          2
+          x  - 1     2
+                   %R  - 16 = 0
+    polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer)))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-> integrate univariate(f, x)
+
+   12? + 6       ──┐                3          1
+   ─────── +     >         %A log(- ─ %A + ? - ─)
+     2           ──┘                8          2
+    ?  - 1     2
+             %A  - 16 = 0
+Type: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Polynomial(Fraction(Integer))))))
+-> integrate(f::EXPR INT, x)
+
+        2                     2
+   (- 4x  + 4)log(x + 1) + (4x  - 4)log(x - 2) + 12x + 6
+   ─────────────────────────────────────────────────────
+                            2
+                           x  - 1
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+** 2.6 The Czichowski Algorithm
+*** Example 2.6.1
+#+BEGIN_SRC axiom
+)clear all
+f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+A := numer f; D := denom f;
+
+groebnerFactorize [D, A - t*differentiate D]
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+
+                                          Type: Fraction(Polynomial(Integer))
+-> A := numer f; D := denom f;
+
+                                                    Type: Polynomial(Integer)
+-> groebnerFactorize [D, A - t*differentiate D]
+
+          3       2             2
+   [[1],[x  + 2t x  - 3x - 4t,4t  + 1]]
+                                        Type: List(List(Polynomial(Integer)))
+
+#+end_example
+
+** 2.7 Newton-Leibniz-Bernoulli Revisited
+*** Example 2.7.1
+#+BEGIN_SRC axiom
+f := 36/(x-2)/(x^2-1)^2
+#+END_SRC
+
+#+RESULTS:
+: -> f := 36/(x-2)/(x^2-1)^2
+:
+:                 36
+:    ────────────────────────────
+:     5     4     3     2
+:    x  - 2x  - 2x  + 4x  + x - 2
+:                                           Type: Fraction(Polynomial(Integer))
+:
+
+*** Example 2.7.2
+#+BEGIN_SRC axiom
+f1 := univariate(f, x)::FRAC SUP FRAC INT;
+fullPartialFraction f1
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f1 := univariate(f, x)::FRAC SUP FRAC INT;
+
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-> fullPartialFraction f1
+
+     4       4         ──┐      - 3%I - 6
+   ───── - ───── +     >        ─────────
+   ? - 2   ? + 1       ──┘              2
+                     2          (? - %I)
+                   %I  - 1 = 0
+Type: FullPartialFractionExpansion(Fraction(Integer),SparseUnivariatePolynomial(Fraction(Integer)))
+
+#+end_example
+
+*** Example 2.7.3
+#+BEGIN_SRC axiom
+integrate(f, x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(f, x)
+:
+:         2                     2
+:    (- 4x  + 4)log(x + 1) + (4x  - 4)log(x - 2) + 12x + 6
+:    ─────────────────────────────────────────────────────
+:                             2
+:                            x  - 1
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 2.8 Rioboo's Algorithm for Real Rational Functions
+#+BEGIN_SRC axiom
+f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4)
+g := integrate(f, x)
+n1 := integrate(f, x=1..2)
+n11 := numeric n1
+T ==> MakeUnaryCompiledFunction(EXPR INT, FLOAT, FLOAT)
+n2 := simpson(compiledFunction(f, x)$T, 1.0, 2.0, 0.1, 0.1, 6, 10)
+n11 - n2.value
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4)
+
+       4     2
+      x  - 3x  + 6
+   ──────────────────
+    6     4     2
+   x  - 5x  + 5x  + 4
+                                          Type: Fraction(Polynomial(Integer))
+-> g := integrate(f, x)
+
+         5     3
+        x  - 3x  + x          3
+   atan(────────────) + atan(x ) + atan(x)
+              2
+                                         Type: Union(Expression(Integer),...)
+-> n1 := integrate(f, x=1..2)
+
+                                          1
+   2atan(8) + 2atan(5) + 2atan(2) + 2atan(─) - %pi
+                                          2
+   ───────────────────────────────────────────────
+                          2
+                  Type: Union(f1: OrderedCompletion(Expression(Integer)),...)
+-> n11 := numeric n1
+
+   2.8198420991931510451
+                                                                  Type: Float
+-> T ==> MakeUnaryCompiledFunction(EXPR INT, FLOAT, FLOAT)
+                                                                    Type: Void
+-> n2 := simpson(compiledFunction(f, x)$T, 1.0, 2.0, 0.1, 0.1, 6, 10)
+    Compiling function %N with type Float -> Float
+
+   [value = 2.8198420916463176517, error = 0.14117860771815140533E-6,
+    totalpts = 129, success = true]
+   Type: Record(value: Float,error: Float,totalpts: Integer,success: Boolean)
+-> n11 - n2.value
+
+   0.75468333933E-8
+                                                                  Type: Float
+
+#+end_example
+
+#+BEGIN_EXAMPLE
+Mathematica
+
+In[1]:= g = Integrate[(x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4),x]
+                 2                     2
+        x (-3 + x )           x (-3 + x )
+-ArcTan[-----------]   ArcTan[-----------]
+               2                      2
+          2 - x                 -2 + x
+-------------------- + -------------------
+         2                      2
+In[2]:= Simplify[g]
+                2
+       x (-3 + x )
+ArcTan[-----------]
+               2
+         -2 + x
+In[3]:= FullSimplify[g]
+              x
+ArcTan[x - -------]
+                 2
+           -2 + x
+
+// ALL 3 ARE NOT CONTINUOUS
+#+END_EXAMPLE
+
+*** Algorithm: LogToAtan(A, B)
+#+BEGIN_SRC sh :results verbatim :exports both
+cd ~/github/fricas
+grep -B4 -A15 '^    ilog0(a' src/algebra/irexpand.spad
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-- transforms i log((a + i b) / (a - i b)) into a sum of real
+-- arc-tangents using Rioboo's algorithm
+-- the arc-tangents will not have k in the denominator
+-- we always keep upa(k) = a  and upb(k) = b
+    ilog0(a, b, upa, upb, k) ==
+      if degree(upa) < degree(upb) then
+        (upa, upb) := (-upb, upa)
+        (a, b) := (-b, a)
+      zero? degree upb => tantrick(a, b)
+      r := extendedEuclidean(upa, upb)
+      (g:= retractIfCan(r.generator)@Union(F,"failed")) case "failed" =>
+        tantrick(a, b)
+      if degree(r.coef1) >= degree upb then
+        qr := divide(r.coef1, upb)
+        r.coef1 := qr.remainder
+        r.coef2 := r.coef2 + qr.quotient * upa
+      aa := (r.coef2) k
+      bb := -(r.coef1) k
+      tantrick(aa * a + bb * b, g::F) + ilog0(aa, bb, r.coef2, -r.coef1, k)
+
+#+end_example
+
+*** Example 2.8.1
+#+BEGIN_SRC axiom
+)clear all
+R ==> UP(x, FRAC INT); -- SUP doesn't work here
+--  because EXPR SUP FRAC INT doesn't make sense, see mailing list
+f : FRAC R := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+monomialIntegrate(f, differentiate)$INTTR(FRAC INT, R)
+res1 := %.ir;
+complexExpand res1
+expand(res1, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> R ==> UP(x, FRAC INT); -- SUP doesn't work here
+                                                                    Type: Void
+-> --  because EXPR SUP FRAC INT doesn't make sense, see mailing list
+-> f : FRAC R := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-> monomialIntegrate(f, differentiate)$INTTR(FRAC INT, R)
+
+             ──┐                 2           3
+   [ir =     >        %M log((2 x  - 4)%M + x  - 3 x), specpart = 0,
+             ──┘
+           2   1
+         %M  + ─ = 0
+               4
+    polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer)))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-> res1 := %.ir;
+
+ Type: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer))))
+-> complexExpand res1
+
+     1  ┌───┐      2      ┌───┐    3
+     ─ \│- 1 log((x  - 2)\│- 1  + x  - 3 x)
+     2
+   +
+       1  ┌───┐        2      ┌───┐    3
+     - ─ \│- 1 log((- x  + 2)\│- 1  + x  - 3 x)
+       2
+                                          Type: Expression(Fraction(Integer))
+-> expand(res1, x)
+
+         1  5   3  3   1            3
+   [atan(─ x  - ─ x  + ─ x) + atan(x ) + atan(x)]
+         2      2      2
+                                    Type: List(Expression(Fraction(Integer)))
+
+#+end_example
+
+Although there is no equivalent algorithm that guarantees the obtention of an
+integral with no new poles for more general functions, Rioboo's algorithm has
+been used together with rectifying transformations in order to compute integrals
+of rational functions in =sin(x)= and =cos(x)=.
+
+** 2.9 In-Field Integration
+** Exercises
+#+BEGIN_SRC axiom
+)clear all
+R ==> SUP FRAC INT; x := monomial(1,1)$R;
+#+END_SRC
+
+#+RESULTS:
+: -> )clear all
+:    All user variables and function definitions have been cleared.
+: -> R ==> SUP FRAC INT; x := monomial(1,1)$R;
+:
+:                           Type: SparseUnivariatePolynomial(Fraction(Integer))
+:
+
+*** Exercise 2.1
+#+BEGIN_SRC axiom
+f := (x^5 - x^4 + 4*x^3 + x^2 - x + 5)/(x^4 - 2*x^3 + 5*x^2 - 4*x + 4)
+
+HermiteIntegrate(f, D)$INTHERTR(FRAC INT, R)
+
+monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+integrate(f 'x, 'x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> f := (x^5 - x^4 + 4*x^3 + x^2 - x + 5)/(x^4 - 2*x^3 + 5*x^2 - 4*x + 4)
+
+    5    4      3    2
+   ?  - ?  + 4 ?  + ?  - ? + 5
+   ───────────────────────────
+     4      3      2
+    ?  - 2 ?  + 5 ?  - 4 ? + 4
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-> HermiteIntegrate(f, D)$INTHERTR(FRAC INT, R)
+
+                4     9                   3
+              - ─ ? + ─               ? + ─
+                7     7                   7
+   [answer = ──────────, logpart = ──────────, specpart = 0, polypart = ? + 1]
+              2                     2
+             ?  - ? + 2            ?  - ? + 2
+Type: Record(answer: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),logpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-> monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+            4     9
+          - ─ ? + ─
+            7     7          ──┐                 49          31
+   [ir = ────────── +        >            %Y log(── %Y + ? - ──), specpart = 0,
+          2                  ──┘                 13          13
+         ?  - ? + 2     2        128
+                      %Y  - %Y + ─── = 0
+                                 343
+    polypart = ? + 1]
+Type: Record(ir: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Integer)))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-> integrate(f 'x, 'x)
+
+           2             ┌─┐     2
+       (7 x  - 7 x + 14)\│7 log(x  - x + 2)
+     +
+                                         ┌─┐
+            2                  (2 x - 1)\│7         4      3              ┌─┐
+       (26 x  - 26 x + 52)atan(─────────────) + (7 x  + 7 x  + 20 x + 18)\│7
+                                     7
+  /
+          2              ┌─┐
+     (14 x  - 14 x + 28)\│7
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+*** Exercise 2.2
+#+BEGIN_SRC axiom :results drawer
+f:=(8*x^9+x^8-12*x^7-4*x^6-26*x^5-6*x^4+30*x^3+23*x^2-2*x-7)/(x^10-2*x^8-2*x^7-4*x^6+7*x^4+10*x^3+3*x^2-4*x-2);
+monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+integrate(f 'x, 'x)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+-> f:=(8*x^9+x^8-12*x^7-4*x^6-26*x^5-6*x^4+30*x^3+23*x^2-2*x-7)/(x^10-2*x^8-2*x^7-4*x^6+7*x^4+10*x^3+3*x^2-4*x-2);
+
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-> monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+   [
+       ir
+     =
+             ──┐
+             >        %Y log(- 4 %Y + ?)
+             ──┘
+           2   1
+         %Y  - ─ = 0
+               8
+       +
+                ──┐                       2             4      2
+                >            %Y log((- 2 ?  - 2 ?)%Y + ?  + 2 ?  + ? - 1)
+                ──┘
+           2          1
+         %Y  - 2 %Y + ─ = 0
+                      2
+     ,
+    specpart = 0, polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Integer)))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-> integrate(f 'x, 'x)
+
+             2      ┌─┐
+           (x  + 2)\│2  - 4 x
+       log(──────────────────)
+                  2
+                 x  - 2
+     +
+          ┌─┐     8      5      4      3    2
+       2 \│2 log(x  - 2 x  - 4 x  - 4 x  - x  + 2 x + 1)
+     +
+         2
+      *
+         log
+                      6      5      3      2        ┌─┐    8      5      3
+                (- 2 x  - 2 x  + 2 x  + 4 x  + 2 x)\│2  + x  - 2 x  + 4 x
+              +
+                   2
+                3 x  + 2 x + 1
+           /
+               8      5      4      3    2
+              x  - 2 x  - 4 x  - 4 x  - x  + 2 x + 1
+  /
+        ┌─┐
+     2 \│2
+                                         Type: Union(Expression(Integer),...)
+
+:END:
+
+
+
+*** Exercise 2.3
+#+BEGIN_SRC axiom :results drawer
+f1 : FRAC SUP INT := (72*x^7+256*x^6-192*x^5-1280*x^4-312*x^3+1440*x^2+576*x-96)/(9*x^8+36*x^7-32*x^6-252*x^5-78*x^4+468*x^3+288*x^2-108*x+9)
+f : FRAC R := f1;
+
+monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+integrate(f 'x, 'x)
+
+integrate(f 'y, y=-2..(-2/3))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+-> f1 : FRAC SUP INT := (72*x^7+256*x^6-192*x^5-1280*x^4-312*x^3+1440*x^2+576*x-96)/(9*x^8+36*x^7-32*x^6-252*x^5-78*x^4+468*x^3+288*x^2-108*x+9)
+
+        7        6        5         4        3         2
+    72 ?  + 256 ?  - 192 ?  - 1280 ?  - 312 ?  + 1440 ?  + 576 ? - 96
+   ───────────────────────────────────────────────────────────────────
+      8       7       6        5       4        3        2
+   9 ?  + 36 ?  - 32 ?  - 252 ?  - 78 ?  + 468 ?  + 288 ?  - 108 ? + 9
+                          Type: Fraction(SparseUnivariatePolynomial(Integer))
+-> f : FRAC R := f1;
+
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-> monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+                 ──┐                     3             4      2
+   [ir =         >            %Y log((2 ?  - 6 ?)%Y + ?  - 4 ?  + 1),
+                 ──┘
+           2          10
+         %Y  - 2 %Y + ── = 0
+                       9
+    specpart = 0, polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Integer)))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-> integrate(f 'x, 'x)
+
+         3
+      *
+              8       7       6        5       4        3        2
+       log(9 x  + 36 x  - 32 x  - 252 x  - 78 x  + 468 x  + 288 x  - 108 x + 9)
+     +
+                 7       6       5        4       3        2
+              9 x  + 36 x  - 23 x  - 216 x  - 83 x  + 324 x  + 213 x - 36
+       2 atan(───────────────────────────────────────────────────────────)
+                                           12
+     +
+                 5       4      3        2
+              9 x  + 36 x  + 4 x  - 108 x  - 53 x + 36
+       2 atan(────────────────────────────────────────)
+                                 12
+     +
+                 3       2
+              9 x  + 36 x  + 31 x - 18           3 x + 6
+       2 atan(────────────────────────) + 2 atan(───────)
+                          6                         2
+  /
+     3
+                                         Type: Union(Expression(Integer),...)
+-> integrate(f 'y, y=-2..(-2/3))
+
+                           60905           35           38           5639
+       - 3 log(97) + 3 log(─────) + 2 atan(──) - 2 atan(──) - 2 atan(────)
+                            729             6            9           1458
+     +
+              17           379                       4
+       2 atan(──) + 2 atan(───) + 2 atan(2) + 2 atan(─)
+               6           162                       3
+  /
+     3
+                  Type: Union(f1: OrderedCompletion(Expression(Integer)),...)
+
+:END:
+
+*** Exercise 2.4
+#+BEGIN_SRC axiom
+)clear all
+integrate(1/(1+x^4), x) -- will be shorter in newer fricas
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> integrate(1/(1+x^4), x) -- will be shorter in newer fricas
+
+            ┌─┐                      1
+       - 4 \│2 atan(───────────────────────────────────)
+                         ┌────────────────┐
+                     ┌─┐ │    ┌─┐    2          ┌─┐
+                    \│2 \│- x\│2  + x  + 1  + x\│2  - 1
+     +
+            ┌─┐                     1                     ┌─┐      ┌─┐    2
+       - 4 \│2 atan(─────────────────────────────────) + \│2 log(x\│2  + x  + 1)
+                         ┌──────────────┐
+                     ┌─┐ │  ┌─┐    2          ┌─┐
+                    \│2 \│x\│2  + x  + 1  + x\│2  + 1
+     +
+          ┌─┐        ┌─┐    2
+       - \│2 log(- x\│2  + x  + 1)
+  /
+     8
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+*** Exercise 2.5
+See p.51, footnote 4.
+
+#+BEGIN_SRC axiom :eval no
+-- fixed between 1.2.7 and 1.3.0.  result too long
+integrate((x^4+x^3+x^2+x+1)/(x^5+x^4+2*x^3+2*x^2-2+4*sqrt(-1+sqrt(3))), x)
+#+END_SRC
+
+*** Exercise 2.7
+This simplification is not in the book, but in the FriCAS source code.
+
+*** Exercise 2.8
+#+BEGIN_SRC axiom
+integrate(3/(5-4*cos(x)), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(3/(5-4*cos(x)), x)
+:
+:           5 cos(x) - 4
+:    - atan(────────────)
+:             3 sin(x)
+:                                          Type: Union(Expression(Integer),...)
+:

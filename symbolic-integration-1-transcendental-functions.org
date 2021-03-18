@@ -1,0 +1,1866 @@
+[[cite:05:_symbol_integ_i][Symbolic Integration 1: Transcendental Functions]]
+
+* Foreword
+Thus these two visions (mathematical and computational) set the stage
+for a century and a half of research that *partially culminates* in
+this book.
+
+The use of these algebraic ideas (of Ritt) were brought to further
+fruition by Kolchin, Rosenlicht, and, particularly for problems of
+symbolic integration, by three of Rosenlicht's Ph.D. students ---
+*Risch*, Singer, and *Bronstein*.
+
+But yet none of the systems had a complete implementation of the full
+algorithm that Risch had announced in barest outline in 1970.  There
+were a number of reasons for this.  First and foremost, no one had
+worked out the many aspects of the problem that Risch's announcement
+left incomplete.
+
+Starting with his Ph.D. dissertation and continuing in a series of
+beautiful and important papers, *Bronstein* set out to fill in the
+missing components of Risch's 1970 announcement.  Meanwhile working at
+the *IBM T. J. Watson Research Center (a.k.a AXIOM)*, he carried out
+an almost complete implementation of the integration algorithm for
+elementary functions.  It is *the most complete implementation* of
+symbolic integration algorithms to date.
+
+I expect this book to be the standard starting place for future
+implementers of symbolic integration algorithms.  Along with the
+algorithms, he presents the mathematics necessary to show that the
+algorithms work correctly.  This is a very interesting story in its
+own right and Bronstein tells it well.  Nonetheless, for those
+primarily interested in the algorithms, much of the mathematics can be
+skipped at least in a first study.  But the full beauty of the subject
+is to be most appreciated by studying both aspects.
+
+The full treatment of the subject is a long one and it is not finished
+in this volume.  The longer and more difficult part involving the
+integration of algebraic functions must await a second volume.  This
+volume serves as a good foundation to the topic of symbolic
+integration and as a nice introduction to the literature for
+integration of algebraic functions and for other aspects such as
+integration involving non-elementary functions.  Study, learn,
+implement, and enjoy!
+
+B. F. Caviness
+
+* Preface to the First Edition
+The inverse problem (symbolic integration) has been challenging
+scientists since the time of Leibniz and Newton, and is still a
+challenge for mathematicians and computer scientists today.
+
+Most calculus and analysis textbooks give students the impression that
+integration is at best a mixture of art and science, with flair in
+choosing the right change of variable or approach being an essential
+ingredient, as well as a comprehensive table of integrals.
+
+This procedure, which Risch described in a series of reports,
+unfortunately not all of them published, forms the basis of most of
+the symbolic integration algorithms of the past 20 years, all of them
+loosely grouped under the appellation /Risch algorithm/.
+
+Our main sources besides Risch being [[cite:bronstein90:_risch][12]], [[cite:bronstein90:_liouv][13]], [[cite:rothstein1977new][83]], [[cite:Trager:1976:AFR:800205.806338][89]].
+
+Including algorithms for integrating algebraic and mixed
+algebraic-transcendental functions would however easily double the
+size of this book, as well as increase the mathematical prerequisites,
+since those algorithms require prior familiarity with algebraic curves
+and functions.  We have thus decided to cover algebraic functions in a
+second volume, which will hopefully appear in the near future.  In the
+meantime, this book is an adequate preparation to the extensive
+literature on the integration of algebraic functions [8, 9], [[cite:bronstein90:_integ][11]], [[cite:Bronstein:1991:RDE:120694.120731][14]],
+[[cite:davenport81:_integ_algeb_funct][29]], [[cite:risch1968integration][73]], [[cite:risch1969further][74]], [[cite:trager1984integration][91]].
+
+Zurich, November 1996   M. Bronstein
+
+* 1 Algebraic Preliminaries
+** 1.1 Groups, Rings and Fields
+An algebraic structure is usually a set together with one or more
+operations on it, operations that satisfy some computation rules
+called axioms.  In order not to always list all the satisfied axioms
+for a given structure, short names have been given to the most common
+structures.
+
+*** Definition 1.1.1 Group
+#+BEGIN_QUOTE
+[[~/github/fricas/src/algebra/catdef.spad::category SGROUP]]
+
+SemiGroup == SetCategory with "*" ...
+
+[[~/github/fricas/src/algebra/catdef.spad::category MONOID]]
+
+Monoid == SemiGroup with 1 ...
+
+[[~/github/fricas/src/algebra/catdef.spad::category GROUP]]
+
+Group == Join(Monoid, unitsKnown) with inv ...
+#+END_QUOTE
+
+#+BEGIN_SRC axiom
+-- (i) Associativity
+Group has SemiGroup
+-- SemiGroup ?has? "*": (%, %) -> %
+-- SemiGroup satisfies (i)
+
+-- (ii) Identity element
+Group has Monoid
+-- Monoid ?has? 1 : constant -> %
+-- Monoid satisfies (i) and (ii)
+
+-- (iii) Inverses
+-- Group ?has? inv : (% -> %)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- (i) Associativity
+-> Group has SemiGroup
+
+   true
+                                                                Type: Boolean
+-> -- SemiGroup ?has? "*": (%, %) -> %
+-> -- SemiGroup satisfies (i)
+-> -- (ii) Identity element
+-> Group has Monoid
+
+   true
+                                                                Type: Boolean
+-> -- Monoid ?has? 1 : constant -> %
+-> -- Monoid satisfies (i) and (ii)
+-> -- (iii) Inverses
+-> -- Group ?has? inv : (% -> %)
+
+#+end_example
+
+#+BEGIN_SRC axiom
+)show Group
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )show Group
+ Group is a category constructor
+ Abbreviation for Group is GROUP
+ This constructor is exposed in this frame.
+─────────────────────────────── Operations ────────────────────────────────
+ ?*? : (%,%) -> %                      ?/? : (%,%) -> %
+ ?=? : (%,%) -> Boolean                1 : () -> %
+ ?^? : (%,Integer) -> %                ?^? : (%,PositiveInteger) -> %
+ coerce : % -> OutputForm              commutator : (%,%) -> %
+ conjugate : (%,%) -> %                hash : % -> SingleInteger
+ inv : % -> %                          latex : % -> String
+ one? : % -> Boolean                   recip : % -> Union(%,"failed")
+ sample : () -> %                      ?~=? : (%,%) -> Boolean
+ ?^? : (%,NonNegativeInteger) -> %
+ hashUpdate! : (HashState,%) -> HashState
+
+
+#+end_example
+
+#+BEGIN_ASCII
+NOTE BY ME:
+In FriCAS, there are two "kinds" of Group:
+
+One uses "*" as its associative operation, thus SemiGroup, Monoid, and
+Group.
+
+Another uses "+" as its associative and commutative operation, thus
+AbelianSemiGroup, AbelianMonoid, (CancellationAbelianMonoid),
+AbelianGroup.
+
+Thus "+" is always commutative, while "*" not necessarily.  And
+CommutativeStar is rarely used, almost exclusively used in
+CommutativeRing.
+#+END_ASCII
+
+*** Example 1.1.1 Group
+#+BEGIN_SRC axiom
+SquareMatrix(2, FRAC INT) has Group
+-- SquareMatrix with nonzero determinant can not be expressed in FriCAS?
+-- Or use SubDomain?
+SquareMatrix(2, FRAC INT) has Monoid
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> SquareMatrix(2, FRAC INT) has Group
+
+   false
+                                                                Type: Boolean
+-> -- SquareMatrix with nonzero determinant can not be expressed in FriCAS?
+-> -- Or use SubDomain?
+-> SquareMatrix(2, FRAC INT) has Monoid
+
+   true
+                                                                Type: Boolean
+
+#+end_example
+
+*** Example 1.1.2 AbelianGroup
+#+BEGIN_SRC axiom
+SquareMatrix(2, FRAC INT) has AbelianGroup
+
+1$SquareMatrix(2, FRAC INT)
+
+0$SquareMatrix(2, FRAC INT)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> SquareMatrix(2, FRAC INT) has AbelianGroup
+
+   true
+                                                                Type: Boolean
+-> 1$SquareMatrix(2, FRAC INT)
+
+   ┌1  0┐
+   │    │
+   └0  1┘
+                                      Type: SquareMatrix(2,Fraction(Integer))
+-> 0$SquareMatrix(2, FRAC INT)
+
+   ┌0  0┐
+   │    │
+   └0  0┘
+                                      Type: SquareMatrix(2,Fraction(Integer))
+
+#+end_example
+
+*** Definition 1.1.2 Ring
+#+BEGIN_SRC axiom
+-- Ring      == Join(Rng, SemiRing, LeftModule(%), unitsKnown) with characteristic
+--  SemiRing == Join(SemiRng, AbelianMonoid, Monoid)
+--  Rng      == Join(SemiRng, AbelianGroup) with
+--   SemiRng == Join(AbelianSemiGroup, SemiGroup)
+-- (i) Commutative group (over +)
+Ring has AbelianGroup
+-- This property is provided by: Rng
+-- (ii) Associativity (over *)
+Ring has SemiGroup
+-- This property is provided by both
+-- (iii) Multiplicative identity
+Ring has Monoid
+-- This property is provided by: SemiRng
+-- (iv) Distributivity
+Ring has Rng
+-- This property is provided by: Rng
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- Ring      == Join(Rng, SemiRing, LeftModule(%), unitsKnown) with characteristic
+-> --  SemiRing == Join(SemiRng, AbelianMonoid, Monoid)
+-> --  Rng      == Join(SemiRng, AbelianGroup) with
+-> --   SemiRng == Join(AbelianSemiGroup, SemiGroup)
+-> -- (i) Commutative group (over +)
+-> Ring has AbelianGroup
+
+   true
+                                                                Type: Boolean
+-> -- This property is provided by: Rng
+-> -- (ii) Associativity (over *)
+-> Ring has SemiGroup
+
+   true
+                                                                Type: Boolean
+-> -- This property is provided by both
+-> -- (iii) Multiplicative identity
+-> Ring has Monoid
+
+   true
+                                                                Type: Boolean
+-> -- This property is provided by: SemiRng
+-> -- (iv) Distributivity
+-> Ring has Rng
+
+   true
+                                                                Type: Boolean
+-> -- This property is provided by: Rng
+
+#+end_example
+
+#+BEGIN_ASCII
+This      Right rectangle is Rng
+total   +----------------------+
+is Ring |  AbelianGroup minus  |
+        |    AbelianMonoid     |
++-------+-------------+        |
+|       |AbelianMonoid|        |
+|       +-------------+        |
+|       |   SemiRng   |        |
+|       +-------------+--------+
+| Monoid              |
++---------------------+
+Left rectangle is SemiRing
+#+END_ASCII
+
+#+BEGIN_SRC axiom
+-- CommutativeRing == Join(Ring, BiModule(%, %), CommutativeStar)
+CommutativeRing has Ring
+CommutativeRing has CommutativeStar
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- CommutativeRing == Join(Ring, BiModule(%, %), CommutativeStar)
+-> CommutativeRing has Ring
+
+   true
+                                                                Type: Boolean
+-> CommutativeRing has CommutativeStar
+
+   true
+                                                                Type: Boolean
+
+#+end_example
+
+#+BEGIN_ASCII
+NOTE BY ME:
+There is a Category CharacteristicNonZero.
+#+END_ASCII
+
+*** Example 1.1.3 Ring
+#+BEGIN_SRC axiom
+SquareMatrix(2, FRAC INT) has Ring
+
+SquareMatrix(2, FRAC INT) has CommutativeRing
+
+characteristic()$SquareMatrix(2, FRAC INT)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> SquareMatrix(2, FRAC INT) has Ring
+
+   true
+                                                                Type: Boolean
+-> SquareMatrix(2, FRAC INT) has CommutativeRing
+
+   false
+                                                                Type: Boolean
+-> characteristic()$SquareMatrix(2, FRAC INT)
+
+   0
+                                                     Type: NonNegativeInteger
+
+#+end_example
+
+*** Example 1.1.4 CommutativeRing
+#+BEGIN_SRC axiom
+R ==> IntegerMod 6
+R has CommutativeRing
+
+characteristic()$R
+
+(2 * 3)$R
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> R ==> IntegerMod 6
+                                                                   Type: Void
+-> R has CommutativeRing
+
+   true
+                                                                Type: Boolean
+-> characteristic()$R
+
+   6
+                                                     Type: NonNegativeInteger
+-> (2 * 3)$R
+
+   0
+                                                          Type: IntegerMod(6)
+
+#+end_example
+
+#+BEGIN_SRC sh :results verbatim
+cd ~/github/fricas
+head -n 47 src/algebra/fmod.spad
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+)abbrev domain ZMOD IntegerMod
+++ Author:
+++ Date Created:
+++ Date Last Updated:
+++ Basic Functions:
+++ Related Constructors:
+++ Also See:
+++ AMS Classifications:
+++ Keywords:
+++ References:
+++ Description:
+++ IntegerMod(n) creates the ring of integers reduced modulo the integer
+++ n.
+
+IntegerMod(p : PositiveInteger):
+ Join(CommutativeRing, Finite, ConvertibleTo Integer, StepThrough) == add
+  size()           == p
+  characteristic() == p
+  lookup x == (zero? x => p; (convert(x)@Integer) :: PositiveInteger)
+
+-- Code is duplicated for the optimizer to kick in.
+  if p <= convert(max()$SingleInteger)@Integer then
+    Rep := SingleInteger
+    q := p::SingleInteger
+
+    bloodyCompiler : Integer -> %
+    bloodyCompiler n == positiveRemainder(n, p)$Integer pretend %
+
+    convert(x : %) : Integer == convert(x)$Rep
+    coerce(x) : OutputForm == coerce(x)$Rep
+    coerce(n : Integer) : %  == bloodyCompiler n
+    0                    == 0$Rep
+    1                    == 1$Rep
+    init                 == 0$Rep
+    nextItem(n)          ==
+                              m := n+1
+                              m = 0 => "failed"
+                              m
+    x = y                == x =$Rep y
+    x : % * y : %            == mulmod(x, y, q)
+    n : Integer * x : %      == mulmod(bloodyCompiler n, x, q)
+    x + y                == addmod(x, y, q)
+    x - y                == submod(x, y, q)
+    random()             == random(q)$Rep
+    index a              == positiveRemainder(a::%, q)
+    - x                  == (zero? x => 0; q -$Rep x)
+
+#+end_example
+
+*** Definition 1.1.3 IntegralDomain
+#+BEGIN_SRC axiom
+-- IntegralDomain == Join(CommutativeRing, Algebra(%), EntireRing)
+IntegralDomain has CommutativeRing
+
+IntegralDomain has noZeroDivisors
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- IntegralDomain == Join(CommutativeRing, Algebra(%), EntireRing)
+-> IntegralDomain has CommutativeRing
+
+   true
+                                                                Type: Boolean
+-> IntegralDomain has noZeroDivisors
+
+   true
+                                                                Type: Boolean
+
+#+end_example
+
+*** Example 1.1.5 IntegralDomain
+#+BEGIN_SRC axiom
+Complex Integer has IntegralDomain
+
+S ==> SimpleAlgebraicExtension(INT, SUP INT, monomial(1,2)$SUP(INT)+5)
+s:S := generator()$S
+
+s^2
+
+(1+s)*(1-s)
+
+S has IntegralDomain
+-- false -- how to fix?
+S has CommutativeRing
+
+S has noZeroDivisors
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> Complex Integer has IntegralDomain
+
+   true
+                                                                Type: Boolean
+-> S ==> SimpleAlgebraicExtension(INT, SUP INT, monomial(1,2)$SUP(INT)+5)
+                                                                    Type: Void
+-> s:S := generator()$S
+
+   ?
+Type: SimpleAlgebraicExtension(Integer,SparseUnivariatePolynomial(Integer),?^2+5)
+-> s^2
+
+   - 5
+Type: SimpleAlgebraicExtension(Integer,SparseUnivariatePolynomial(Integer),?^2+5)
+-> (1+s)*(1-s)
+
+   6
+Type: SimpleAlgebraicExtension(Integer,SparseUnivariatePolynomial(Integer),?^2+5)
+-> S has IntegralDomain
+
+   false
+                                                                Type: Boolean
+-> -- false -- how to fix?
+-> S has CommutativeRing
+
+   true
+                                                                Type: Boolean
+-> S has noZeroDivisors
+
+   false
+                                                                Type: Boolean
+
+#+end_example
+
+#+BEGIN_SRC axiom
+a | a^2+5=0
+
+SAEa has IntegralDomain
+-- There is
+--   if R has Field and R has PolynomialFactorizationExplicit then PolynomialFactorizationExplicit
+-- in the exports of SAE,
+-- and FRAC INT has Field while INT does not.
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> a | a^2+5=0
+   Your statement has resulted in the following assignments and
+      declaration:
+
+   SAEa := SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),a^2+5)
+   a : SAEa := a
+
+   a
+Type: SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),a^2+5)
+-> SAEa has IntegralDomain
+
+   true
+                                                                Type: Boolean
+-> -- There is
+-> --   if R has Field and R has PolynomialFactorizationExplicit then PolynomialFactorizationExplicit
+-> -- in the exports of SAE,
+-> -- and FRAC INT has Field while INT does not.
+
+#+end_example
+
+#+BEGIN_QUOTE
+https://groups.google.com/d/topic/fricas-devel/vriGwv4weSI/discussion
+
+In fact, it could be useful to allow boolean arguments in category
+tests so user could supply extra argument saying that domain is a
+field (or not).
+
+ATM Spad compiler does not allow such tests.  More precisely, in
+implementation part one can use arbitrary tests.  But export list
+uses limited form of tests.
+#+END_QUOTE
+
+*** Definition 1.1.4 GcdDomain
+#+BEGIN_SRC axiom :eval no
+-- GcdDomain == Join(IntegralDomain, LeftOreRing) with gcd, lcm
+-- GcdDomain ?has? gcd : (%, %) -> %
+-- GcdDomain needs the property that gcd exists for any two non-zero elements,
+-- which not all IntegralDomain satisfy, such as Example 1.1.6.
+-- See also https://en.wikipedia.org/wiki/Greatest_common_divisor#The_gcd_in_commutative_rings
+#+END_SRC
+
+*** Example 1.1.6 GcdDomain
+#+BEGIN_SRC axiom
+SAE(INT, SUP INT, x^2+5) has GcdDomain
+-- This is not the proof that SAE does not have GcdDomain.
+#+END_SRC
+
+#+RESULTS:
+: -> SAE(INT, SUP INT, x^2+5) has GcdDomain
+:
+:    false
+:                                                                 Type: Boolean
+: -> -- This is not the proof that SAE does not have GcdDomain.
+:
+
+*** Definition 1.1.5 prime
+#+BEGIN_SRC axiom :eval no
+-- UniqueFactorizationDomain ?has? prime? : % -> Boolean
+#+END_SRC
+
+*** Example 1.1.7
+
+*** Definition 1.1.6 UFD
+#+BEGIN_SRC axiom
+-- UniqueFactorizationDomain == GcdDomain with ...
+UFD has IntegralDomain
+-- prime?, squareFree, and factor is provided by UFD
+#+END_SRC
+
+#+RESULTS:
+: -> -- UniqueFactorizationDomain == GcdDomain with ...
+: -> UFD has IntegralDomain
+:
+:    true
+:                                                                 Type: Boolean
+: -> -- prime?, squareFree, and factor is provided by UFD
+:
+
+*** Example 1.1.8 UFD
+#+BEGIN_SRC axiom
+MPOLY([u,v], FRAC INT) has UFD
+#+END_SRC
+
+#+RESULTS:
+: -> MPOLY([u,v], FRAC INT) has UFD
+:
+:    true
+:                                                                 Type: Boolean
+:
+
+#+BEGIN_ASCII
+NOTES BY ME:
+When the above code of Example 1.1.8 firstly written in 2014 Mrach 06,
+it retuens false.
+
+Then in 2014 September 07, SVN r1800,
+"Activate PolynomialFactorizationExplicit for Integer",
+And in PolynomialCategory there is:
+    if R has PolynomialFactorizationExplicit then
+       PolynomialFactorizationExplicit
+in its definition, and "PFECAT has UFD".
+
+Also see other discussion about PolynomialFactorizationExplicit
+in FriCAS mail list.
+
+An older discussion is:
+https://groups.google.com/d/topic/fricas-devel/oEBpZYstIqo/discussion
+#+END_ASCII
+
+*** Theorem 1.1.3
+#+BEGIN_SRC axiom
+UFD has GcdDomain
+#+END_SRC
+
+#+RESULTS:
+: -> UFD has GcdDomain
+:
+:    true
+:                                                                 Type: Boolean
+:
+
+*** Theorem 1.1.4
+#+BEGIN_SRC axiom
+INT has UFD
+
+MPOLY([x,y],INT) has UFD
+-- Also see NOTES for Example 1.1.8
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> INT has UFD
+
+   true
+                                                                Type: Boolean
+-> MPOLY([x,y],INT) has UFD
+
+   true
+                                                                Type: Boolean
+-> -- Also see NOTES for Example 1.1.8
+
+#+end_example
+
+*** Definition 1.1.7 subgroup
+*** Example 1.1.9 subgroup
+*** Definition 1.1.8 Ideal
+#+BEGIN_SRC axiom :eval no
+-- PID ?has? principalIdeal: List % -> Record(coef : List %, generator : %)
+#+END_SRC
+
+*** Theorem 1.1.5
+*** Example 1.1.10 principalIdeal
+#+BEGIN_SRC axiom
+MPOLY([x,y], FRAC INT) has PID
+#+END_SRC
+
+#+RESULTS:
+: -> MPOLY([x,y], FRAC INT) has PID
+:
+:    false
+:                                                                 Type: Boolean
+:
+
+*** Definition 1.1.9 PID
+#+BEGIN_SRC axiom
+-- PrincipalIdealDomain == GcdDomain with principalIdeal
+PID has IntegralDomain
+#+END_SRC
+
+#+RESULTS:
+: -> -- PrincipalIdealDomain == GcdDomain with principalIdeal
+: -> PID has IntegralDomain
+:
+:    true
+:                                                                 Type: Boolean
+:
+
+*** Example 1.1.11 PID
+#+BEGIN_SRC axiom
+POLY FRAC INT has PID
+
+SUP FRAC INT has PID
+#+END_SRC
+
+#+RESULTS:
+: -> POLY FRAC INT has PID
+:
+:    false
+:                                                                 Type: Boolean
+: -> SUP FRAC INT has PID
+:
+:    true
+:                                                                 Type: Boolean
+:
+
+*** Definition 1.1.10 EuclideanDomain
+#+BEGIN_SRC axiom
+-- EuclideanDomain == PrincipalIdealDomain with divide, euclideanSize ...
+-- (i) size function
+-- EuclideanDomain ?has? euclideanSize : % -> NonNegativeInteger
+-- (ii) Euclidean division
+-- EuclideanDomain ?has? divide : (%, %) -> Record(quotient : %, remainder : %)
+EuclideanDomain has IntegralDomain
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- EuclideanDomain == PrincipalIdealDomain with divide, euclideanSize ...
+-> -- (i) size function
+-> -- EuclideanDomain ?has? euclideanSize : % -> NonNegativeInteger
+-> -- (ii) Euclidean division
+-> -- EuclideanDomain ?has? divide : (%, %) -> Record(quotient : %, remainder : %)
+-> EuclideanDomain has IntegralDomain
+
+   true
+                                                                Type: Boolean
+
+#+end_example
+
+*** Example 1.1.12 EuclideanDomain
+#+BEGIN_SRC axiom
+Integer has EuclideanDomain
+-- euclideanSize implenmented under IntegerNumberSystem in si.spad
+#+END_SRC
+
+#+RESULTS:
+: -> Integer has EuclideanDomain
+:
+:    true
+:                                                                 Type: Boolean
+: -> -- euclideanSize implenmented under IntegerNumberSystem in si.spad
+:
+
+*** Theorem 1.1.6
+#+BEGIN_SRC axiom
+EuclideanDomain has PID
+#+END_SRC
+
+#+RESULTS:
+: -> EuclideanDomain has PID
+:
+:    true
+:                                                                 Type: Boolean
+:
+
+*** Theorem 1.1.7
+#+BEGIN_SRC axiom
+PID has UFD
+-- false -- why?
+#+END_SRC
+
+#+RESULTS:
+: -> PID has UFD
+:
+:    false
+:                                                                 Type: Boolean
+: -> -- false -- why?
+:
+
+#+BEGIN_ASCII
+NOTES BY ME:
+
+See also https://groups.google.com/forum/?fromgroups=&hl=en#!topic/fricas-devel/mMmm9zmC7io
+#+END_ASCII
+
+*** Definition 1.1.11 Field
+#+BEGIN_SRC axiom
+-- Field == Join(EuclideanDomain, UniqueFactorizationDomain,
+--               DivisionRing, canonicalUnitNormal, canonicalsClosed) with /
+--   DivisionRing == Join(EntireRing, Algebra Fraction Integer) with inv
+Field has CommutativeRing
+
+Field has DivisionRing
+-- See comments form DivisionRing's definition:
+--   A division ring (sometimes called a skew field),
+--   i.e. a not necessarily commutative ring where
+--   all non-zero elements have multiplicative inverses.
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- Field == Join(EuclideanDomain, UniqueFactorizationDomain,
+-> --               DivisionRing, canonicalUnitNormal, canonicalsClosed) with /
+-> --   DivisionRing == Join(EntireRing, Algebra Fraction Integer) with inv
+-> Field has CommutativeRing
+
+   true
+                                                                Type: Boolean
+-> Field has DivisionRing
+
+   true
+                                                                Type: Boolean
+-> -- See comments form DivisionRing's definition:
+-> --   A division ring (sometimes called a skew field),
+-> --   i.e. a not necessarily commutative ring where
+-> --   all non-zero elements have multiplicative inverses.
+
+#+end_example
+
+*** Example 1.1.13 Field
+#+BEGIN_SRC axiom
+IntegerMod 5 has Field
+
+PrimeField 5 has Field
+#+END_SRC
+
+#+RESULTS:
+: -> IntegerMod 5 has Field
+:
+:    false
+:                                                                 Type: Boolean
+: -> PrimeField 5 has Field
+:
+:    true
+:                                                                 Type: Boolean
+:
+
+*** Example 1.1.14 Field
+#+BEGIN_SRC axiom
+FRAC INT has Field
+
+FRAC POLY INT has Field
+
+POLY FRAC INT has Field
+-- Fraction(S : IntegralDomain) : QuotientFieldCategory S with ...
+-- QuotientFieldCategory(S : IntegralDomain) : Category == Join(Field, ...
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> FRAC INT has Field
+
+   true
+                                                                Type: Boolean
+-> FRAC POLY INT has Field
+
+   true
+                                                                Type: Boolean
+-> POLY FRAC INT has Field
+
+   false
+                                                                Type: Boolean
+-> -- Fraction(S : IntegralDomain) : QuotientFieldCategory S with ...
+-> -- QuotientFieldCategory(S : IntegralDomain) : Category == Join(Field, ...
+
+#+end_example
+
+*** Definition 1.1.12 SimpleAlgebraicExtension
+#+BEGIN_ASCII
+NOTES BY ME:
+
+SAE in FriCAS is not exactly the same with Definition 1.1.12.
+SAE(INT, SUP INT, x^2+5) has Field -- false
+#+END_ASCII
+
+*** Definition 1.1.13 AlgebraicallyClosedField
+#+BEGIN_SRC axiom
+AlgebraicallyClosedField has Field
+-- AlgebraicallyClosedField == Join(Field, RadicalCategory) with ...
+#+END_SRC
+
+#+RESULTS:
+: -> AlgebraicallyClosedField has Field
+:
+:    true
+:                                                                 Type: Boolean
+: -> -- AlgebraicallyClosedField == Join(Field, RadicalCategory) with ...
+:
+
+*** Theorem 1.1.9
+*** Theorem 1.1.10
+*** Theorem 1.1.11
+
+** 1.2 Euclidean Division and Pseudo-Division
+*** Algorithm: PolyDivide
+[[~/github/fricas/src/algebra/polycat.spad::852]]
+
+#+BEGIN_EXAMPLE
+-- UnivariatePolynomialCategory(R)
+    if R has Field then
+        EuclideanDomain
+#+END_EXAMPLE
+
+[[~/github/fricas/src/algebra/poly.spad::883]]
+
+#+begin_example
+-- SparseUnivariatePolynomial(R)
+--   : UnivariatePolynomialCategory(R) with ...
+   if R has Field then
+     divide(p1, p2)  ==
+       zero? p2 => error "Division by 0"
+       (p2 = 1) => [p1, 0]
+       ct := inv(p2.first.c)
+       n := p2.first.k
+       p2 := p2.rest
+       rout := empty()$List(Term)
+       while p1 ~= 0 repeat
+          (u := subtractIfCan(p1.first.k, n)) case "failed" => break
+          rout := cons([u, ct * p1.first.c], rout)
+          p1 := fmecg(p1.rest, rout.first.k, rout.first.c, p2)
+       [reverse!(rout), p1]
+#+end_example
+
+Rewrite using notations from book:
+
+#+BEGIN_ASCII
+  pseudo code: A  B  Q    R  delta T
+  spad code  : p1 p2 rout p1 u     rout.first
+Notice that "p2 := p2.rest" part, together with "fmecg(p1.rest, ...)",
+to reduce computation.
+#+END_ASCII
+
+#+BEGIN_SRC spad :eval no
+divide(A, B)  ==
+  zero? B => error "Division by 0"
+  (B = 1) => [A, 0]
+  Q := empty()$List(Term)
+  R := A
+  lcR := R.first.c
+  lcB := B.first.c
+  degR := R.first.k
+  degB := B.first.k
+  B := B.rest -- speed hack: use R.rest in fmecg bellow
+  while R ~= 0 repeat
+     (delta := subtractIfCan(degR, degB)) case "failed" => break
+     T := [delta, lcR/lcB]
+     Q := cons(T, Q)
+     R := fmecg(R.rest, T.k, T.c, B) -- R - B * T
+  [reverse!(Q), R]
+#+END_SRC
+
+*** Example 1.2.1 PolyDivide
+#+BEGIN_SRC axiom
+)clear all
+T ==> UP(x, FRAC INT);
+T has EUCDOM
+
+A := 3*x^3 + x^2 + x + 5
+B := 5*x^2 - 3*x + 1
+divide(A, B)$T
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> T ==> UP(x, FRAC INT);
+                                                                    Type: Void
+-> T has EUCDOM
+
+   true
+                                                                Type: Boolean
+-> A := 3*x^3 + x^2 + x + 5
+
+      3    2
+   3 x  + x  + x + 5
+                                                    Type: Polynomial(Integer)
+-> B := 5*x^2 - 3*x + 1
+
+      2
+   5 x  - 3 x + 1
+                                                    Type: Polynomial(Integer)
+-> divide(A, B)$T
+
+               3     14              52     111
+   [quotient = ─ x + ──, remainder = ── x + ───]
+               5     25              25      25
+Type: Record(quotient: UnivariatePolynomial(x,Fraction(Integer)),remainder: UnivariatePolynomial(x,Fraction(Integer)))
+
+#+end_example
+
+*** Algorithm: PolyPseudoDivide
+#+BEGIN_SRC axiom
+FRAC INT has Field
+T ==> UP(x, FRAC INT)
+T has divide : (T, T) -> Record(quotient:T, remainder:T)
+
+INT has Field
+T ==> UP(x, INT)
+T has divide : (T, T) -> Record(quotient:T, remainder:T)
+T has pseudoDivide : (T, T) -> Record(coef:Integer, quotient:T, remainder:T)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> FRAC INT has Field
+
+   true
+                                                                Type: Boolean
+-> T ==> UP(x, FRAC INT)
+                                                                    Type: Void
+-> T has divide : (T, T) -> Record(quotient:T, remainder:T)
+
+   true
+                                                                Type: Boolean
+-> INT has Field
+
+   false
+                                                                Type: Boolean
+-> T ==> UP(x, INT)
+                                                                    Type: Void
+-> T has divide : (T, T) -> Record(quotient:T, remainder:T)
+
+   false
+                                                                Type: Boolean
+-> T has pseudoDivide : (T, T) -> Record(coef:Integer, quotient:T, remainder:T)
+
+   true
+                                                                Type: Boolean
+
+#+end_example
+
+[[~/github/fricas/src/algebra/polycat.spad::844]]
+
+#+BEGIN_EXAMPLE
+-- UnivariatePolynomialCategory(R)
+    if R has IntegralDomain then
+        pseudoDivide : (%, %) -> Record(coef : R, quotient : %, remainder : %)
+#+END_EXAMPLE
+
+[[~/github/fricas/src/algebra/polycat.spad::1059][implementation of pseudoDivide]]
+
+[[~/github/fricas/src/algebra/polycat.spad::1026][implementation of pseudoRemainder]]
+
+*** Example 1.2.2 PolyPseudoDivide
+#+BEGIN_SRC axiom
+pseudoDivide(A, B)
+#+END_SRC
+
+#+RESULTS:
+: -> pseudoDivide(A, B)
+:
+:    [coef = 25,quotient = 15x + 14,remainder = 52x + 111]
+: Type: Record(coef: Integer,quotient: UnivariatePolynomial(x,Integer),remainder: UnivariatePolynomial(x,Integer))
+:
+
+** 1.3 The Euclidean Algorithm
+#+BEGIN_SRC axiom
+POLY INT has EuclideanDomain
+POLY INT has GcdDomain
+UP(x, INT) has EuclideanDomain
+UP(x, INT) has GcdDomain
+
+POLY FRAC INT has EuclideanDomain
+POLY FRAC INT has GcdDomain
+UP(x, FRAC INT) has EuclideanDomain
+UP(x, FRAC INT) has GcdDomain
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> POLY INT has EuclideanDomain
+
+   false
+                                                                Type: Boolean
+-> POLY INT has GcdDomain
+
+   true
+                                                                Type: Boolean
+-> UP(x, INT) has EuclideanDomain
+
+   false
+                                                                Type: Boolean
+-> UP(x, INT) has GcdDomain
+
+   true
+                                                                Type: Boolean
+-> POLY FRAC INT has EuclideanDomain
+
+   false
+                                                                Type: Boolean
+-> POLY FRAC INT has GcdDomain
+
+   true
+                                                                Type: Boolean
+-> UP(x, FRAC INT) has EuclideanDomain
+
+   true
+                                                                Type: Boolean
+-> UP(x, FRAC INT) has GcdDomain
+
+   true
+                                                                Type: Boolean
+
+#+end_example
+
+*** Example 1.3.1 EuclideanDivision
+#+BEGIN_SRC axiom
+a := x^4 - 2*x^3 - 6*x^2 + 12*x + 15;
+b := x^3 + x^2 - 4*x - 4;
+gcd(a, b)
+gcd(a, b)$UP(x, FRAC INT)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> a := x^4 - 2*x^3 - 6*x^2 + 12*x + 15;
+
+                                                    Type: Polynomial(Integer)
+-> b := x^3 + x^2 - 4*x - 4;
+
+                                                    Type: Polynomial(Integer)
+-> gcd(a, b)
+
+   x + 1
+                                                    Type: Polynomial(Integer)
+-> gcd(a, b)$UP(x, FRAC INT)
+
+   x + 1
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+
+#+end_example
+
+#+BEGIN_EXAMPLE
+gcd, like divide in last section, is also implemented in SUP in
+poly.spad :
+#+END_EXAMPLE
+
+#+BEGIN_SRC sh :results verbatim
+cd ~/github/fricas
+grep 'gcd(p1, p2)' src/algebra/poly.spad -A3
+#+END_SRC
+
+#+RESULTS:
+:      gcd(p1, p2) ==
+:           gcdPolynomial(p1 pretend SparseUnivariatePolynomial R,
+:                         p2 pretend SparseUnivariatePolynomial R) pretend %
+:
+
+#+BEGIN_EXAMPLE
+TODO: NOTE:
+
+add source code for ExtendedEuclidean
+
+it's implemented in catdef.spad, EUCDOM, seems very very inefficient?
+#+END_EXAMPLE
+
+*** Example 1.3.2 ExtendedEuclidean
+#+BEGIN_SRC axiom
+extendedEuclidean(a, b, 5*x+5)$UP(x, FRAC INT)
+#+END_SRC
+
+#+RESULTS:
+: -> extendedEuclidean(a, b, 5*x+5)$UP(x, FRAC INT)
+:
+:                              2
+:    [coef1 = - x + 3,coef2 = x  - 6x + 10]
+: Type: Union(Record(coef1: UnivariatePolynomial(x,Fraction(Integer)),coef2: UnivariatePolynomial(x,Fraction(Integer))),...)
+:
+
+*** Example 1.3.3
+*** Example 1.3.4
+#+BEGIN_SRC axiom
+stg := extendedEuclidean(a, b)$UP(x, FRAC INT)
+
+s := stg.coef1
+t := stg.coef2
+g := stg.generator
+qr:= divide(x^2-1,g)
+
+q := qr.quotient
+r := qr.remainder
+s := q*s
+
+t := q*t
+
+s*a+t*b = x^2-1
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> stg := extendedEuclidean(a, b)$UP(x, FRAC INT)
+
+              1     3         1  2   6
+   [coef1 = - ─ x + ─,coef2 = ─ x  - ─ x + 2,generator = x + 1]
+              5     5         5      5
+Type: Record(coef1: UnivariatePolynomial(x,Fraction(Integer)),coef2: UnivariatePolynomial(x,Fraction(Integer)),generator: UnivariatePolynomial(x,Fraction(Integer)))
+-> s := stg.coef1
+
+     1     3
+   - ─ x + ─
+     5     5
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> t := stg.coef2
+
+   1  2   6
+   ─ x  - ─ x + 2
+   5      5
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> g := stg.generator
+
+   x + 1
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> qr:= divide(x^2-1,g)
+
+   [quotient = x - 1,remainder = 0]
+Type: Record(quotient: UnivariatePolynomial(x,Fraction(Integer)),remainder: UnivariatePolynomial(x,Fraction(Integer)))
+-> q := qr.quotient
+
+   x - 1
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> r := qr.remainder
+
+   0
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> s := q*s
+
+     1  2   4     3
+   - ─ x  + ─ x - ─
+     5      5     5
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> t := q*t
+
+   1  3   7  2   16
+   ─ x  - ─ x  + ── x - 2
+   5      5       5
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> s*a+t*b = x^2-1
+
+    2        2
+   x  - 1 = x  - 1
+                                Type: Equation(Polynomial(Fraction(Integer)))
+
+#+end_example
+
+*** Example 1.3.5
+#+BEGIN_SRC axiom
+extendedEuclidean(a, b, x^2-1)$UP(x, FRAC INT)
+#+END_SRC
+
+#+RESULTS:
+: -> extendedEuclidean(a, b, x^2-1)$UP(x, FRAC INT)
+:
+:               1  2   4     3         1  3   7  2   16
+:    [coef1 = - ─ x  + ─ x - ─,coef2 = ─ x  - ─ x  + ── x - 2]
+:               5      5     5         5      5       5
+: Type: Union(Record(coef1: UnivariatePolynomial(x,Fraction(Integer)),coef2: UnivariatePolynomial(x,Fraction(Integer))),...)
+:
+
+#+BEGIN_ASCII
+NOTES by me:
+
+How to use dioSolve to solve this equation?
+#+END_ASCII
+
+*** Example 1.3.6 PartialFraction
+#+BEGIN_SRC axiom
+x := monomial(1, 1)$SUP FRAC INT;
+f := (x^2+3*x)/(x^3-x^2-x+1);
+partialFraction f
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> x := monomial(1, 1)$SUP FRAC INT;
+
+                          Type: SparseUnivariatePolynomial(Fraction(Integer))
+-> f := (x^2+3*x)/(x^3-x^2-x+1);
+
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-> partialFraction f
+
+    3     1     1
+    ─ ? + ─     ─
+    2     2     2
+   ──────── - ─────
+          2   ? + 1
+   (? - 1)
+         Type: PartialFraction(SparseUnivariatePolynomial(Fraction(Integer)))
+
+#+end_example
+
+#+BEGIN_ASCII
+partialFraction is implemented in pfr.spad
+#+END_ASCII
+
+*** Example 1.3.7 FullPartialFraction
+#+BEGIN_SRC axiom
+fullPartialFraction f
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> fullPartialFraction f
+
+     3                  1
+     ─                  ─
+     2         2        2
+   ───── + ──────── - ─────
+   ? - 1          2   ? + 1
+           (? - 1)
+Type: FullPartialFractionExpansion(Fraction(Integer),SparseUnivariatePolynomial(Fraction(Integer)))
+
+#+end_example
+
+#+BEGIN_ASCII
+fullPartialFraction is implemented in fparfrac.spad
+#+END_ASCII
+
+** 1.4 Resultants and Subresultants
+[54] GTM.211-Lang.S.Algebra.Springer.2002.600dpi.T.934s.KA.MAt.djvu
+Chapter IV § 8, p200.
+
+*** Definition 1.4.1 Sylvester Matrix
+#+BEGIN_QUOTE
+defined in bezout.spad
+
+[[~/github/fricas/src/algebra/bezout.spad::BEZOUT]]
+
+BezoutMatrix is not used anywhere else in FriCAS.
+#+END_QUOTE
+
+*** Example 1.4.1 Resultant
+#+BEGIN_SRC axiom
+)clear all
+T ==> UP(x, POLY INT)
+A : T := 3*t*x^2 - t^3-4
+B : T := x^2 + t^3*x - 9
+)expose BezoutMatrix
+sab:=sylvesterMatrix(A, B)
+
+determinant sab
+
+bezoutResultant(A, B)
+
+resultant(A, B)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> T ==> UP(x, POLY INT)
+                                                                    Type: Void
+-> A : T := 3*t*x^2 - t^3-4
+
+        2    3
+   3 t x  - t  - 4
+                            Type: UnivariatePolynomial(x,Polynomial(Integer))
+-> B : T := x^2 + t^3*x - 9
+
+    2    3
+   x  + t x - 9
+                            Type: UnivariatePolynomial(x,Polynomial(Integer))
+-> )expose BezoutMatrix
+    BezoutMatrix is now explicitly exposed in frame initial
+-> sab:=sylvesterMatrix(A, B)
+
+   ┌             3              ┐
+   │3 t   0   - t  - 4     0    │
+   │                            │
+   │                       3    │
+   │ 0   3 t     0      - t  - 4│
+   │                            │
+   │      3                     │
+   │ 1   t      - 9        0    │
+   │                            │
+   │              3             │
+   └ 0    1      t        - 9   ┘
+                                            Type: Matrix(Polynomial(Integer))
+-> determinant sab
+
+        10       7    6       4      3        2
+   - 3 t   - 12 t  + t  - 54 t  + 8 t  + 729 t  - 216 t + 16
+                                                    Type: Polynomial(Integer)
+-> bezoutResultant(A, B)
+
+        10       7    6       4      3        2
+   - 3 t   - 12 t  + t  - 54 t  + 8 t  + 729 t  - 216 t + 16
+                                                    Type: Polynomial(Integer)
+-> resultant(A, B)
+
+        10       7    6       4      3        2
+   - 3 t   - 12 t  + t  - 54 t  + 8 t  + 729 t  - 216 t + 16
+                                                    Type: Polynomial(Integer)
+
+#+end_example
+
+#+BEGIN_QUOTE
+resultant is defined in prs.spad
+
+[[~/github/fricas/src/algebra/prs.spad::396]]
+#+END_QUOTE
+
+*** Theorem 1.4.1 Resultant
+[[~/github/fricas/src/algebra/prs.spad::400]]
+
+*** Theorem 1.4.2 resultantEuclidean
+[[~/github/fricas/src/algebra/prs.spad::41]]
+
+[[~/github/fricas/src/algebra/prs.spad::426]]
+
+#+BEGIN_SRC axiom
+)expose PRS
+resultantEuclidean(A, B)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )expose PRS
+   PseudoRemainderSequence is already explicitly exposed in frame
+      initial
+-> resultantEuclidean(A, B)
+
+               4       7    3
+   [coef1 = 3 t x + 3 t  - t  + 27 t - 4,
+                 5       4       2
+    coef2 = - 9 t x + 3 t  - 81 t  + 12 t,
+                     10       7    6       4      3        2
+    resultant = - 3 t   - 12 t  + t  - 54 t  + 8 t  + 729 t  - 216 t + 16]
+Type: Record(coef1: UnivariatePolynomial(x,Polynomial(Integer)),coef2: UnivariatePolynomial(x,Polynomial(Integer)),resultant: Polynomial(Integer))
+
+#+end_example
+
+*** Example 1.4.2 Subresultant
+#+BEGIN_SRC axiom
+)clear all
+A := x^2 + 1;
+B := x^2 - 1;
+)expose BezoutMatrix
+sylvesterMatrix(A, B)
+
+)expose PseudoRemainderSequence
+chainSubResultants(A, B)
+
+-- or alternatively:
+)expose SubResultantPackage
+subresultantVector(A, B)
+
+-- There is also:
+T ==> NSMP(INT,OrderedVariableList[x]);
+subResultantChain(A::T, B::T)
+
+-- can not compute when degree(A) = degree(B)
+)expose SturmHabichtPackage
+subresultantSequence(A, B)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> A := x^2 + 1;
+
+                                                    Type: Polynomial(Integer)
+-> B := x^2 - 1;
+
+                                                    Type: Polynomial(Integer)
+-> )expose BezoutMatrix
+    BezoutMatrix is now explicitly exposed in frame initial
+-> sylvesterMatrix(A, B)
+
+   ┌1  0   1    0 ┐
+   │              │
+   │0  1   0    1 │
+   │              │
+   │1  0  - 1   0 │
+   │              │
+   └0  1   0   - 1┘
+                                                        Type: Matrix(Integer)
+-> )expose PseudoRemainderSequence
+    PseudoRemainderSequence is now explicitly exposed in frame initial
+-> chainSubResultants(A, B)
+
+           2
+   [4,- 2,x  - 1]
+                                  Type: List(UnivariatePolynomial(x,Integer))
+-> -- or alternatively:
+-> )expose SubResultantPackage
+     SubResultantPackage is already explicitly exposed in frame initial
+-> subresultantVector(A, B)
+
+           2      2
+   [4,- 2,x  - 1,x  + 1]
+                        Type: PrimitiveArray(UnivariatePolynomial(x,Integer))
+-> -- There is also:
+-> T ==> NSMP(INT,OrderedVariableList[x]);
+                                                                     Type: Void
+-> subResultantChain(A::T, B::T)
+
+           2
+   [4,- 2,x  - 1]
+Type: List(NewSparseMultivariatePolynomial(Integer,OrderedVariableList([x])))
+-> -- can not compute when degree(A) = degree(B)
+-> )expose SturmHabichtPackage
+     SturmHabichtPackage is now explicitly exposed in frame initial
+-> subresultantSequence(A, B)
+
+   >> Error detected within library code:
+   subresultantSequence : degree(p1) <= degree(p2)
+
+
+#+end_example
+
+#+BEGIN_ASCII
+NOTES BY ME:
+
+SubResultantPackage is based on PseudoRemainderSequence,
+but why write a wrapper on top of it?  See the interesting
+comments in SubResultantPackage.
+#+END_ASCII
+
+*** Example 1.4.3
+#+BEGIN_SRC axiom
+)clear all
+T ==> UP(x, POLY INT)
+A:T := 3*t*x^2 - t^3-4
+B:T := x^2 + t^3*x - 9
+)expose PseudoRemainderSequence
+chainSubResultants(A, B)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> T ==> UP(x, POLY INT)
+                                                                    Type: Void
+-> A:T := 3*t*x^2 - t^3-4
+
+        2    3
+   3 t x  - t  - 4
+                            Type: UnivariatePolynomial(x,Polynomial(Integer))
+-> B:T := x^2 + t^3*x - 9
+
+    2    3
+   x  + t x - 9
+                            Type: UnivariatePolynomial(x,Polynomial(Integer))
+-> )expose PseudoRemainderSequence
+    PseudoRemainderSequence is already explicitly exposed in frame
+      initial
+-> chainSubResultants(A, B)
+
+         10       7    6       4      3        2
+   [- 3 t   - 12 t  + t  - 54 t  + 8 t  + 729 t  - 216 t + 16,
+       4     3              2    3
+    3 t x + t  - 27 t + 4, x  + t x - 9]
+                      Type: List(UnivariatePolynomial(x,Polynomial(Integer)))
+
+#+end_example
+
+** 1.5 Polynomial Remainder Sequences
+*** Definition 1.5.1 Polynomial Remainder Sequence
+[[~/github/fricas/src/algebra/prs.spad]]
+
+*** Example 1.5.1
+#+BEGIN_SRC axiom
+resultant(x^2+1, x^2-1)
+#+END_SRC
+
+#+RESULTS:
+: -> resultant(x^2+1, x^2-1)
+:
+:    4
+:                                                         Type: PositiveInteger
+:
+
+*** Example 1.5.2
+Same as Example 1.4.3.
+
+** 1.6 Primitive Polynomials
+*** Definition 1.6.1 content, primitivePart
+#+BEGIN_SRC axiom
+primitivePart(4*x+6)$POLY INT
+
+primitivePart(4*x+6)$POLY FRAC INT
+-- not the same with book
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> primitivePart(4*x+6)$POLY INT
+
+   2 x + 3
+                                                    Type: Polynomial(Integer)
+-> primitivePart(4*x+6)$POLY FRAC INT
+
+       3
+   x + ─
+       2
+                                          Type: Polynomial(Fraction(Integer))
+-> -- not the same with book
+
+#+end_example
+
+*** Definition 1.6.2 suqareFreePart
+#+BEGIN_SRC axiom
+-- UFD ?has? squareFree: % -> Factored(%)
+#+END_SRC
+
+** 1.7 Squarefree Factorization
+*** Definition 1.7.2 squareFree
+#+BEGIN_ASCII
+NOTES BY ME:
+
+squareFree is implemented in UnivariatePolynomialSquareFree
+in poly.spad .
+#+END_ASCII
+
+[[~/github/fricas/src/algebra/poly.spad::1147]]
+
+*** Example 1.7.1 squareFree
+#+BEGIN_SRC axiom
+squareFree(x^8+6*x^6+12*x^4+8*x^2)
+#+END_SRC
+
+#+RESULTS:
+: -> squareFree(x^8+6*x^6+12*x^4+8*x^2)
+:
+:     2  2     3
+:    x (x  + 2)
+:                                           Type: Factored(Polynomial(Integer))
+:
+
+*** Example 1.7.2 squareFree
+#+BEGIN_ASCII
+NOTES BY ME:
+
+In FriCAS, Yun's method is used when domain has CharacteristicZero.
+#+END_ASCII
+
+** Exercises
+*** Exercise 1.1
+#+BEGIN_SRC axiom
+gcd(217, 413)
+#+END_SRC
+
+#+RESULTS:
+: -> gcd(217, 413)
+:
+:    7
+:                                                         Type: PositiveInteger
+:
+
+*** Exercise 1.2
+#+BEGIN_SRC axiom
+-- (a)
+extendedEuclidean(12, 19, 1)
+-- (b)
+extendedEuclidean(3, 2, 5)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- (a)
+-> extendedEuclidean(12, 19, 1)
+
+   [coef1 = 8,coef2 = - 5]
+                       Type: Union(Record(coef1: Integer,coef2: Integer),...)
+-> -- (b)
+-> extendedEuclidean(3, 2, 5)
+
+   [coef1 = 1,coef2 = 1]
+                       Type: Union(Record(coef1: Integer,coef2: Integer),...)
+
+#+end_example
+
+#+BEGIN_SRC axiom
+-- or solve by Diophantine theory:
+dioSolve(12*x-19*y=1)
+-- The answer has to be positive?
+
+dioSolve(3*x+2*y=5)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- or solve by Diophantine theory:
+-> dioSolve(12*x-19*y=1)
+
+   [varOrder = [x,y],inhom = [[8,5]],hom = [[19,12]]]
+Type: Record(varOrder: List(Symbol),inhom: Union(List(Vector(NonNegativeInteger)),"failed"),hom: List(Vector(NonNegativeInteger)))
+-> -- The answer has to be positive?
+-> dioSolve(3*x+2*y=5)
+
+   [varOrder = [x,y],inhom = [[1,1]],hom = []]
+Type: Record(varOrder: List(Symbol),inhom: Union(List(Vector(NonNegativeInteger)),"failed"),hom: List(Vector(NonNegativeInteger)))
+
+#+end_example
+
+*** Exercise 1.3
+#+BEGIN_SRC axiom
+inv(14)$(PrimeField 37)
+#+END_SRC
+
+#+RESULTS:
+: -> inv(14)$(PrimeField 37)
+:
+:    8
+:                                                          Type: PrimeField(37)
+:
+
+*** Exercise 1.4
+#+BEGIN_SRC axiom
+gcd(2*x^3 - 19/5*x^2 - x + 6/5, x^2 + 1/3*x - 14/3)
+#+END_SRC
+
+#+RESULTS:
+: -> gcd(2*x^3 - 19/5*x^2 - x + 6/5, x^2 + 1/3*x - 14/3)
+:
+:    x - 2
+:                                           Type: Polynomial(Fraction(Integer))
+:
+
+*** Exercise 1.5
+#+BEGIN_SRC axiom
+pseudoDivide(x^4 - 7*x + 7, 3*x^2 - 7)
+#+END_SRC
+
+#+RESULTS:
+: -> pseudoDivide(x^4 - 7*x + 7, 3*x^2 - 7)
+:
+:                              2
+:    [coef = 27, quotient = 9 x  + 21, remainder = - 189 x + 336]
+: Type: Record(coef: Integer,quotient: UnivariatePolynomial(x,Integer),remainder: UnivariatePolynomial(x,Integer))
+:
+
+*** Exercise 1.6
+#+BEGIN_SRC axiom
+a := 7*x^5 + 4*x^3 + 2*x + 1
+b := 2*x^3 + 3
+divide(a,b)$UP(x, PrimeField 5)
+
+divide(a,b)$UP(x, PrimeField 11)
+
+pseudoDivide(a,b)$UP(x, INT)
+
+divide(a,b)$UP(x, FRAC INT)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> a := 7*x^5 + 4*x^3 + 2*x + 1
+
+      5      3
+   7 x  + 4 x  + 2 x + 1
+                                                    Type: Polynomial(Integer)
+-> b := 2*x^3 + 3
+
+      3
+   2 x  + 3
+                                                    Type: Polynomial(Integer)
+-> divide(a,b)$UP(x, PrimeField 5)
+
+                2                     2
+   [quotient = x  + 2, remainder = 2 x  + 2 x]
+Type: Record(quotient: UnivariatePolynomial(x,PrimeField(5)),remainder: UnivariatePolynomial(x,PrimeField(5)))
+-> divide(a,b)$UP(x, PrimeField 11)
+
+                  2                     2
+   [quotient = 9 x  + 2, remainder = 6 x  + 2 x + 6]
+Type: Record(quotient: UnivariatePolynomial(x,PrimeField(11)),remainder: UnivariatePolynomial(x,PrimeField(11)))
+-> pseudoDivide(a,b)$UP(x, INT)
+
+                             2                         2
+   [coef = 8, quotient = 28 x  + 16, remainder = - 84 x  + 16 x - 40]
+Type: Record(coef: Integer,quotient: UnivariatePolynomial(x,Integer),remainder: UnivariatePolynomial(x,Integer))
+-> divide(a,b)$UP(x, FRAC INT)
+
+               7  2                    21  2
+   [quotient = ─ x  + 2, remainder = - ── x  + 2 x - 5]
+               2                        2
+Type: Record(quotient: UnivariatePolynomial(x,Fraction(Integer)),remainder: UnivariatePolynomial(x,Fraction(Integer)))
+
+#+end_example
+
+*** Exercise 1.7
+#+BEGIN_SRC axiom
+)clear all
+T ==> UP(x, POLY INT)
+
+a:T := x^4 + x^3 - t
+b:T := x^3 + 2*x^2 + 3*t*x - t + 1
+
+)expose PseudoRemainderSequence
+chainSubResultants(a,b)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> )clear all
+   All user variables and function definitions have been cleared.
+-> T ==> UP(x, POLY INT)
+                                                                    Type: Void
+-> a:T := x^4 + x^3 - t
+
+    4    3
+   x  + x  - t
+                            Type: UnivariatePolynomial(x,Polynomial(Integer))
+-> b:T := x^3 + 2*x^2 + 3*t*x - t + 1
+
+    3      2
+   x  + 2 x  + 3 t x - t + 1
+                            Type: UnivariatePolynomial(x,Polynomial(Integer))
+-> )expose PseudoRemainderSequence
+    PseudoRemainderSequence is already explicitly exposed in frame
+      initial
+-> chainSubResultants(a,b)
+
+          5       4       3      2
+   [- 81 t  - 26 t  + 54 t  + 3 t  - 11 t + 2,
+         3      2                   3    2
+    (27 t  - 2 t  - 11 t + 3)x - 9 t  + t  + 4 t - 1,
+                2                          3      2
+    (- 3 t + 2)x  + (4 t - 1)x - 2 t + 1, x  + 2 x  + 3 t x - t + 1]
+                      Type: List(UnivariatePolynomial(x,Polynomial(Integer)))
+
+#+end_example
+
+*** Exercise 1.8
+#+BEGIN_SRC axiom
+-- (a)
+gcd(4*x^4+13*x^3+15*x^2+7*x+1,2*x^3+x^2-4*x-3)$UP(x, FRAC INT)
+-- (b)
+gcd(4*x^4+13*x^3+15*x^2+7*x+1,2*x^3+x^2-4*x-3)$UP(x, INT)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> -- (a)
+-> gcd(4*x^4+13*x^3+15*x^2+7*x+1,2*x^3+x^2-4*x-3)$UP(x, FRAC INT)
+
+    2
+   x  + 2 x + 1
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-> -- (b)
+-> gcd(4*x^4+13*x^3+15*x^2+7*x+1,2*x^3+x^2-4*x-3)$UP(x, INT)
+
+    2
+   x  + 2 x + 1
+                                        Type: UnivariatePolynomial(x,Integer)
+
+#+end_example
+
+*** Exercise 1.9
+#+BEGIN_SRC axiom
+squareFree (x^8-5*x^6+6*x^4+4*x^2-8)
+#+END_SRC
+
+#+RESULTS:
+: -> squareFree (x^8-5*x^6+6*x^4+4*x^2-8)
+:
+:      2     3  2
+:    (x  - 2) (x  + 1)
+:                                           Type: Factored(Polynomial(Integer))
+:

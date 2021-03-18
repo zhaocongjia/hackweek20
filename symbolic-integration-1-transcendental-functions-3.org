@@ -1,0 +1,967 @@
+* 3 Differential Fields
+** 3.1 Derivations
+*** Definition 3.1.1 DifferentialRing
+#+BEGIN_SRC axiom
+-- DifferentialRing == Ring with D
+DifferentialRing has Ring
+-- DifferentialRing ?has? D : % -> %
+#+END_SRC
+
+#+RESULTS:
+: -> -- DifferentialRing == Ring with D
+: -> DifferentialRing has Ring
+:
+:    true
+:                                                                 Type: Boolean
+: -> -- DifferentialRing ?has? D : % -> %
+:
+
+** 3.2 Differential Extensions
+*** Definition 3.2.1 DifferentialExtension
+** 3.3 Constants and Extensions
+** 3.4 Monomial Extensions
+** 3.5 The Canonical Representation
+*** Example 3.5.1
+#+BEGIN_EXAMPLE
+TBD
+#+END_EXAMPLE
+
+** Exercises
+
+* 4 The Order Function
+** 4.1 Basic Properties
+*** Example 4.1.1
+#+BEGIN_EXAMPLE
+TBD
+#+END_EXAMPLE
+
+** 4.2 Localizations
+** 4.3 The Order at Infinity
+** 4.4 Residues and the Rothstein-Trager Resultant
+** Exercises
+
+* 5 Integration of Transcendental Functions
+** 5.1 Elementary and Liouvillian Extensions
+** 5.2 Outline and Scope of the Integration Algorithm
+*** Example 5.2.1
+#+BEGIN_SRC axiom
+integrate(log(x)*log(x+1)*log(2*x^2+2*x), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(log(x)*log(x+1)*log(2*x^2+2*x), x)
+:
+:       x
+:     ┌┐                           2
+:     │   log(%A)log(%A + 1)log(2%A  + 2%A)d%A
+:    └┘
+:                                          Type: Union(Expression(Integer),...)
+:
+
+*** Example 5.2.2
+#+BEGIN_SRC axiom
+integrate(exp(2*x)+exp(x+log(x)/2), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(exp(2*x)+exp(x+log(x)/2), x)
+:
+:            log(%A) + 2%A
+:       x    ─────────────
+:     ┌┐           2           2%A
+:     │   (%e              + %e   )d%A
+:    └┘
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 5.3 The Hermite Reduction
+*** Example 5.3.1
+#+BEGIN_SRC axiom
+integrate((x - tan(x))/(tan x)^2, x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate((x - tan(x))/(tan x)^2, x)
+:
+:       2
+:    - x tan(x) - 2x
+:    ───────────────
+:        2tan(x)
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 5.4 The Polynomial Reduction
+*** Example 5.4.1
+#+BEGIN_SRC axiom
+integrate(1+x*tan(x)+(tan x)^2, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate(1+x*tan(x)+(tan x)^2, x)
+   dilog
+                2
+         2cos(x)          2cos(x)sin(x)
+   [───────────────── + ───────────────── %i]
+          2         2         2         2
+    sin(x)  + cos(x)    sin(x)  + cos(x)
+
+                      ┌───┐                       ┌───┐
+                    2\│- 1                      2\│- 1
+       - 2x log(───────────────) - 2x log(- ───────────────)
+                          ┌───┐                       ┌───┐
+                tan(x) + \│- 1              tan(x) - \│- 1
+     +
+                         ┌───┐                            ┌───┐
+        ┌───┐          2\│- 1          ┌───┐            2\│- 1
+       \│- 1 dilog(───────────────) - \│- 1 dilog(- ───────────────) + 4tan(x)
+                             ┌───┐                            ┌───┐
+                   tan(x) + \│- 1                   tan(x) - \│- 1
+  /
+     4
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+** 5.5 Liouville's Theorem
+** 5.6 The Residue Criterion
+*** Example 5.6.1
+*** Example 5.6.2
+#+BEGIN_SRC axiom
+integrate((2*(log x)^2 - log x - x^2)/((log x)^3 - x^2 * log x), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate((2*(log x)^2 - log x - x^2)/((log x)^3 - x^2 * log x), x)
+:
+:    log(log(x) + x) - log(log(x) - x) + 2li(x)
+:    ──────────────────────────────────────────
+:                         2
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 5.7 Integration of Reduced Functions
+** 5.8 The Primitive Case
+*** Example 5.8.1
+#+BEGIN_SRC axiom
+integrate((log(x) + 1/log(x))*li(x) - x/log(x), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate((log(x) + 1/log(x))*li(x) - x/log(x), x)
+:
+:                          2               2
+:    2x li(x)log(x) + li(x)  - 2x li(x) - x
+:    ───────────────────────────────────────
+:                       2
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 5.9 The Hyperexponential Case
+#+BEGIN_SRC axiom
+integrate(((tan x)^3 + (x+1)*(tan x)^2 + tan(x)+x+2)*exp tan x + 1/(x^2+1), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(((tan x)^3 + (x+1)*(tan x)^2 + tan(x)+x+2)*exp tan x + 1/(x^2+1), x)
+:
+:                  tan(x)
+:    (tan(x) + x)%e       + atan(x)
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 5.10 The Hypertangent Case
+*** Example 5.10.1
+Same with Example 5.4.1.
+
+*** Example 5.10.2
+#+BEGIN_SRC axiom
+integrate(sin(x)/x, x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(sin(x)/x, x)
+:
+:    Si(x)
+:                                          Type: Union(Expression(Integer),...)
+:
+
+*** Example 5.10.3
+#+BEGIN_SRC axiom
+integrate(((tan x)^5 + (tan x)^3 + x^2*tan(x) + 1)/((tan x)^2 + 1)^3, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate(((tan x)^5 + (tan x)^3 + x^2*tan(x) + 1)/((tan x)^2 + 1)^3, x)
+
+            2                     6                      5
+       (360x  + 2160x + 835)tan(x)  + (720x + 2160)tan(x)
+     +
+             2                     4                       3
+       (1080x  + 6480x - 591)tan(x)  + (1920x + 5760)tan(x)
+     +
+           2                      2                              2
+     (1080x  + 6480x - 1839)tan(x)  + (1584x + 4752)tan(x) - 792x  + 2160x - 349
+  /
+               6              4              2
+     6912tan(x)  + 20736tan(x)  + 20736tan(x)  + 6912
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+** 5.11 The Nonlinear Case with no Specials
+*** Example 5.11.1
+*** Example 5.11.2
+
+** 5.12 In-Field Integration
+
+** Exercises
+*** Exercise 5.6
+**** a
+#+BEGIN_SRC axiom
+integrate((tan(a*x))^5, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate((tan(a*x))^5, x)
+
+                1                  4            2
+   - 2log(─────────────) + tan(a x)  - 2tan(a x)
+                  2
+          tan(a x)  + 1
+   ──────────────────────────────────────────────
+                         4a
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+**** b
+#+BEGIN_SRC axiom
+integrate(x^n*exp(x), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(x^n*exp(x), x)
+:
+:       x
+:     ┌┐    %A  n
+:     │   %e  %A d%A
+:    └┘
+:                                          Type: Union(Expression(Integer),...)
+:
+
+**** c
+#+BEGIN_SRC axiom
+integrate(log(x+a)/(x+b), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(log(x+a)/(x+b), x)
+:
+:       x
+:     ┌┐  log(a + %A)
+:     │   ─────────── d%A
+:    └┘      b + %A
+:                                          Type: Union(Expression(Integer),...)
+:
+
+**** d
+#+BEGIN_SRC axiom
+integrate(((x+1)*exp(x^2)+1)/((exp(x^2))^2-1), x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate(((x+1)*exp(x^2)+1)/((exp(x^2))^2-1), x)
+
+                    2
+      x           %A
+    ┌┐  (%A + 1)%e    + 1
+    │   ───────────────── d%A
+   └┘           2 2
+              %A
+           (%e   )  - 1
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+**** e
+#+BEGIN_SRC axiom
+integrate((1+x^(2-n)/(2-n)+(n-1)/x^n)*exp(x), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate((1+x^(2-n)/(2-n)+(n-1)/x^n)*exp(x), x)
+:
+:             x  n log(x)       2                x
+:    (n - 2)%e %e         + (- x  + (- n + 2)x)%e
+:    ─────────────────────────────────────────────
+:                           n log(x)
+:                  (n - 2)%e
+:                                          Type: Union(Expression(Integer),...)
+:
+
+**** f
+#+BEGIN_SRC axiom
+integrate((2+(tan x)^2)/(1+(tan(x)+x)^2), x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate((2+(tan x)^2)/(1+(tan(x)+x)^2), x)
+
+                  2      2               3
+          x tan(x)  + (2x  + 4)tan(x) + x  + 3x         x
+   - atan(─────────────────────────────────────) + atan(─)
+                        2                               2
+                 2tan(x)  + 2x tan(x) - 2
+   ───────────────────────────────────────────────────────
+                              2
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+**** g
+#+BEGIN_SRC axiom
+integrate(((3*x-2)*(log x)^3+(x-1)*(log x)^2+2*x*(x-2)*log(x)+x^2)/(x*(log x)^6-4*x^2*(log x)^5+6*x^3*(log x)^4-4*x^4*(log x)^3+x^5*(log x)^2), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(((3*x-2)*(log x)^3+(x-1)*(log x)^2+2*x*(x-2)*log(x)+x^2)/(x*(log x)^6-4*x^2*(log x)^5+6*x^3*(log x)^4-4*x^4*(log x)^3+x^5*(log x)^2), x)
+:
+:                       2
+:                3log(x)  + log(x) + 3x
+:    ──────────────────────────────────────────────
+:           4            3     2      2     3
+:    3log(x)  - 9x log(x)  + 9x log(x)  - 3x log(x)
+:                                          Type: Union(Expression(Integer),...)
+:
+
+* 6 The Risch Differential Equation
+** 6.1 The Normal Part of the Denominator
+*** Example 6.1.1
+#+BEGIN_SRC axiom
+y := operator y
+solve(D(y t,t)+y(t)=1/t, y, t)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> y := operator y
+
+   y
+                                                          Type: BasicOperator
+-> solve(D(y t,t)+y(t)=1/t, y, t)
+
+                        - t            - t
+   [particular = Ei(t)%e   ,basis = [%e   ]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+*** Example 6.1.2
+#+BEGIN_SRC axiom
+t := tan x
+solve(D(y x,x) + (t^2+1)*y(x) = 1/t^2, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-> solve(D(y x,x) + (t^2+1)*y(x) = 1/t^2, y, x)
+    Ei
+   [
+                             4cos(x)sin(x)
+       ────────────────────────────────────────────────────────
+             4           2           2         4          2
+       sin(x)  + (2cos(x)  - 2)sin(x)  + cos(x)  + 2cos(x)  + 1
+     +
+                                2          2
+                       - 2sin(x)  + 2cos(x)  + 2
+       ──────────────────────────────────────────────────────── %i
+             4           2           2         4          2
+       sin(x)  + (2cos(x)  - 2)sin(x)  + cos(x)  + 2cos(x)  + 1
+     ]
+
+   [
+       particular
+     =
+                                                       ┌───┐
+                  ┌───┐                   ┌───┐       \│- 1
+               - \│- 1 tan(x)Ei(tan(x) + \│- 1 ) + 2%e      tan(x)Ei(tan(x))
+             +
+                         ┌───┐ 2
+                ┌───┐   \│- 1                      ┌───┐
+               \│- 1 (%e      ) tan(x)Ei(tan(x) - \│- 1 )
+          *
+               - tan(x)
+             %e
+         +
+                 ┌───┐
+                \│- 1
+           - 2%e
+      /
+             ┌───┐
+            \│- 1
+         2%e      tan(x)
+     ,
+               - tan(x)
+    basis = [%e        ]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+** 6.2 The Special Part of the Denominator
+*** Example 6.2.1
+#+BEGIN_SRC axiom
+t := exp x
+eq := (t^2+2*x*t+x^2)*D(y x,x)+((1+1/x^2)*t^2+(2*x-1+2/x)*t+x^2)*y(x)=t/x^2-1+2/x
+solve(eq, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := exp x
+
+     x
+   %e
+                                                    Type: Expression(Integer)
+-> eq := (t^2+2*x*t+x^2)*D(y x,x)+((1+1/x^2)*t^2+(2*x-1+2/x)*t+x^2)*y(x)=t/x^2-1+2/x
+
+           2   x 2     3  x    4  ,        2            x 2
+         (x (%e )  + 2x %e  + x )y (x) + (x  + 1)y(x)(%e )
+
+       +
+            3    2            x    4
+         (2x  - x  + 2x)y(x)%e  + x y(x)
+    /
+        2
+       x
+   =
+       x    2
+     %e  - x  + 2x
+     ─────────────
+            2
+           x
+                                          Type: Equation(Expression(Integer))
+-> solve(eq, y, x)
+
+                                    2       x    3
+                                (- x  + 1)%e  - x
+                                ──────────────────
+                                        x    2
+                  1                 x %e  + x
+   [particular = ───,basis = [%e                  ]]
+                   x
+                 %e
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+** 6.3 Degree Bounds
+*** Example 6.3.1
+#+BEGIN_SRC axiom
+t0 := exp(-1/x)
+t := log x
+eq := t^2*D(y x,x)-(t^2/x^2+1/x)*y(x)=(2*x-1)*t^4+(t0+x)/x*t^3-(t0+4*x^2)/2/x*t^2+x*t
+solve(eq, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t0 := exp(-1/x)
+
+       1
+     - ─
+       x
+   %e
+                                                    Type: Expression(Integer)
+-> t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-> eq := t^2*D(y x,x)-(t^2/x^2+1/x)*y(x)=(2*x-1)*t^4+(t0+x)/x*t^3-(t0+4*x^2)/2/x*t^2+x*t
+
+      2      2 ,                2
+     x log(x) y (x) - y(x)log(x)  - x y(x)
+
+     ─────────────────────────────────────
+                        2
+                       x
+   =
+                                   1                       1
+                                 - ─                     - ─
+            2            4         x            3          x     2       2
+         (4x  - 2x)log(x)  + (2%e    + 2x)log(x)  + (- %e    - 4x )log(x)
+       +
+           2
+         2x log(x)
+    /
+       2x
+                                          Type: Equation(Expression(Integer))
+-> solve(eq, y, x)
+
+                      1
+                    - ─                                      - log(x) - x
+                      x     2       2     2                  ────────────
+                 (%e    + 2x )log(x)  - 2x log(x)              x log(x)
+   [particular = ────────────────────────────────,basis = [%e            ]]
+                                 2
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+*** Example 6.3.2
+#+BEGIN_SRC axiom
+solve(D(y x,x)-2*x*y(x)=1, y, x)
+#+END_SRC
+
+#+RESULTS:
+: -> solve(D(y x,x)-2*x*y(x)=1, y, x)
+:
+:                           2
+:                          x  ┌───┐             2
+:                  erf(x)%e  \│%pi             x
+:    [particular = ────────────────,basis = [%e  ]]
+:                          2
+: Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+:
+
+** 6.4 The SPDE Algorithm
+** 6.5 The non-Cancellation Cases
+*** Example 6.5.1
+#+BEGIN_SRC axiom
+t := tan x
+solve(D(y x,x)+(t^2+1)*y(x)=t^3+(x+1)*t^2+t+x+2, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-> solve(D(y x,x)+(t^2+1)*y(x)=t^3+(x+1)*t^2+t+x+2, y, x)
+
+                                       - tan(x)
+   [particular = tan(x) + x,basis = [%e        ]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+*** Example 6.5.3
+Answer is =c1/cos(x)/exp(x)-tan(x)*(2*x-tan(x))=
+
+#+BEGIN_SRC axiom
+t := tan x
+solve(D(y x,x)+(1-t)*y(x)=t^3+t^2-2*x*t-2*x, y, x)
+solve(D(y x,x)+(1-t)*y(x)=-2*(x+1)*t-2*x, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-> solve(D(y x,x)+(1-t)*y(x)=t^3+t^2-2*x*t-2*x, y, x)
+
+   >> Error detected within library code:
+   integrate: implementation incomplete (constant residues)
+
+-> solve(D(y x,x)+(1-t)*y(x)=-2*(x+1)*t-2*x, y, x)
+
+   >> Error detected within library code:
+   integrate: implementation incomplete (constant residues)
+
+
+#+end_example
+
+#+BEGIN_SRC axiom
+integrate(((tan x)^3+(tan x)^2-2*x*tan(x)-2*x)*exp(x-log(1+(tan x)^2)/2), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate(((tan x)^3+(tan x)^2-2*x*tan(x)-2*x)*exp(x-log(1+(tan x)^2)/2), x)
+:
+:                                       2
+:                           - log(tan(x)  + 1) + 2x
+:                           ───────────────────────
+:           2                          2
+:    (tan(x)  - 2x tan(x))%e
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 6.6 The Cancellation Cases
+** Exercises
+
+* 7 Parametric Problems
+** 7.1 The Parametric Risch Differential Equation
+*** Exercise 7.1.1
+#+BEGIN_SRC axiom
+solve(D(y x,x)=c1*(2*t^3+3*t+1)/(t^2-1)+c2/(t-1)+c3/(t+1), y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> solve(D(y x,x)=c1*(2*t^3+3*t+1)/(t^2-1)+c2/(t-1)+c3/(t+1), y, x)
+
+   [
+       particular
+     =
+                               2
+                         tan(x)  + 2tan(x) + 1
+           (c3 + 2c1)log(─────────────────────)
+                                    2
+                              tan(x)  + 1
+         +
+                               2
+                         tan(x)  - 2tan(x) + 1                 1
+           (c2 + 3c1)log(─────────────────────) - 4c1 log(───────────)
+                                    2                           2
+                              tan(x)  + 1                 tan(x)  + 1
+         +
+           (2c3 - 2c2 - 2c1)x
+      /
+         4
+     ,
+    basis = [1]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+*** Example 7.1.3
+#+BEGIN_SRC axiom
+solve(D(y x,x)+y(x)=c1*x^N+c2, y, x)
+#+END_SRC
+
+#+RESULTS:
+: -> solve(D(y x,x)+y(x)=c1*x^N+c2, y, x)
+:
+:                          x      N
+:                    - x ┌┐  c1 %A  + c2                 - x
+:    [particular = %e    │   ─────────── d%A ,basis = [%e   ]]
+:                       └┘        - %A
+:                               %e
+: Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+:
+
+*** Example 7.1.4
+#+BEGIN_SRC axiom
+t := log x
+solve(t*D(y x,x)-y(x)/x=c1*x-c2*x*t, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-> solve(t*D(y x,x)-y(x)/x=c1*x-c2*x*t, y, x)
+
+                                 2              2
+   [particular = (- c2 + 2c1)li(x )log(x) - c1 x ,basis = [log(x)]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+** 7.2 The Limited Integration Problem
+*** Example 7.2.1
+#+BEGIN_SRC axiom
+t := log x
+solve(x/t^2=D(y x,x)+c1*x/t, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-> solve(x/t^2=D(y x,x)+c1*x/t, y, x)
+
+                               2           2
+                 (- c1 + 2)li(x )log(x) - x
+   [particular = ───────────────────────────,basis = [1]]
+                            log(x)
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+#+end_example
+
+*** Example 7.3.1
+#+BEGIN_SRC axiom
+t := log x
+theta := exp(1/log(x))
+eq := n*(5*t^2+t-6)/2/x/t^2 = D(y x,x)/y(x) + m*D(theta,x)/theta
+solve(eq, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-> theta := exp(1/log(x))
+
+        1
+     ──────
+     log(x)
+   %e
+                                                    Type: Expression(Integer)
+-> eq := n*(5*t^2+t-6)/2/x/t^2 = D(y x,x)/y(x) + m*D(theta,x)/theta
+
+                                        2 ,
+            2                   x log(x) y (x) - m y(x)
+   5n log(x)  + n log(x) - 6n
+   ────────────────────────── = ───────────────────────
+                    2                            2
+           2x log(x)                 x y(x)log(x)
+                                          Type: Equation(Expression(Integer))
+-> solve(eq, y, x)
+
+                                             2
+            - n log(x)log(log(x)) - 5n log(x)  - 6n + 2m
+            ────────────────────────────────────────────
+                               2log(x)
+   - 2y(x)%e
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+*** Example 7.3.2
+#+BEGIN_SRC axiom
+theta := exp x
+solve(11=D(y x,x)/y(x)+m*D(theta,x)/theta, y, x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> theta := exp x
+
+     x
+   %e
+                                                    Type: Expression(Integer)
+-> solve(11=D(y x,x)/y(x)+m*D(theta,x)/theta, y, x)
+
+           (m - 11)x
+   - y(x)%e
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+#+BEGIN_SRC axiom
+t := exp x
+integrate((2581284541*t+1757211400)/(39916800*t^3+119750400*t^2+119750400*t+39916800)*exp(1/(t+1)-10*x),x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> t := exp x
+
+     x
+   %e
+                                                    Type: Expression(Integer)
+-> integrate((2581284541*t+1757211400)/(39916800*t^3+119750400*t^2+119750400*t+39916800)*exp(1/(t+1)-10*x),x)
+
+                    x 11              x 9              x 8              x 7
+         39916800(%e )   + 19958400(%e )  - 26611200(%e )  + 34927200(%e )
+       +
+                      x 6              x 5              x 4              x 3
+         - 45239040(%e )  + 57934800(%e )  - 73465920(%e )  + 92356110(%e )
+       +
+                       x 2              x
+         - 115211360(%e )  + 142731171%e  - 175721140
+    *
+                 x
+         - 10x %e  - 10x + 1
+         ───────────────────
+                 x
+               %e  + 1
+       %e
+  /
+               x
+     39916800%e  + 39916800
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+** Exercises
+
+* 8 The Coupled Differential System
+** 8.1 The Primitive Case
+** 8.2 The Hyperexponential Case
+** 8.3 The Nonlinear Case
+** 8.4 The Hypertangent Case
+*** Example 8.4.1
+#+BEGIN_SRC axiom
+y1 := operator 'y1; y2 := operator 'y2;
+t := tan x
+eqs := matrix[[D(y1 x,x)],[D(y2 x,x)]] + matrix[[0, -4*x],[4*x, 0]]*matrix[[y1 x],[y2 x]] = matrix[[-(t^2-2*t+8*x^2-1)/(t^2+1)],[2*(1-2*x)/(t^2+1)]]
+-- solve(column(lhs eqs - rhs eqs, 1), [y1,y2], x) -- result too long
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> y1 := operator 'y1; y2 := operator 'y2;
+
+                                                          Type: BasicOperator
+-> t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-> eqs := matrix[[D(y1 x,x)],[D(y2 x,x)]] + matrix[[0, -4*x],[4*x, 0]]*matrix[[y1 x],[y2 x]] = matrix[[-(t^2-2*t+8*x^2-1)/(t^2+1)],[2*(1-2*x)/(t^2+1)]]
+
+                         ┌        2               2    ┐
+   ┌  ,              ┐   │- tan(x)  + 2tan(x) - 8x  + 1│
+   │y1 (x) - 4x y2(x)│   │─────────────────────────────│
+   │                 │   │               2             │
+   │                 │ = │         tan(x)  + 1         │
+   │  ,              │   │                             │
+   │y2 (x) + 4x y1(x)│   │           - 4x + 2          │
+   └                 ┘   │         ───────────         │
+                         │               2             │
+                         └         tan(x)  + 1         ┘
+                                  Type: Equation(Matrix(Expression(Integer)))
+-> -- solve(column(lhs eqs - rhs eqs, 1), [y1,y2], x) -- result too long
+
+#+end_example
+
+#+BEGIN_SRC axiom
+integrate(-(((tan x)^2-2*tan x+8*x^2-1)*tan(x^2)+4*x-2)/((tan x)^2+1)/(tan(x^2)^2+1), x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate(-(((tan x)^2-2*tan x+8*x^2-1)*tan(x^2)+4*x-2)/((tan x)^2+1)/(tan(x^2)^2+1), x)
+
+             2                2                        2               2 2
+       ((- 2x  + 2x + 1)tan(x)  + (- 4x + 2)tan(x) - 2x  - 2x - 1)tan(x )
+     +
+                         2         2                2                        2
+       (4tan(x) - 4)tan(x ) + (- 2x  + 2x + 1)tan(x)  + (- 4x + 2)tan(x) - 2x
+     +
+       6x - 1
+  /
+             2          2 2          2
+     (4tan(x)  + 4)tan(x )  + 4tan(x)  + 4
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+* 9 Structure Theorems
+** 9.1 the Module of Differentials
+** 9.2 Rosenlicht's Theorem
+** 9.3 The Risch Structure Theorems
+** 9.4 The Rothstein-Caviness Structure Theorem
+** Exercises
+* 10 Parallel IntegrationResult
+** 10.1 Derivations of Polynomial Rings
+** 10.2 Structure of Elementary Antiderivatives
+** 10.3 The Integration Method
+*** Example 10.3.1
+#+BEGIN_SRC axiom
+integrate(((exp(x)-x^2+2*x)/((exp(x)+x)^2*x^2))*exp((x^2-1)/x+1/(exp(x)+x)), x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate(((exp(x)-x^2+2*x)/((exp(x)+x)^2*x^2))*exp((x^2-1)/x+1/(exp(x)+x)), x)
+
+       2       x    3
+     (x  - 1)%e  + x
+     ────────────────
+            x    2
+        x %e  + x
+   %e
+   ──────────────────
+             x
+           %e
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+*** Example 10.3.3
+#+BEGIN_SRC axiom
+integrate((1 - log x)/(x^2-(log x)^2), x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate((1 - log x)/(x^2-(log x)^2), x)
+:
+:    log(log(x) + x) - log(log(x) - x)
+:    ─────────────────────────────────
+:                    2
+:                                          Type: Union(Expression(Integer),...)
+:
+
+*** Example 10.3.4
+#+BEGIN_SRC axiom
+integrate((x^2+(x^2+2)*lambertW(x^2))/x/(1+lambertW(x^2))^2,x)
+#+END_SRC
+
+#+RESULTS:
+: -> integrate((x^2+(x^2+2)*lambertW(x^2))/x/(1+lambertW(x^2))^2,x)
+:
+:               2               2          2
+:    2lambertW(x )log(lambertW(x ) + 1) + x
+:    ───────────────────────────────────────
+:                            2
+:                 2lambertW(x )
+:                                          Type: Union(Expression(Integer),...)
+:
+
+** 10.4 Simple Differential Fields
+
+* References
+[19]
+http://sites.mathdoc.fr/JMPA/feuilleter.php?id=JMPA_1864_2_9 http://sites.mathdoc.fr/JMPA/PDF/JMPA_1864_2_9_A23_0.pdf
+
+#+BEGIN_SRC axiom
+integrate((x+1/6)/sqrt(x^4+x^2+x+1/4), x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate((x+1/6)/sqrt(x^4+x^2+x+1/4), x)
+
+     log
+                                     ┌──────────────────┐
+             4     3     2           │  4     2               6     5      4
+          (4x  - 4x  + 6x  - 2x + 1)\│4x  + 4x  + 4x + 1  + 8x  - 8x  + 16x
+        +
+              3     2
+          - 4x  + 4x  + 2x
+  /
+     6
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+#+BEGIN_SRC axiom
+integrate((x+B)/sqrt(x^4+5*x^3+3*x^2-x), x)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+-> integrate((x+B)/sqrt(x^4+5*x^3+3*x^2-x), x)
+
+      x
+    ┌┐            B + %A
+    │   ───────────────────────── d%A
+   └┘    ┌──────────────────────┐
+         │  4      3      2
+        \│%A  + 5%A  + 3%A  - %A
+                                         Type: Union(Expression(Integer),...)
+
+#+end_example
+
+#+BEGIN_EXAMPLE
+est inexprimable en termes finis
+#+END_EXAMPLE
