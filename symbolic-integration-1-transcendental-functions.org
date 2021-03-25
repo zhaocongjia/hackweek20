@@ -1,3 +1,5 @@
+#+PROPERTY: header-args :exports both :eval never-export
+
 [[cite:05:_symbol_integ_i][Symbolic Integration 1: Transcendental Functions]]
 
 * Foreword

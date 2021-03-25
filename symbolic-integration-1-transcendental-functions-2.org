@@ -1,3 +1,5 @@
+#+PROPERTY: header-args :exports both :eval never-export
+
 #+BEGIN_SRC axiom :results none
 )set message prompt plain
 )boot $IOindex := nil
