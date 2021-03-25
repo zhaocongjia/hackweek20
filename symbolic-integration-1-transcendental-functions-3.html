@@ -1,0 +1,1738 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-25 Thu 17:09 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge7de7cd">1. 3 Differential Fields</a>
+<ul>
+<li><a href="#org82b44d4">1.1. 3.1 Derivations</a>
+<ul>
+<li><a href="#orgce9ee03">1.1.1. Definition 3.1.1 DifferentialRing</a></li>
+</ul>
+</li>
+<li><a href="#org7e70e75">1.2. 3.2 Differential Extensions</a>
+<ul>
+<li><a href="#org9ae7542">1.2.1. Definition 3.2.1 DifferentialExtension</a></li>
+</ul>
+</li>
+<li><a href="#orga5a4fd4">1.3. 3.3 Constants and Extensions</a></li>
+<li><a href="#org7a0d580">1.4. 3.4 Monomial Extensions</a></li>
+<li><a href="#org28a3487">1.5. 3.5 The Canonical Representation</a>
+<ul>
+<li><a href="#org95bfa93">1.5.1. Example 3.5.1</a></li>
+</ul>
+</li>
+<li><a href="#org773c817">1.6. Exercises</a></li>
+</ul>
+</li>
+<li><a href="#org99c965d">2. 4 The Order Function</a>
+<ul>
+<li><a href="#orgf7f57c4">2.1. 4.1 Basic Properties</a>
+<ul>
+<li><a href="#org5a730d0">2.1.1. Example 4.1.1</a></li>
+</ul>
+</li>
+<li><a href="#orgcd70092">2.2. 4.2 Localizations</a></li>
+<li><a href="#org6cc8c3a">2.3. 4.3 The Order at Infinity</a></li>
+<li><a href="#org1e3c42f">2.4. 4.4 Residues and the Rothstein-Trager Resultant</a></li>
+<li><a href="#orgca33687">2.5. Exercises</a></li>
+</ul>
+</li>
+<li><a href="#orga93c9e6">3. 5 Integration of Transcendental Functions</a>
+<ul>
+<li><a href="#org2adb278">3.1. 5.1 Elementary and Liouvillian Extensions</a></li>
+<li><a href="#org2a263e8">3.2. 5.2 Outline and Scope of the Integration Algorithm</a>
+<ul>
+<li><a href="#orgfd36184">3.2.1. Example 5.2.1</a></li>
+<li><a href="#org400c6dd">3.2.2. Example 5.2.2</a></li>
+</ul>
+</li>
+<li><a href="#org36558d9">3.3. 5.3 The Hermite Reduction</a>
+<ul>
+<li><a href="#org9994c82">3.3.1. Example 5.3.1</a></li>
+</ul>
+</li>
+<li><a href="#org2c8c42d">3.4. 5.4 The Polynomial Reduction</a>
+<ul>
+<li><a href="#org48fbd52">3.4.1. Example 5.4.1</a></li>
+</ul>
+</li>
+<li><a href="#orge1fa627">3.5. 5.5 Liouville's Theorem</a></li>
+<li><a href="#org49b0354">3.6. 5.6 The Residue Criterion</a>
+<ul>
+<li><a href="#org296de01">3.6.1. Example 5.6.1</a></li>
+<li><a href="#org873393e">3.6.2. Example 5.6.2</a></li>
+</ul>
+</li>
+<li><a href="#org33036c9">3.7. 5.7 Integration of Reduced Functions</a></li>
+<li><a href="#org46c2ccf">3.8. 5.8 The Primitive Case</a>
+<ul>
+<li><a href="#org232f616">3.8.1. Example 5.8.1</a></li>
+</ul>
+</li>
+<li><a href="#orga5711e5">3.9. 5.9 The Hyperexponential Case</a></li>
+<li><a href="#org6b1dceb">3.10. 5.10 The Hypertangent Case</a>
+<ul>
+<li><a href="#orge1d470a">3.10.1. Example 5.10.1</a></li>
+<li><a href="#org094f330">3.10.2. Example 5.10.2</a></li>
+<li><a href="#org4d156f1">3.10.3. Example 5.10.3</a></li>
+</ul>
+</li>
+<li><a href="#org00c1d87">3.11. 5.11 The Nonlinear Case with no Specials</a>
+<ul>
+<li><a href="#orga6a778f">3.11.1. Example 5.11.1</a></li>
+<li><a href="#org4552d94">3.11.2. Example 5.11.2</a></li>
+</ul>
+</li>
+<li><a href="#org024bd77">3.12. 5.12 In-Field Integration</a></li>
+<li><a href="#org83f5d53">3.13. Exercises</a>
+<ul>
+<li><a href="#org6fcdb59">3.13.1. Exercise 5.6</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgccf8426">4. 6 The Risch Differential Equation</a>
+<ul>
+<li><a href="#orgd2f724c">4.1. 6.1 The Normal Part of the Denominator</a>
+<ul>
+<li><a href="#org2ec7ea2">4.1.1. Example 6.1.1</a></li>
+<li><a href="#org8fb915f">4.1.2. Example 6.1.2</a></li>
+</ul>
+</li>
+<li><a href="#orga0bcf35">4.2. 6.2 The Special Part of the Denominator</a>
+<ul>
+<li><a href="#org928ec81">4.2.1. Example 6.2.1</a></li>
+</ul>
+</li>
+<li><a href="#org6aa31c8">4.3. 6.3 Degree Bounds</a>
+<ul>
+<li><a href="#orgac21be3">4.3.1. Example 6.3.1</a></li>
+<li><a href="#org0cfa0d2">4.3.2. Example 6.3.2</a></li>
+</ul>
+</li>
+<li><a href="#org0bf3c1a">4.4. 6.4 The SPDE Algorithm</a></li>
+<li><a href="#orgc332da5">4.5. 6.5 The non-Cancellation Cases</a>
+<ul>
+<li><a href="#orgcb9ff69">4.5.1. Example 6.5.1</a></li>
+<li><a href="#org75c05ca">4.5.2. Example 6.5.3</a></li>
+</ul>
+</li>
+<li><a href="#orgd9f0114">4.6. 6.6 The Cancellation Cases</a></li>
+<li><a href="#org12a360e">4.7. Exercises</a></li>
+</ul>
+</li>
+<li><a href="#orgdfc6e6b">5. 7 Parametric Problems</a>
+<ul>
+<li><a href="#orge9c5cf5">5.1. 7.1 The Parametric Risch Differential Equation</a>
+<ul>
+<li><a href="#orgb0523a2">5.1.1. Exercise 7.1.1</a></li>
+<li><a href="#org3460429">5.1.2. Example 7.1.3</a></li>
+<li><a href="#org2f59a6b">5.1.3. Example 7.1.4</a></li>
+</ul>
+</li>
+<li><a href="#orgf7ac5ec">5.2. 7.2 The Limited Integration Problem</a>
+<ul>
+<li><a href="#orgca382d2">5.2.1. Example 7.2.1</a></li>
+<li><a href="#org3a64c20">5.2.2. Example 7.3.1</a></li>
+<li><a href="#orge6d374b">5.2.3. Example 7.3.2</a></li>
+</ul>
+</li>
+<li><a href="#org82931cd">5.3. Exercises</a></li>
+</ul>
+</li>
+<li><a href="#org0e89ce3">6. 8 The Coupled Differential System</a>
+<ul>
+<li><a href="#org3e468e3">6.1. 8.1 The Primitive Case</a></li>
+<li><a href="#org40048d1">6.2. 8.2 The Hyperexponential Case</a></li>
+<li><a href="#orgee67b33">6.3. 8.3 The Nonlinear Case</a></li>
+<li><a href="#orgdd9c823">6.4. 8.4 The Hypertangent Case</a>
+<ul>
+<li><a href="#org025fe99">6.4.1. Example 8.4.1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgee374ff">7. 9 Structure Theorems</a>
+<ul>
+<li><a href="#org5a7a34f">7.1. 9.1 the Module of Differentials</a></li>
+<li><a href="#org7b94211">7.2. 9.2 Rosenlicht's Theorem</a></li>
+<li><a href="#org0f130d8">7.3. 9.3 The Risch Structure Theorems</a></li>
+<li><a href="#orgd7258db">7.4. 9.4 The Rothstein-Caviness Structure Theorem</a></li>
+<li><a href="#org85608ba">7.5. Exercises</a></li>
+</ul>
+</li>
+<li><a href="#org5445eb2">8. 10 Parallel IntegrationResult</a>
+<ul>
+<li><a href="#orga56f4f2">8.1. 10.1 Derivations of Polynomial Rings</a></li>
+<li><a href="#org7b6439c">8.2. 10.2 Structure of Elementary Antiderivatives</a></li>
+<li><a href="#org8474765">8.3. 10.3 The Integration Method</a>
+<ul>
+<li><a href="#orgf672171">8.3.1. Example 10.3.1</a></li>
+<li><a href="#org1396ae6">8.3.2. Example 10.3.3</a></li>
+<li><a href="#org87c6fad">8.3.3. Example 10.3.4</a></li>
+</ul>
+</li>
+<li><a href="#orgb43618f">8.4. 10.4 Simple Differential Fields</a></li>
+</ul>
+</li>
+<li><a href="#orga06aed9">9. References</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge7de7cd" class="outline-2">
+<h2 id="orge7de7cd"><span class="section-number-2">1</span> 3 Differential Fields</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org82b44d4" class="outline-3">
+<h3 id="org82b44d4"><span class="section-number-3">1.1</span> 3.1 Derivations</h3>
+<div class="outline-text-3" id="text-1-1">
+</div>
+<div id="outline-container-orgce9ee03" class="outline-4">
+<h4 id="orgce9ee03"><span class="section-number-4">1.1.1</span> Definition 3.1.1 DifferentialRing</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<div class="org-src-container">
+<pre class="src src-axiom">-- DifferentialRing == Ring with D
+DifferentialRing has Ring
+-- DifferentialRing ?has? D : % -&gt; %
+</pre>
+</div>
+
+<pre class="example">
+-&gt; -- DifferentialRing == Ring with D
+-&gt; DifferentialRing has Ring
+
+   true
+                                                                Type: Boolean
+-&gt; -- DifferentialRing ?has? D : % -&gt; %
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7e70e75" class="outline-3">
+<h3 id="org7e70e75"><span class="section-number-3">1.2</span> 3.2 Differential Extensions</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-org9ae7542" class="outline-4">
+<h4 id="org9ae7542"><span class="section-number-4">1.2.1</span> Definition 3.2.1 DifferentialExtension</h4>
+</div>
+</div>
+<div id="outline-container-orga5a4fd4" class="outline-3">
+<h3 id="orga5a4fd4"><span class="section-number-3">1.3</span> 3.3 Constants and Extensions</h3>
+</div>
+<div id="outline-container-org7a0d580" class="outline-3">
+<h3 id="org7a0d580"><span class="section-number-3">1.4</span> 3.4 Monomial Extensions</h3>
+</div>
+<div id="outline-container-org28a3487" class="outline-3">
+<h3 id="org28a3487"><span class="section-number-3">1.5</span> 3.5 The Canonical Representation</h3>
+<div class="outline-text-3" id="text-1-5">
+</div>
+<div id="outline-container-org95bfa93" class="outline-4">
+<h4 id="org95bfa93"><span class="section-number-4">1.5.1</span> Example 3.5.1</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<pre class="example" id="org6c6160c">
+TBD
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org773c817" class="outline-3">
+<h3 id="org773c817"><span class="section-number-3">1.6</span> Exercises</h3>
+</div>
+</div>
+
+<div id="outline-container-org99c965d" class="outline-2">
+<h2 id="org99c965d"><span class="section-number-2">2</span> 4 The Order Function</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgf7f57c4" class="outline-3">
+<h3 id="orgf7f57c4"><span class="section-number-3">2.1</span> 4.1 Basic Properties</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org5a730d0" class="outline-4">
+<h4 id="org5a730d0"><span class="section-number-4">2.1.1</span> Example 4.1.1</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<pre class="example" id="org67b0ae4">
+TBD
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd70092" class="outline-3">
+<h3 id="orgcd70092"><span class="section-number-3">2.2</span> 4.2 Localizations</h3>
+</div>
+<div id="outline-container-org6cc8c3a" class="outline-3">
+<h3 id="org6cc8c3a"><span class="section-number-3">2.3</span> 4.3 The Order at Infinity</h3>
+</div>
+<div id="outline-container-org1e3c42f" class="outline-3">
+<h3 id="org1e3c42f"><span class="section-number-3">2.4</span> 4.4 Residues and the Rothstein-Trager Resultant</h3>
+</div>
+<div id="outline-container-orgca33687" class="outline-3">
+<h3 id="orgca33687"><span class="section-number-3">2.5</span> Exercises</h3>
+</div>
+</div>
+
+<div id="outline-container-orga93c9e6" class="outline-2">
+<h2 id="orga93c9e6"><span class="section-number-2">3</span> 5 Integration of Transcendental Functions</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org2adb278" class="outline-3">
+<h3 id="org2adb278"><span class="section-number-3">3.1</span> 5.1 Elementary and Liouvillian Extensions</h3>
+</div>
+<div id="outline-container-org2a263e8" class="outline-3">
+<h3 id="org2a263e8"><span class="section-number-3">3.2</span> 5.2 Outline and Scope of the Integration Algorithm</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-orgfd36184" class="outline-4">
+<h4 id="orgfd36184"><span class="section-number-4">3.2.1</span> Example 5.2.1</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(log(x)*log(x+1)*log(2*x^2+2*x), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(log(x)*log(x+1)*log(2*x^2+2*x), x)
+
+      x
+    ┌┐                           2
+    │   log(%A)log(%A + 1)log(2%A  + 2%A)d%A
+   └┘
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org400c6dd" class="outline-4">
+<h4 id="org400c6dd"><span class="section-number-4">3.2.2</span> Example 5.2.2</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(exp(2*x)+exp(x+log(x)/2), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(exp(2*x)+exp(x+log(x)/2), x)
+
+           log(%A) + 2%A
+      x    ─────────────
+    ┌┐           2           2%A
+    │   (%e              + %e   )d%A
+   └┘
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org36558d9" class="outline-3">
+<h3 id="org36558d9"><span class="section-number-3">3.3</span> 5.3 The Hermite Reduction</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-org9994c82" class="outline-4">
+<h4 id="org9994c82"><span class="section-number-4">3.3.1</span> Example 5.3.1</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((x - tan(x))/(tan x)^2, x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate((x - tan(x))/(tan x)^2, x)
+
+      2
+   - x tan(x) - 2x
+   ───────────────
+       2tan(x)
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2c8c42d" class="outline-3">
+<h3 id="org2c8c42d"><span class="section-number-3">3.4</span> 5.4 The Polynomial Reduction</h3>
+<div class="outline-text-3" id="text-3-4">
+</div>
+<div id="outline-container-org48fbd52" class="outline-4">
+<h4 id="org48fbd52"><span class="section-number-4">3.4.1</span> Example 5.4.1</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(1+x*tan(x)+(tan x)^2, x)
+</pre>
+</div>
+
+<pre class="example" id="orgb4e8ccc">
+-&gt; integrate(1+x*tan(x)+(tan x)^2, x)
+   dilog
+                2
+         2cos(x)          2cos(x)sin(x)
+   [───────────────── + ───────────────── %i]
+          2         2         2         2
+    sin(x)  + cos(x)    sin(x)  + cos(x)
+
+                      ┌───┐                       ┌───┐
+                    2\│- 1                      2\│- 1
+       - 2x log(───────────────) - 2x log(- ───────────────)
+                          ┌───┐                       ┌───┐
+                tan(x) + \│- 1              tan(x) - \│- 1
+     +
+                         ┌───┐                            ┌───┐
+        ┌───┐          2\│- 1          ┌───┐            2\│- 1
+       \│- 1 dilog(───────────────) - \│- 1 dilog(- ───────────────) + 4tan(x)
+                             ┌───┐                            ┌───┐
+                   tan(x) + \│- 1                   tan(x) - \│- 1
+  /
+     4
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge1fa627" class="outline-3">
+<h3 id="orge1fa627"><span class="section-number-3">3.5</span> 5.5 Liouville's Theorem</h3>
+</div>
+<div id="outline-container-org49b0354" class="outline-3">
+<h3 id="org49b0354"><span class="section-number-3">3.6</span> 5.6 The Residue Criterion</h3>
+<div class="outline-text-3" id="text-3-6">
+</div>
+<div id="outline-container-org296de01" class="outline-4">
+<h4 id="org296de01"><span class="section-number-4">3.6.1</span> Example 5.6.1</h4>
+</div>
+<div id="outline-container-org873393e" class="outline-4">
+<h4 id="org873393e"><span class="section-number-4">3.6.2</span> Example 5.6.2</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((2*(log x)^2 - log x - x^2)/((log x)^3 - x^2 * log x), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate((2*(log x)^2 - log x - x^2)/((log x)^3 - x^2 * log x), x)
+
+   log(log(x) + x) - log(log(x) - x) + 2li(x)
+   ──────────────────────────────────────────
+                        2
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org33036c9" class="outline-3">
+<h3 id="org33036c9"><span class="section-number-3">3.7</span> 5.7 Integration of Reduced Functions</h3>
+</div>
+<div id="outline-container-org46c2ccf" class="outline-3">
+<h3 id="org46c2ccf"><span class="section-number-3">3.8</span> 5.8 The Primitive Case</h3>
+<div class="outline-text-3" id="text-3-8">
+</div>
+<div id="outline-container-org232f616" class="outline-4">
+<h4 id="org232f616"><span class="section-number-4">3.8.1</span> Example 5.8.1</h4>
+<div class="outline-text-4" id="text-3-8-1">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((log(x) + 1/log(x))*li(x) - x/log(x), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate((log(x) + 1/log(x))*li(x) - x/log(x), x)
+
+                         2               2
+   2x li(x)log(x) + li(x)  - 2x li(x) - x
+   ───────────────────────────────────────
+                      2
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga5711e5" class="outline-3">
+<h3 id="orga5711e5"><span class="section-number-3">3.9</span> 5.9 The Hyperexponential Case</h3>
+<div class="outline-text-3" id="text-3-9">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(((tan x)^3 + (x+1)*(tan x)^2 + tan(x)+x+2)*exp tan x + 1/(x^2+1), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(((tan x)^3 + (x+1)*(tan x)^2 + tan(x)+x+2)*exp tan x + 1/(x^2+1), x)
+
+                 tan(x)
+   (tan(x) + x)%e       + atan(x)
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6b1dceb" class="outline-3">
+<h3 id="org6b1dceb"><span class="section-number-3">3.10</span> 5.10 The Hypertangent Case</h3>
+<div class="outline-text-3" id="text-3-10">
+</div>
+<div id="outline-container-orge1d470a" class="outline-4">
+<h4 id="orge1d470a"><span class="section-number-4">3.10.1</span> Example 5.10.1</h4>
+<div class="outline-text-4" id="text-3-10-1">
+<p>
+Same with Example 5.4.1.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org094f330" class="outline-4">
+<h4 id="org094f330"><span class="section-number-4">3.10.2</span> Example 5.10.2</h4>
+<div class="outline-text-4" id="text-3-10-2">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(sin(x)/x, x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(sin(x)/x, x)
+
+   Si(x)
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org4d156f1" class="outline-4">
+<h4 id="org4d156f1"><span class="section-number-4">3.10.3</span> Example 5.10.3</h4>
+<div class="outline-text-4" id="text-3-10-3">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(((tan x)^5 + (tan x)^3 + x^2*tan(x) + 1)/((tan x)^2 + 1)^3, x)
+</pre>
+</div>
+
+<pre class="example" id="orgd08a45a">
+-&gt; integrate(((tan x)^5 + (tan x)^3 + x^2*tan(x) + 1)/((tan x)^2 + 1)^3, x)
+
+            2                     6                      5
+       (360x  + 2160x + 835)tan(x)  + (720x + 2160)tan(x)
+     +
+             2                     4                       3
+       (1080x  + 6480x - 591)tan(x)  + (1920x + 5760)tan(x)
+     +
+           2                      2                              2
+     (1080x  + 6480x - 1839)tan(x)  + (1584x + 4752)tan(x) - 792x  + 2160x - 349
+  /
+               6              4              2
+     6912tan(x)  + 20736tan(x)  + 20736tan(x)  + 6912
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org00c1d87" class="outline-3">
+<h3 id="org00c1d87"><span class="section-number-3">3.11</span> 5.11 The Nonlinear Case with no Specials</h3>
+<div class="outline-text-3" id="text-3-11">
+</div>
+<div id="outline-container-orga6a778f" class="outline-4">
+<h4 id="orga6a778f"><span class="section-number-4">3.11.1</span> Example 5.11.1</h4>
+</div>
+<div id="outline-container-org4552d94" class="outline-4">
+<h4 id="org4552d94"><span class="section-number-4">3.11.2</span> Example 5.11.2</h4>
+</div>
+</div>
+
+<div id="outline-container-org024bd77" class="outline-3">
+<h3 id="org024bd77"><span class="section-number-3">3.12</span> 5.12 In-Field Integration</h3>
+</div>
+
+<div id="outline-container-org83f5d53" class="outline-3">
+<h3 id="org83f5d53"><span class="section-number-3">3.13</span> Exercises</h3>
+<div class="outline-text-3" id="text-3-13">
+</div>
+<div id="outline-container-org6fcdb59" class="outline-4">
+<h4 id="org6fcdb59"><span class="section-number-4">3.13.1</span> Exercise 5.6</h4>
+<div class="outline-text-4" id="text-3-13-1">
+</div>
+<ol class="org-ol">
+<li><a id="org6f40e83"></a>a<br />
+<div class="outline-text-5" id="text-3-13-1-1">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((tan(a*x))^5, x)
+</pre>
+</div>
+
+<pre class="example" id="org54f53d0">
+-&gt; integrate((tan(a*x))^5, x)
+
+                1                  4            2
+   - 2log(─────────────) + tan(a x)  - 2tan(a x)
+                  2
+          tan(a x)  + 1
+   ──────────────────────────────────────────────
+                         4a
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</li>
+
+<li><a id="org1eb953c"></a>b<br />
+<div class="outline-text-5" id="text-3-13-1-2">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(x^n*exp(x), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(x^n*exp(x), x)
+
+      x
+    ┌┐    %A  n
+    │   %e  %A d%A
+   └┘
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</li>
+
+<li><a id="org97bc4f2"></a>c<br />
+<div class="outline-text-5" id="text-3-13-1-3">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(log(x+a)/(x+b), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(log(x+a)/(x+b), x)
+
+      x
+    ┌┐  log(a + %A)
+    │   ─────────── d%A
+   └┘      b + %A
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</li>
+
+<li><a id="org2b3c112"></a>d<br />
+<div class="outline-text-5" id="text-3-13-1-4">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(((x+1)*exp(x^2)+1)/((exp(x^2))^2-1), x)
+</pre>
+</div>
+
+<pre class="example" id="orgcb149ed">
+-&gt; integrate(((x+1)*exp(x^2)+1)/((exp(x^2))^2-1), x)
+
+                    2
+      x           %A
+    ┌┐  (%A + 1)%e    + 1
+    │   ───────────────── d%A
+   └┘           2 2
+              %A
+           (%e   )  - 1
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</li>
+
+<li><a id="org567666a"></a>e<br />
+<div class="outline-text-5" id="text-3-13-1-5">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((1+x^(2-n)/(2-n)+(n-1)/x^n)*exp(x), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate((1+x^(2-n)/(2-n)+(n-1)/x^n)*exp(x), x)
+
+            x  n log(x)       2                x
+   (n - 2)%e %e         + (- x  + (- n + 2)x)%e
+   ─────────────────────────────────────────────
+                          n log(x)
+                 (n - 2)%e
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</li>
+
+<li><a id="org94e1dc3"></a>f<br />
+<div class="outline-text-5" id="text-3-13-1-6">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((2+(tan x)^2)/(1+(tan(x)+x)^2), x)
+</pre>
+</div>
+
+<pre class="example" id="orgff16ce5">
+-&gt; integrate((2+(tan x)^2)/(1+(tan(x)+x)^2), x)
+
+                  2      2               3
+          x tan(x)  + (2x  + 4)tan(x) + x  + 3x         x
+   - atan(─────────────────────────────────────) + atan(─)
+                        2                               2
+                 2tan(x)  + 2x tan(x) - 2
+   ───────────────────────────────────────────────────────
+                              2
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</li>
+
+<li><a id="orgb1fcc0a"></a>g<br />
+<div class="outline-text-5" id="text-3-13-1-7">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(((3*x-2)*(log x)^3+(x-1)*(log x)^2+2*x*(x-2)*log(x)+x^2)/(x*(log x)^6-4*x^2*(log x)^5+6*x^3*(log x)^4-4*x^4*(log x)^3+x^5*(log x)^2), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(((3*x-2)*(log x)^3+(x-1)*(log x)^2+2*x*(x-2)*log(x)+x^2)/(x*(log x)^6-4*x^2*(log x)^5+6*x^3*(log x)^4-4*x^4*(log x)^3+x^5*(log x)^2), x)
+
+                      2
+               3log(x)  + log(x) + 3x
+   ──────────────────────────────────────────────
+          4            3     2      2     3
+   3log(x)  - 9x log(x)  + 9x log(x)  - 3x log(x)
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgccf8426" class="outline-2">
+<h2 id="orgccf8426"><span class="section-number-2">4</span> 6 The Risch Differential Equation</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgd2f724c" class="outline-3">
+<h3 id="orgd2f724c"><span class="section-number-3">4.1</span> 6.1 The Normal Part of the Denominator</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-org2ec7ea2" class="outline-4">
+<h4 id="org2ec7ea2"><span class="section-number-4">4.1.1</span> Example 6.1.1</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<div class="org-src-container">
+<pre class="src src-axiom">y := operator y
+solve(D(y t,t)+y(t)=1/t, y, t)
+</pre>
+</div>
+
+<pre class="example" id="org0b145c8">
+-&gt; y := operator y
+
+   y
+                                                          Type: BasicOperator
+-&gt; solve(D(y t,t)+y(t)=1/t, y, t)
+
+                        - t            - t
+   [particular = Ei(t)%e   ,basis = [%e   ]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org8fb915f" class="outline-4">
+<h4 id="org8fb915f"><span class="section-number-4">4.1.2</span> Example 6.1.2</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<div class="org-src-container">
+<pre class="src src-axiom">t := tan x
+solve(D(y x,x) + (t^2+1)*y(x) = 1/t^2, y, x)
+</pre>
+</div>
+
+<pre class="example" id="org81d067e">
+-&gt; t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-&gt; solve(D(y x,x) + (t^2+1)*y(x) = 1/t^2, y, x)
+    Ei
+   [
+                             4cos(x)sin(x)
+       ────────────────────────────────────────────────────────
+             4           2           2         4          2
+       sin(x)  + (2cos(x)  - 2)sin(x)  + cos(x)  + 2cos(x)  + 1
+     +
+                                2          2
+                       - 2sin(x)  + 2cos(x)  + 2
+       ──────────────────────────────────────────────────────── %i
+             4           2           2         4          2
+       sin(x)  + (2cos(x)  - 2)sin(x)  + cos(x)  + 2cos(x)  + 1
+     ]
+
+   [
+       particular
+     =
+                                                       ┌───┐
+                  ┌───┐                   ┌───┐       \│- 1
+               - \│- 1 tan(x)Ei(tan(x) + \│- 1 ) + 2%e      tan(x)Ei(tan(x))
+             +
+                         ┌───┐ 2
+                ┌───┐   \│- 1                      ┌───┐
+               \│- 1 (%e      ) tan(x)Ei(tan(x) - \│- 1 )
+          *
+               - tan(x)
+             %e
+         +
+                 ┌───┐
+                \│- 1
+           - 2%e
+      /
+             ┌───┐
+            \│- 1
+         2%e      tan(x)
+     ,
+               - tan(x)
+    basis = [%e        ]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga0bcf35" class="outline-3">
+<h3 id="orga0bcf35"><span class="section-number-3">4.2</span> 6.2 The Special Part of the Denominator</h3>
+<div class="outline-text-3" id="text-4-2">
+</div>
+<div id="outline-container-org928ec81" class="outline-4">
+<h4 id="org928ec81"><span class="section-number-4">4.2.1</span> Example 6.2.1</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<div class="org-src-container">
+<pre class="src src-axiom">t := exp x
+eq := (t^2+2*x*t+x^2)*D(y x,x)+((1+1/x^2)*t^2+(2*x-1+2/x)*t+x^2)*y(x)=t/x^2-1+2/x
+solve(eq, y, x)
+</pre>
+</div>
+
+<pre class="example" id="orgec53b7e">
+-&gt; t := exp x
+
+     x
+   %e
+                                                    Type: Expression(Integer)
+-&gt; eq := (t^2+2*x*t+x^2)*D(y x,x)+((1+1/x^2)*t^2+(2*x-1+2/x)*t+x^2)*y(x)=t/x^2-1+2/x
+
+           2   x 2     3  x    4  ,        2            x 2
+         (x (%e )  + 2x %e  + x )y (x) + (x  + 1)y(x)(%e )
+
+       +
+            3    2            x    4
+         (2x  - x  + 2x)y(x)%e  + x y(x)
+    /
+        2
+       x
+   =
+       x    2
+     %e  - x  + 2x
+     ─────────────
+            2
+           x
+                                          Type: Equation(Expression(Integer))
+-&gt; solve(eq, y, x)
+
+                                    2       x    3
+                                (- x  + 1)%e  - x
+                                ──────────────────
+                                        x    2
+                  1                 x %e  + x
+   [particular = ───,basis = [%e                  ]]
+                   x
+                 %e
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6aa31c8" class="outline-3">
+<h3 id="org6aa31c8"><span class="section-number-3">4.3</span> 6.3 Degree Bounds</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-orgac21be3" class="outline-4">
+<h4 id="orgac21be3"><span class="section-number-4">4.3.1</span> Example 6.3.1</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<div class="org-src-container">
+<pre class="src src-axiom">t0 := exp(-1/x)
+t := log x
+eq := t^2*D(y x,x)-(t^2/x^2+1/x)*y(x)=(2*x-1)*t^4+(t0+x)/x*t^3-(t0+4*x^2)/2/x*t^2+x*t
+solve(eq, y, x)
+</pre>
+</div>
+
+<pre class="example" id="orga54bc5c">
+-&gt; t0 := exp(-1/x)
+
+       1
+     - ─
+       x
+   %e
+                                                    Type: Expression(Integer)
+-&gt; t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-&gt; eq := t^2*D(y x,x)-(t^2/x^2+1/x)*y(x)=(2*x-1)*t^4+(t0+x)/x*t^3-(t0+4*x^2)/2/x*t^2+x*t
+
+      2      2 ,                2
+     x log(x) y (x) - y(x)log(x)  - x y(x)
+
+     ─────────────────────────────────────
+                        2
+                       x
+   =
+                                   1                       1
+                                 - ─                     - ─
+            2            4         x            3          x     2       2
+         (4x  - 2x)log(x)  + (2%e    + 2x)log(x)  + (- %e    - 4x )log(x)
+       +
+           2
+         2x log(x)
+    /
+       2x
+                                          Type: Equation(Expression(Integer))
+-&gt; solve(eq, y, x)
+
+                      1
+                    - ─                                      - log(x) - x
+                      x     2       2     2                  ────────────
+                 (%e    + 2x )log(x)  - 2x log(x)              x log(x)
+   [particular = ────────────────────────────────,basis = [%e            ]]
+                                 2
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org0cfa0d2" class="outline-4">
+<h4 id="org0cfa0d2"><span class="section-number-4">4.3.2</span> Example 6.3.2</h4>
+<div class="outline-text-4" id="text-4-3-2">
+<div class="org-src-container">
+<pre class="src src-axiom">solve(D(y x,x)-2*x*y(x)=1, y, x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; solve(D(y x,x)-2*x*y(x)=1, y, x)
+
+                          2
+                         x  ┌───┐             2
+                 erf(x)%e  \│%pi             x
+   [particular = ────────────────,basis = [%e  ]]
+                         2
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0bf3c1a" class="outline-3">
+<h3 id="org0bf3c1a"><span class="section-number-3">4.4</span> 6.4 The SPDE Algorithm</h3>
+</div>
+<div id="outline-container-orgc332da5" class="outline-3">
+<h3 id="orgc332da5"><span class="section-number-3">4.5</span> 6.5 The non-Cancellation Cases</h3>
+<div class="outline-text-3" id="text-4-5">
+</div>
+<div id="outline-container-orgcb9ff69" class="outline-4">
+<h4 id="orgcb9ff69"><span class="section-number-4">4.5.1</span> Example 6.5.1</h4>
+<div class="outline-text-4" id="text-4-5-1">
+<div class="org-src-container">
+<pre class="src src-axiom">t := tan x
+solve(D(y x,x)+(t^2+1)*y(x)=t^3+(x+1)*t^2+t+x+2, y, x)
+</pre>
+</div>
+
+<pre class="example" id="orgdea8780">
+-&gt; t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-&gt; solve(D(y x,x)+(t^2+1)*y(x)=t^3+(x+1)*t^2+t+x+2, y, x)
+
+                                       - tan(x)
+   [particular = tan(x) + x,basis = [%e        ]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org75c05ca" class="outline-4">
+<h4 id="org75c05ca"><span class="section-number-4">4.5.2</span> Example 6.5.3</h4>
+<div class="outline-text-4" id="text-4-5-2">
+<p>
+Answer is <code>c1/cos(x)/exp(x)-tan(x)*(2*x-tan(x))</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-axiom">t := tan x
+solve(D(y x,x)+(1-t)*y(x)=t^3+t^2-2*x*t-2*x, y, x)
+solve(D(y x,x)+(1-t)*y(x)=-2*(x+1)*t-2*x, y, x)
+</pre>
+</div>
+
+<pre class="example" id="org5e8b561">
+-&gt; t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-&gt; solve(D(y x,x)+(1-t)*y(x)=t^3+t^2-2*x*t-2*x, y, x)
+
+   &gt;&gt; Error detected within library code:
+   integrate: implementation incomplete (constant residues)
+
+-&gt; solve(D(y x,x)+(1-t)*y(x)=-2*(x+1)*t-2*x, y, x)
+
+   &gt;&gt; Error detected within library code:
+   integrate: implementation incomplete (constant residues)
+
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(((tan x)^3+(tan x)^2-2*x*tan(x)-2*x)*exp(x-log(1+(tan x)^2)/2), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(((tan x)^3+(tan x)^2-2*x*tan(x)-2*x)*exp(x-log(1+(tan x)^2)/2), x)
+
+                                      2
+                          - log(tan(x)  + 1) + 2x
+                          ───────────────────────
+          2                          2
+   (tan(x)  - 2x tan(x))%e
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd9f0114" class="outline-3">
+<h3 id="orgd9f0114"><span class="section-number-3">4.6</span> 6.6 The Cancellation Cases</h3>
+</div>
+<div id="outline-container-org12a360e" class="outline-3">
+<h3 id="org12a360e"><span class="section-number-3">4.7</span> Exercises</h3>
+</div>
+</div>
+
+<div id="outline-container-orgdfc6e6b" class="outline-2">
+<h2 id="orgdfc6e6b"><span class="section-number-2">5</span> 7 Parametric Problems</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orge9c5cf5" class="outline-3">
+<h3 id="orge9c5cf5"><span class="section-number-3">5.1</span> 7.1 The Parametric Risch Differential Equation</h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-orgb0523a2" class="outline-4">
+<h4 id="orgb0523a2"><span class="section-number-4">5.1.1</span> Exercise 7.1.1</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+<pre class="src src-axiom">solve(D(y x,x)=c1*(2*t^3+3*t+1)/(t^2-1)+c2/(t-1)+c3/(t+1), y, x)
+</pre>
+</div>
+
+<pre class="example" id="org532fabf">
+-&gt; solve(D(y x,x)=c1*(2*t^3+3*t+1)/(t^2-1)+c2/(t-1)+c3/(t+1), y, x)
+
+   [
+       particular
+     =
+                               2
+                         tan(x)  + 2tan(x) + 1
+           (c3 + 2c1)log(─────────────────────)
+                                    2
+                              tan(x)  + 1
+         +
+                               2
+                         tan(x)  - 2tan(x) + 1                 1
+           (c2 + 3c1)log(─────────────────────) - 4c1 log(───────────)
+                                    2                           2
+                              tan(x)  + 1                 tan(x)  + 1
+         +
+           (2c3 - 2c2 - 2c1)x
+      /
+         4
+     ,
+    basis = [1]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org3460429" class="outline-4">
+<h4 id="org3460429"><span class="section-number-4">5.1.2</span> Example 7.1.3</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<div class="org-src-container">
+<pre class="src src-axiom">solve(D(y x,x)+y(x)=c1*x^N+c2, y, x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; solve(D(y x,x)+y(x)=c1*x^N+c2, y, x)
+
+                         x      N
+                   - x ┌┐  c1 %A  + c2                 - x
+   [particular = %e    │   ─────────── d%A ,basis = [%e   ]]
+                      └┘        - %A
+                              %e
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2f59a6b" class="outline-4">
+<h4 id="org2f59a6b"><span class="section-number-4">5.1.3</span> Example 7.1.4</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<div class="org-src-container">
+<pre class="src src-axiom">t := log x
+solve(t*D(y x,x)-y(x)/x=c1*x-c2*x*t, y, x)
+</pre>
+</div>
+
+<pre class="example" id="orgde20db9">
+-&gt; t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-&gt; solve(t*D(y x,x)-y(x)/x=c1*x-c2*x*t, y, x)
+
+                                 2              2
+   [particular = (- c2 + 2c1)li(x )log(x) - c1 x ,basis = [log(x)]]
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf7ac5ec" class="outline-3">
+<h3 id="orgf7ac5ec"><span class="section-number-3">5.2</span> 7.2 The Limited Integration Problem</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+<div id="outline-container-orgca382d2" class="outline-4">
+<h4 id="orgca382d2"><span class="section-number-4">5.2.1</span> Example 7.2.1</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<div class="org-src-container">
+<pre class="src src-axiom">t := log x
+solve(x/t^2=D(y x,x)+c1*x/t, y, x)
+</pre>
+</div>
+
+<pre class="example" id="org0cc120a">
+-&gt; t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-&gt; solve(x/t^2=D(y x,x)+c1*x/t, y, x)
+
+                               2           2
+                 (- c1 + 2)li(x )log(x) - x
+   [particular = ───────────────────────────,basis = [1]]
+                            log(x)
+Type: Union(Record(particular: Expression(Integer),basis: List(Expression(Integer))),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org3a64c20" class="outline-4">
+<h4 id="org3a64c20"><span class="section-number-4">5.2.2</span> Example 7.3.1</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<div class="org-src-container">
+<pre class="src src-axiom">t := log x
+theta := exp(1/log(x))
+eq := n*(5*t^2+t-6)/2/x/t^2 = D(y x,x)/y(x) + m*D(theta,x)/theta
+solve(eq, y, x)
+</pre>
+</div>
+
+<pre class="example" id="org7c4b298">
+-&gt; t := log x
+
+   log(x)
+                                                    Type: Expression(Integer)
+-&gt; theta := exp(1/log(x))
+
+        1
+     ──────
+     log(x)
+   %e
+                                                    Type: Expression(Integer)
+-&gt; eq := n*(5*t^2+t-6)/2/x/t^2 = D(y x,x)/y(x) + m*D(theta,x)/theta
+
+                                        2 ,
+            2                   x log(x) y (x) - m y(x)
+   5n log(x)  + n log(x) - 6n
+   ────────────────────────── = ───────────────────────
+                    2                            2
+           2x log(x)                 x y(x)log(x)
+                                          Type: Equation(Expression(Integer))
+-&gt; solve(eq, y, x)
+
+                                             2
+            - n log(x)log(log(x)) - 5n log(x)  - 6n + 2m
+            ────────────────────────────────────────────
+                               2log(x)
+   - 2y(x)%e
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge6d374b" class="outline-4">
+<h4 id="orge6d374b"><span class="section-number-4">5.2.3</span> Example 7.3.2</h4>
+<div class="outline-text-4" id="text-5-2-3">
+<div class="org-src-container">
+<pre class="src src-axiom">theta := exp x
+solve(11=D(y x,x)/y(x)+m*D(theta,x)/theta, y, x)
+</pre>
+</div>
+
+<pre class="example" id="org500d818">
+-&gt; theta := exp x
+
+     x
+   %e
+                                                    Type: Expression(Integer)
+-&gt; solve(11=D(y x,x)/y(x)+m*D(theta,x)/theta, y, x)
+
+           (m - 11)x
+   - y(x)%e
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-axiom">t := exp x
+integrate((2581284541*t+1757211400)/(39916800*t^3+119750400*t^2+119750400*t+39916800)*exp(1/(t+1)-10*x),x)
+</pre>
+</div>
+
+<pre class="example" id="org6e02b6e">
+-&gt; t := exp x
+
+     x
+   %e
+                                                    Type: Expression(Integer)
+-&gt; integrate((2581284541*t+1757211400)/(39916800*t^3+119750400*t^2+119750400*t+39916800)*exp(1/(t+1)-10*x),x)
+
+                    x 11              x 9              x 8              x 7
+         39916800(%e )   + 19958400(%e )  - 26611200(%e )  + 34927200(%e )
+       +
+                      x 6              x 5              x 4              x 3
+         - 45239040(%e )  + 57934800(%e )  - 73465920(%e )  + 92356110(%e )
+       +
+                       x 2              x
+         - 115211360(%e )  + 142731171%e  - 175721140
+    *
+                 x
+         - 10x %e  - 10x + 1
+         ───────────────────
+                 x
+               %e  + 1
+       %e
+  /
+               x
+     39916800%e  + 39916800
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org82931cd" class="outline-3">
+<h3 id="org82931cd"><span class="section-number-3">5.3</span> Exercises</h3>
+</div>
+</div>
+
+<div id="outline-container-org0e89ce3" class="outline-2">
+<h2 id="org0e89ce3"><span class="section-number-2">6</span> 8 The Coupled Differential System</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org3e468e3" class="outline-3">
+<h3 id="org3e468e3"><span class="section-number-3">6.1</span> 8.1 The Primitive Case</h3>
+</div>
+<div id="outline-container-org40048d1" class="outline-3">
+<h3 id="org40048d1"><span class="section-number-3">6.2</span> 8.2 The Hyperexponential Case</h3>
+</div>
+<div id="outline-container-orgee67b33" class="outline-3">
+<h3 id="orgee67b33"><span class="section-number-3">6.3</span> 8.3 The Nonlinear Case</h3>
+</div>
+<div id="outline-container-orgdd9c823" class="outline-3">
+<h3 id="orgdd9c823"><span class="section-number-3">6.4</span> 8.4 The Hypertangent Case</h3>
+<div class="outline-text-3" id="text-6-4">
+</div>
+<div id="outline-container-org025fe99" class="outline-4">
+<h4 id="org025fe99"><span class="section-number-4">6.4.1</span> Example 8.4.1</h4>
+<div class="outline-text-4" id="text-6-4-1">
+<div class="org-src-container">
+<pre class="src src-axiom">y1 := operator 'y1; y2 := operator 'y2;
+t := tan x
+eqs := matrix[[D(y1 x,x)],[D(y2 x,x)]] + matrix[[0, -4*x],[4*x, 0]]*matrix[[y1 x],[y2 x]] = matrix[[-(t^2-2*t+8*x^2-1)/(t^2+1)],[2*(1-2*x)/(t^2+1)]]
+-- solve(column(lhs eqs - rhs eqs, 1), [y1,y2], x) -- result too long
+</pre>
+</div>
+
+<pre class="example" id="orge5e7b70">
+-&gt; y1 := operator 'y1; y2 := operator 'y2;
+
+                                                          Type: BasicOperator
+-&gt; t := tan x
+
+   tan(x)
+                                                    Type: Expression(Integer)
+-&gt; eqs := matrix[[D(y1 x,x)],[D(y2 x,x)]] + matrix[[0, -4*x],[4*x, 0]]*matrix[[y1 x],[y2 x]] = matrix[[-(t^2-2*t+8*x^2-1)/(t^2+1)],[2*(1-2*x)/(t^2+1)]]
+
+                         ┌        2               2    ┐
+   ┌  ,              ┐   │- tan(x)  + 2tan(x) - 8x  + 1│
+   │y1 (x) - 4x y2(x)│   │─────────────────────────────│
+   │                 │   │               2             │
+   │                 │ = │         tan(x)  + 1         │
+   │  ,              │   │                             │
+   │y2 (x) + 4x y1(x)│   │           - 4x + 2          │
+   └                 ┘   │         ───────────         │
+                         │               2             │
+                         └         tan(x)  + 1         ┘
+                                  Type: Equation(Matrix(Expression(Integer)))
+-&gt; -- solve(column(lhs eqs - rhs eqs, 1), [y1,y2], x) -- result too long
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(-(((tan x)^2-2*tan x+8*x^2-1)*tan(x^2)+4*x-2)/((tan x)^2+1)/(tan(x^2)^2+1), x)
+</pre>
+</div>
+
+<pre class="example" id="orgd0b0cb1">
+-&gt; integrate(-(((tan x)^2-2*tan x+8*x^2-1)*tan(x^2)+4*x-2)/((tan x)^2+1)/(tan(x^2)^2+1), x)
+
+             2                2                        2               2 2
+       ((- 2x  + 2x + 1)tan(x)  + (- 4x + 2)tan(x) - 2x  - 2x - 1)tan(x )
+     +
+                         2         2                2                        2
+       (4tan(x) - 4)tan(x ) + (- 2x  + 2x + 1)tan(x)  + (- 4x + 2)tan(x) - 2x
+     +
+       6x - 1
+  /
+             2          2 2          2
+     (4tan(x)  + 4)tan(x )  + 4tan(x)  + 4
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgee374ff" class="outline-2">
+<h2 id="orgee374ff"><span class="section-number-2">7</span> 9 Structure Theorems</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-org5a7a34f" class="outline-3">
+<h3 id="org5a7a34f"><span class="section-number-3">7.1</span> 9.1 the Module of Differentials</h3>
+</div>
+<div id="outline-container-org7b94211" class="outline-3">
+<h3 id="org7b94211"><span class="section-number-3">7.2</span> 9.2 Rosenlicht's Theorem</h3>
+</div>
+<div id="outline-container-org0f130d8" class="outline-3">
+<h3 id="org0f130d8"><span class="section-number-3">7.3</span> 9.3 The Risch Structure Theorems</h3>
+</div>
+<div id="outline-container-orgd7258db" class="outline-3">
+<h3 id="orgd7258db"><span class="section-number-3">7.4</span> 9.4 The Rothstein-Caviness Structure Theorem</h3>
+</div>
+<div id="outline-container-org85608ba" class="outline-3">
+<h3 id="org85608ba"><span class="section-number-3">7.5</span> Exercises</h3>
+</div>
+</div>
+<div id="outline-container-org5445eb2" class="outline-2">
+<h2 id="org5445eb2"><span class="section-number-2">8</span> 10 Parallel IntegrationResult</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-orga56f4f2" class="outline-3">
+<h3 id="orga56f4f2"><span class="section-number-3">8.1</span> 10.1 Derivations of Polynomial Rings</h3>
+</div>
+<div id="outline-container-org7b6439c" class="outline-3">
+<h3 id="org7b6439c"><span class="section-number-3">8.2</span> 10.2 Structure of Elementary Antiderivatives</h3>
+</div>
+<div id="outline-container-org8474765" class="outline-3">
+<h3 id="org8474765"><span class="section-number-3">8.3</span> 10.3 The Integration Method</h3>
+<div class="outline-text-3" id="text-8-3">
+</div>
+<div id="outline-container-orgf672171" class="outline-4">
+<h4 id="orgf672171"><span class="section-number-4">8.3.1</span> Example 10.3.1</h4>
+<div class="outline-text-4" id="text-8-3-1">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(((exp(x)-x^2+2*x)/((exp(x)+x)^2*x^2))*exp((x^2-1)/x+1/(exp(x)+x)), x)
+</pre>
+</div>
+
+<pre class="example" id="org75c7e23">
+-&gt; integrate(((exp(x)-x^2+2*x)/((exp(x)+x)^2*x^2))*exp((x^2-1)/x+1/(exp(x)+x)), x)
+
+       2       x    3
+     (x  - 1)%e  + x
+     ────────────────
+            x    2
+        x %e  + x
+   %e
+   ──────────────────
+             x
+           %e
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1396ae6" class="outline-4">
+<h4 id="org1396ae6"><span class="section-number-4">8.3.2</span> Example 10.3.3</h4>
+<div class="outline-text-4" id="text-8-3-2">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((1 - log x)/(x^2-(log x)^2), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate((1 - log x)/(x^2-(log x)^2), x)
+
+   log(log(x) + x) - log(log(x) - x)
+   ─────────────────────────────────
+                   2
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org87c6fad" class="outline-4">
+<h4 id="org87c6fad"><span class="section-number-4">8.3.3</span> Example 10.3.4</h4>
+<div class="outline-text-4" id="text-8-3-3">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((x^2+(x^2+2)*lambertW(x^2))/x/(1+lambertW(x^2))^2,x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate((x^2+(x^2+2)*lambertW(x^2))/x/(1+lambertW(x^2))^2,x)
+
+              2               2          2
+   2lambertW(x )log(lambertW(x ) + 1) + x
+   ───────────────────────────────────────
+                           2
+                2lambertW(x )
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb43618f" class="outline-3">
+<h3 id="orgb43618f"><span class="section-number-3">8.4</span> 10.4 Simple Differential Fields</h3>
+</div>
+</div>
+
+<div id="outline-container-orga06aed9" class="outline-2">
+<h2 id="orga06aed9"><span class="section-number-2">9</span> References</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+[19]
+<a href="http://sites.mathdoc.fr/JMPA/feuilleter.php?id=JMPA_1864_2_9">http://sites.mathdoc.fr/JMPA/feuilleter.php?id=JMPA_1864_2_9</a> <a href="http://sites.mathdoc.fr/JMPA/PDF/JMPA_1864_2_9_A23_0.pdf">http://sites.mathdoc.fr/JMPA/PDF/JMPA_1864_2_9_A23_0.pdf</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((x+1/6)/sqrt(x^4+x^2+x+1/4), x)
+</pre>
+</div>
+
+<pre class="example" id="orgdf1442e">
+-&gt; integrate((x+1/6)/sqrt(x^4+x^2+x+1/4), x)
+
+     log
+                                     ┌──────────────────┐
+             4     3     2           │  4     2               6     5      4
+          (4x  - 4x  + 6x  - 2x + 1)\│4x  + 4x  + 4x + 1  + 8x  - 8x  + 16x
+        +
+              3     2
+          - 4x  + 4x  + 2x
+  /
+     6
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-axiom">integrate((x+B)/sqrt(x^4+5*x^3+3*x^2-x), x)
+</pre>
+</div>
+
+<pre class="example" id="orgdd0ec23">
+-&gt; integrate((x+B)/sqrt(x^4+5*x^3+3*x^2-x), x)
+
+      x
+    ┌┐            B + %A
+    │   ───────────────────────── d%A
+   └┘    ┌──────────────────────┐
+         │  4      3      2
+        \│%A  + 5%A  + 3%A  - %A
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+
+<pre class="example" id="orgd80b866">
+est inexprimable en termes finis
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2021-03-25 Thu 17:09</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

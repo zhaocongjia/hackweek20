@@ -1,0 +1,1504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-25 Thu 17:12 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge1b9e77">1. 2 Integration of Rational Functions</a>
+<ul>
+<li><a href="#org867c2a4">1.1. Introduction</a></li>
+<li><a href="#orge38f16b">1.2. 2.1 The Bernoulli Algorithm</a>
+<ul>
+<li><a href="#org19ebde3">1.2.1. Example 2.1.1</a></li>
+<li><a href="#orgcb31be7">1.2.2. Example 2.1.2</a></li>
+<li><a href="#org82ce44a">1.2.3. Example 2.1.3</a></li>
+</ul>
+</li>
+<li><a href="#orgd3e6220">1.3. 2.2 The Hermite Reduction</a>
+<ul>
+<li><a href="#org8ec0359">1.3.1. Example 2.2.1 HermiteIntegrate</a></li>
+<li><a href="#org11d2118">1.3.2. Example 2.2.2</a></li>
+<li><a href="#org1878c40">1.3.3. Algorithm: HermiteReduce(A, D) (* Hermite Reduction &#x2013; Mack's linear version *)</a></li>
+<li><a href="#orgda6527a">1.3.4. Example 2.2.3</a></li>
+</ul>
+</li>
+<li><a href="#org6cdeef1">1.4. 2.3 The Horowitz-Ostrogradsky Algorithm</a></li>
+<li><a href="#orgc9655d4">1.5. 2.4 The Rothstein-Trager Algorithm</a>
+<ul>
+<li><a href="#org3f8dc08">1.5.1. Algorithm: IntRationalLogPart(A, D) (* Rothstein-Trager algorithm *)</a></li>
+<li><a href="#org8a6dd52">1.5.2. Example 2.4.1</a></li>
+</ul>
+</li>
+<li><a href="#org4447ac2">1.6. 2.5 The Lazard-Rioboo-Trager Algorithm</a>
+<ul>
+<li><a href="#orgcc8f349">1.6.1. Algorithm: IntRationalLogPart(A, D) (* Lazard-Rioboo-Trager algorithm *)</a></li>
+<li><a href="#org64606f8">1.6.2. Example 2.5.1</a></li>
+<li><a href="#org71b9327">1.6.3. Example 2.5.2</a></li>
+</ul>
+</li>
+<li><a href="#org697109f">1.7. 2.6 The Czichowski Algorithm</a>
+<ul>
+<li><a href="#orge54e2ba">1.7.1. Example 2.6.1</a></li>
+</ul>
+</li>
+<li><a href="#orgada3789">1.8. 2.7 Newton-Leibniz-Bernoulli Revisited</a>
+<ul>
+<li><a href="#org9b34b8e">1.8.1. Example 2.7.1</a></li>
+<li><a href="#org09b286f">1.8.2. Example 2.7.2</a></li>
+<li><a href="#orgc7665f5">1.8.3. Example 2.7.3</a></li>
+</ul>
+</li>
+<li><a href="#org35be5e8">1.9. 2.8 Rioboo's Algorithm for Real Rational Functions</a>
+<ul>
+<li><a href="#org31914f6">1.9.1. Algorithm: LogToAtan(A, B)</a></li>
+<li><a href="#org5d36644">1.9.2. Example 2.8.1</a></li>
+</ul>
+</li>
+<li><a href="#org376c91d">1.10. 2.9 In-Field Integration</a></li>
+<li><a href="#orgc13c8df">1.11. Exercises</a>
+<ul>
+<li><a href="#org5488a99">1.11.1. Exercise 2.1</a></li>
+<li><a href="#org7e6a8c9">1.11.2. Exercise 2.2</a></li>
+<li><a href="#org87fc506">1.11.3. Exercise 2.3</a></li>
+<li><a href="#orgb5a2fda">1.11.4. Exercise 2.4</a></li>
+<li><a href="#orgba1bff9">1.11.5. Exercise 2.5</a></li>
+<li><a href="#org7030c20">1.11.6. Exercise 2.7</a></li>
+<li><a href="#orga79ec96">1.11.7. Exercise 2.8</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="org-src-container">
+<pre class="src src-axiom">)set message prompt plain
+)boot $IOindex := nil
+</pre>
+</div>
+
+<div id="outline-container-orge1b9e77" class="outline-2">
+<h2 id="orge1b9e77"><span class="section-number-2">1</span> 2 Integration of Rational Functions</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The algorithms and theorems of this chapter are special cases of the
+Risch algorithm.
+</p>
+</div>
+
+<div id="outline-container-org867c2a4" class="outline-3">
+<h3 id="org867c2a4"><span class="section-number-3">1.1</span> Introduction</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+The problem of computing the transcendental part of the integral
+without factoring remained open for over a century, and was finally
+solved in recent papers [56, <a class='org-ref-reference' href="#rothstein1977new">rothstein1977new</a>, 89].
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge38f16b" class="outline-3">
+<h3 id="orge38f16b"><span class="section-number-3">1.2</span> 2.1 The Bernoulli Algorithm</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-org19ebde3" class="outline-4">
+<h4 id="org19ebde3"><span class="section-number-4">1.2.1</span> Example 2.1.1</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<div class="org-src-container">
+<pre class="src src-axiom">)expose INTRAT
+F ==&gt; FRAC INT; UUP ==&gt; UP(x, F); FFR ==&gt; FRAC UUP;
+f : FFR := 1/(x^3+x)
+
+partialFraction f
+
+integrate univariate(f, x)
+</pre>
+</div>
+
+<pre class="example" id="orge325467">
+-&gt; )expose INTRAT
+   RationalIntegration is already explicitly exposed in frame initial
+-&gt; F ==&gt; FRAC INT; UUP ==&gt; UP(x, F); FFR ==&gt; FRAC UUP;
+                                                                    Type: Void
+-&gt; f : FFR := 1/(x^3+x)
+
+      1
+   ──────
+    3
+   x  + x
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; partialFraction f
+
+   1      x
+   ─ - ──────
+   x    2
+       x  + 1
+             Type: PartialFraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; integrate univariate(f, x)
+
+     1      2
+   - ─ log(?  + 1) + log(?)
+     2
+Type: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Polynomial(Fraction(Integer))))))
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgcb31be7" class="outline-4">
+<h4 id="orgcb31be7"><span class="section-number-4">1.2.2</span> Example 2.1.2</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<div class="org-src-container">
+<pre class="src src-axiom">f := 1/(x^2+1)^2;
+
+partialFraction f
+
+integrate(f::EXPR INT, x)
+</pre>
+</div>
+
+<pre class="example" id="org5fbe3d4">
+-&gt; f := 1/(x^2+1)^2;
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; partialFraction f
+
+       1
+   ─────────
+     2     2
+   (x  + 1)
+             Type: PartialFraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; integrate(f::EXPR INT, x)
+
+     2
+   (x  + 1)atan(x) + x
+   ───────────────────
+            2
+         2 x  + 2
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org82ce44a" class="outline-4">
+<h4 id="org82ce44a"><span class="section-number-4">1.2.3</span> Example 2.1.3</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<div class="org-src-container">
+<pre class="src src-axiom">f1 : FRAC UP(y, FRAC COMPLEX INT) := 1/(y^3+y)
+
+partialFraction f1
+
+reduce(+, map(integrate, fractionalTerms %))
+</pre>
+</div>
+
+<pre class="example" id="orgd6ff51d">
+-&gt; f1 : FRAC UP(y, FRAC COMPLEX INT) := 1/(y^3+y)
+
+      1
+   ──────
+    3
+   y  + y
+           Type: Fraction(UnivariatePolynomial(y,Fraction(Complex(Integer))))
+-&gt; partialFraction f1
+
+        1        1
+        ─        ─
+        2        2     1
+   - ────── - ────── + ─
+     y - %i   y + %i   y
+    Type: PartialFraction(UnivariatePolynomial(y,Fraction(Complex(Integer))))
+-&gt; reduce(+, map(integrate, fractionalTerms %))
+
+            1               1
+   log(y) - ─ log(y + %i) - ─ log(y - %i)
+            2               2
+Type: IntegrationResult(Fraction(UnivariatePolynomial(y,Fraction(Complex(Integer)))))
+
+</pre>
+
+<p>
+An algorithm that never makes an unnecessary algebraic extension and
+does not compute irreducible factorizations over K will be called
+"rational".
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd3e6220" class="outline-3">
+<h3 id="orgd3e6220"><span class="section-number-3">1.3</span> 2.2 The Hermite Reduction</h3>
+<div class="outline-text-3" id="text-1-3">
+</div>
+<div id="outline-container-org8ec0359" class="outline-4">
+<h4 id="org8ec0359"><span class="section-number-4">1.3.1</span> Example 2.2.1 HermiteIntegrate</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<div class="org-src-container">
+<pre class="src src-axiom">f := (x^7 - 24*x^4 - 4*x^2 + 8*x - 8)/(x^8 + 6*x^6 + 12*x^4 + 8*x^2);
+
+squareFree denom f
+
+partialFraction f
+
+HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+-- Or ')expose TranscendentalHermiteIntegration' and the '$'
+-- selector can be omitted.
+
+integrate univariate(f, x)
+</pre>
+</div>
+
+<pre class="example" id="orgab8d08d">
+-&gt; f := (x^7 - 24*x^4 - 4*x^2 + 8*x - 8)/(x^8 + 6*x^6 + 12*x^4 + 8*x^2);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; squareFree denom f
+
+    2  2     3
+   x (x  + 2)
+                    Type: Factored(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; partialFraction f
+
+            4      3       2
+   x - 1   x  - 6 x  - 18 x  - 12 x + 8
+   ───── + ────────────────────────────
+      2                2     3
+     x               (x  + 2)
+             Type: PartialFraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+                3      2
+             3 x  + 8 x  + 6 x + 4            1
+   [answer = ─────────────────────, logpart = ─, specpart = 0, polypart = 0]
+                 5      3                     x
+                x  + 4 x  + 4 x
+Type: Record(answer: Fraction(UnivariatePolynomial(x,Fraction(Integer))),logpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; -- Or ')expose TranscendentalHermiteIntegration' and the '$'
+-&gt; -- selector can be omitted.
+-&gt; integrate univariate(f, x)
+
+      3      2
+   3 ?  + 8 ?  + 6 ? + 4
+   ───────────────────── + log(?)
+       5      3
+      ?  + 4 ?  + 4 ?
+Type: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Polynomial(Fraction(Integer))))))
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org11d2118" class="outline-4">
+<h4 id="org11d2118"><span class="section-number-4">1.3.2</span> Example 2.2.2</h4>
+</div>
+<div id="outline-container-org1878c40" class="outline-4">
+<h4 id="org1878c40"><span class="section-number-4">1.3.3</span> Algorithm: HermiteReduce(A, D) (* Hermite Reduction &#x2013; Mack's linear version *)</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+<a href="file:///fricas/src/algebra/intrf.spad">file:///fricas/src/algebra/intrf.spad</a> 272
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #4f97d7;">cd</span> /fricas
+grep -A25 <span style="color: #2d9574;">'Hermite Reduction'</span> src/algebra/intrf.spad
+</pre>
+</div>
+
+<pre class="example" id="orgd7c3c8e">
+-- Hermite Reduction on f, every squarefree factor of denom(f) is normal wrt D
+-- this is really a "parallel" Hermite reduction, in the sense that
+-- every multiple factor of the denominator gets reduced at each pass
+-- so if the denominator is P1 P2^2 ... Pn^n, this requires O(n)
+-- reduction steps instead of O(n^2), like Mack's algorithm
+-- (D.Mack, On Rational Integration, Univ. of Utah C.S. Tech.Rep. UCP-38, 1975)
+-- returns [g, b, d] s.t. f = g' + b/d and d is squarefree and normal wrt D
+    normalHermiteIntegrate(f, derivation, d0) ==
+      a := numer f
+      q := denom f
+      p : UP    := 0
+      mult : UP := 1
+      qhat := (q exquo (g0 := g := gcd(q, differentiate q)))::UP
+      while(degree(qbar := g) &gt; 0) repeat
+        qbarhat := (qbar exquo (g := gcd(qbar, differentiate qbar)))::UP
+        qtil := - ((qhat * (derivation qbar)) exquo qbar)::UP
+        bc :=
+         extendedEuclidean(qtil, qbarhat, a)::Record(coef1 : UP, coef2 : UP)
+        qr := divide(bc.coef1, qbarhat)
+        qr_rem := qr.remainder
+        a  := bc.coef2 + qtil * qr.quotient - (derivation(qr_rem)
+                + d0*qr_rem)*(qhat exquo qbarhat)::UP
+        p  := p + mult*qr_rem
+        mult := mult * qbarhat
+      [p / g0, a, qhat]
+
+</pre>
+
+<p>
+We remark that it is possible to perform all the variants of Hermite's
+reduction over a UFD rather than a field.
+</p>
+
+<div class="ASCII" id="org43e2440">
+<p>
+NOTES BY ME:
+</p>
+
+<p>
+FriCAS is over Field.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgda6527a" class="outline-4">
+<h4 id="orgda6527a"><span class="section-number-4">1.3.4</span> Example 2.2.3</h4>
+</div>
+</div>
+<div id="outline-container-org6cdeef1" class="outline-3">
+<h3 id="org6cdeef1"><span class="section-number-3">1.4</span> 2.3 The Horowitz-Ostrogradsky Algorithm</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+While the complexity of this algorithm is very good for rational
+functions [ 45 ], it does not generalize as easily as the Hermite
+reduction to larger classes of functions, so we use the linear Hermite
+reduction in the general algorithm later.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc9655d4" class="outline-3">
+<h3 id="orgc9655d4"><span class="section-number-3">1.5</span> 2.4 The Rothstein-Trager Algorithm</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+With appropriate modifications, the Rothstein-Trager algorithm can, like the
+Hermite reduction, be applied to rational functions over a UFD rather than a
+field. Part (iii) of Theorem 2.4.1 shows that the splitting field of R is the
+minimal algebraic extension of K necessary to express the integral of <code>A/D</code>
+using logarithms, thereby essentially answering question Q2.
+</p>
+</div>
+
+<div id="outline-container-org3f8dc08" class="outline-4">
+<h4 id="org3f8dc08"><span class="section-number-4">1.5.1</span> Algorithm: IntRationalLogPart(A, D) (* Rothstein-Trager algorithm *)</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<p>
+See bellow Lazard-Rioboo-Trager algorithm.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8a6dd52" class="outline-4">
+<h4 id="org8a6dd52"><span class="section-number-4">1.5.2</span> Example 2.4.1</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<div class="org-src-container">
+<pre class="src src-axiom">f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+A := numer f; D := denom f;
+
+HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+t := monomial(1, 1)$SUP F
+T ==&gt; UP(x, SUP F)
+factor resultant(D, A - t * differentiate D)$T
+
+a | 4*a^2 + 1 = 0
+gcd(D, A - a * differentiate D)
+
+monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+integrate(f::EXPR INT, x)
+</pre>
+</div>
+
+<pre class="example" id="orgc84b6ce">
+-&gt; f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; A := numer f; D := denom f;
+
+                              Type: UnivariatePolynomial(x,Fraction(Integer))
+-&gt; HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+                               4      2
+                              x  - 3 x  + 6
+   [answer = 0, logpart = ────────────────────, specpart = 0, polypart = 0]
+                           6      4      2
+                          x  - 5 x  + 5 x  + 4
+Type: Record(answer: Fraction(UnivariatePolynomial(x,Fraction(Integer))),logpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; t := monomial(1, 1)$SUP F
+
+   ?
+                          Type: SparseUnivariatePolynomial(Fraction(Integer))
+-&gt; T ==&gt; UP(x, SUP F)
+                                                                    Type: Void
+-&gt; factor resultant(D, A - t * differentiate D)$T
+
+             2   1 3
+   2930944 (?  + ─)
+                 4
+                Type: Factored(SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; a | 4*a^2 + 1 = 0
+    Your statement has resulted in the following assignments and
+      declaration:
+
+   SAEa := SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),4*a^2+1)
+   a : SAEa := a
+
+   a
+Type: SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),4*a^2+1)
+-&gt; gcd(D, A - a * differentiate D)
+
+    3        2
+   x  + 2 a x  - 3 x - 4 a
+Type: UnivariatePolynomial(x,SimpleAlgebraicExtension(Fraction(Integer),UnivariatePolynomial(a,Fraction(Integer)),4*a^2+1))
+-&gt; monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+             ──┐                 2           3
+   [ir =     &gt;        %M log((2 x  - 4)%M + x  - 3 x), specpart = 0,
+             ──┘
+           2   1
+         %M  + ─ = 0
+               4
+    polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer)))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; integrate(f::EXPR INT, x)
+
+         5      3
+        x  - 3 x  + x          3
+   atan(─────────────) + atan(x ) + atan(x)
+              2
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4447ac2" class="outline-3">
+<h3 id="org4447ac2"><span class="section-number-3">1.6</span> 2.5 The Lazard-Rioboo-Trager Algorithm</h3>
+<div class="outline-text-3" id="text-1-6">
+<div class="ASCII" id="org3d216d9">
+<p>
+NOTES BY ME:
+</p>
+
+<p>
+Renaud Rioboo is also the author of several AXIOM packages.
+</p>
+
+</div>
+
+<p>
+Although he did not publish it, Trager programmed this algorithm in
+his AXIOM implementation of rational function integration.
+</p>
+
+<p>
+As long as the result is returned as a formal sum over the roots of some
+polynomials, all the calculations are done over K, no algebraic extensions is
+required, and the formal algebraic numbers introduced by the sum are in the
+smallest possible algebraic extension needed to express the integral.
+</p>
+</div>
+
+<div id="outline-container-orgcc8f349" class="outline-4">
+<h4 id="orgcc8f349"><span class="section-number-4">1.6.1</span> Algorithm: IntRationalLogPart(A, D) (* Lazard-Rioboo-Trager algorithm *)</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<p>
+<a href="file:///fricas/src/algebra/intrf.spad">file:///fricas/src/algebra/intrf.spad</a> 405
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #4f97d7;">cd</span> /fricas
+grep -A29 -B1 <span style="color: #2d9574;">'  monomialIntegrate1(f : RF'</span> src/algebra/intrf.spad
+</pre>
+</div>
+
+<pre class="example" id="org4226e5d">
+-- works in any monomial extension
+    monomialIntegrate1(f : RF, denint : RF -&gt; DREC, derivation : UP -&gt; UP
+                      ) : REC ==
+      zero? f =&gt; [0, 0, 0]
+      r := HermiteIntegrate(f, derivation)
+      zero?(numer(r.logpart)) =&gt; [r.answer::IR, r.specpart, r.polypart]
+      dr := denint(r.logpart)
+      ans1 := r.answer + dr.answer
+      inum := numer(dr.logpart)
+      iden  := denom(dr.logpart)
+      x := monomial(1, 1)$UP
+      resultvec := subresultantVector(UP2UP2 inum -
+                                 (x::UP2) * UP2UP2 derivation iden, UP2UP2 iden)
+      respoly := primitivePart leadingCoefficient resultvec 0
+      rec := splitSquarefree(respoly, x1+-&gt;kappa(x1, derivation))
+      logs : List(LOG) := [
+              [1, UP2UPR(term.factor),
+               UP22UPR swap primitivePart(resultvec(term.exponent), term.factor)]
+                     for term in factors(rec.special)]
+      dlog :=
+--           one? derivation x =&gt; dr.logpart
+           ((derivation x) = 1) =&gt; dr.logpart
+           differentiate(mkAnswer(0, logs, empty()),
+                         (x1 : RF) : RF+-&gt;differentiate(x1, derivation))
+      (u := retractIfCan(p := dr.logpart - dlog)@Union(UP, "failed")) case UP =&gt;
+        [mkAnswer(ans1, logs, empty) + dr.ir, r.specpart, r.polypart + u::UP]
+      [mkAnswer(ans1, logs, [[p, dummy]]) + dr.ir, r.specpart, r.polypart]
+
+    monomialIntegrate(f, derivation) ==
+        monomialIntegrate1(f, denint_dummy, derivation)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org64606f8" class="outline-4">
+<h4 id="org64606f8"><span class="section-number-4">1.6.2</span> Example 2.5.1</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<div class="org-src-container">
+<pre class="src src-axiom">)expose SubResultantPackage
+subresultantVector(D::T, (A - t * differentiate D)::T)
+</pre>
+</div>
+
+<pre class="example" id="orgad0d935">
+-&gt; )expose SubResultantPackage
+   SubResultantPackage is already explicitly exposed in frame initial
+-&gt; subresultantVector(D::T, (A - t * differentiate D)::T)
+
+            6           4          2
+   [2930944?  + 2198208?  + 549552?  + 45796,
+              5         3                   4         2
+    (- 119840?  - 59920?  - 7490?)x - 23968?  - 11984?  - 1498,
+             4        2       2         4        2
+    (- 11200?  - 2604?  + 49)x  + 25600?  + 5952?  - 112,
+         3        3          2      2           3               2
+    (800?  - 14?)x  + (- 400?  + 7)x  + (- 2440?  + 32?)x + 792?  - 16,
+          2      4       3        2      2               2
+    (- 60?  + 1)x  + 2? x  + (120?  - 3)x  + 26? x + 144?  + 6,
+          5    4        3     2               6     4     2
+    - 6? x  + x  + 20? x  - 3x  - 10? x + 6, x  - 5x  + 5x  + 4, 0]
+Type: PrimitiveArray(UnivariatePolynomial(x,SparseUnivariatePolynomial(Fraction(Integer))))
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org71b9327" class="outline-4">
+<h4 id="org71b9327"><span class="section-number-4">1.6.3</span> Example 2.5.2</h4>
+<div class="outline-text-4" id="text-1-6-3">
+<div class="org-src-container">
+<pre class="src src-axiom">f := 36/(x^5 - 2*x^4 - 2*x^3 + 4*x^2 + x - 2);
+
+HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+integrate univariate(f, x)
+
+integrate(f::EXPR INT, x)
+</pre>
+</div>
+
+<pre class="example" id="org201df43">
+-&gt; f := 36/(x^5 - 2*x^4 - 2*x^3 + 4*x^2 + x - 2);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; HermiteIntegrate(f, differentiate)$INTHERTR(F, UUP)
+
+             12x + 6               12
+   [answer = ───────,logpart = ──────────,specpart = 0,polypart = 0]
+               2                2
+              x  - 1           x  - x - 2
+Type: Record(answer: Fraction(UnivariatePolynomial(x,Fraction(Integer))),logpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; monomialIntegrate(f, differentiate)$INTTR(F, UUP)
+
+         12x + 6       ──┐                3          1
+   [ir = ─────── +     &gt;         %R log(- ─ %R + x - ─), specpart = 0,
+           2           ──┘                8          2
+          x  - 1     2
+                   %R  - 16 = 0
+    polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer)))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; integrate univariate(f, x)
+
+   12? + 6       ──┐                3          1
+   ─────── +     &gt;         %A log(- ─ %A + ? - ─)
+     2           ──┘                8          2
+    ?  - 1     2
+             %A  - 16 = 0
+Type: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Polynomial(Fraction(Integer))))))
+-&gt; integrate(f::EXPR INT, x)
+
+        2                     2
+   (- 4x  + 4)log(x + 1) + (4x  - 4)log(x - 2) + 12x + 6
+   ─────────────────────────────────────────────────────
+                            2
+                           x  - 1
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org697109f" class="outline-3">
+<h3 id="org697109f"><span class="section-number-3">1.7</span> 2.6 The Czichowski Algorithm</h3>
+<div class="outline-text-3" id="text-1-7">
+</div>
+<div id="outline-container-orge54e2ba" class="outline-4">
+<h4 id="orge54e2ba"><span class="section-number-4">1.7.1</span> Example 2.6.1</h4>
+<div class="outline-text-4" id="text-1-7-1">
+<div class="org-src-container">
+<pre class="src src-axiom">)clear all
+f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+A := numer f; D := denom f;
+
+groebnerFactorize [D, A - t*differentiate D]
+</pre>
+</div>
+
+<pre class="example" id="org5484128">
+-&gt; )clear all
+   All user variables and function definitions have been cleared.
+-&gt; f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+
+                                          Type: Fraction(Polynomial(Integer))
+-&gt; A := numer f; D := denom f;
+
+                                                    Type: Polynomial(Integer)
+-&gt; groebnerFactorize [D, A - t*differentiate D]
+
+          3       2             2
+   [[1],[x  + 2t x  - 3x - 4t,4t  + 1]]
+                                        Type: List(List(Polynomial(Integer)))
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgada3789" class="outline-3">
+<h3 id="orgada3789"><span class="section-number-3">1.8</span> 2.7 Newton-Leibniz-Bernoulli Revisited</h3>
+<div class="outline-text-3" id="text-1-8">
+</div>
+<div id="outline-container-org9b34b8e" class="outline-4">
+<h4 id="org9b34b8e"><span class="section-number-4">1.8.1</span> Example 2.7.1</h4>
+<div class="outline-text-4" id="text-1-8-1">
+<div class="org-src-container">
+<pre class="src src-axiom">f := 36/(x-2)/(x^2-1)^2
+</pre>
+</div>
+
+<pre class="example">
+-&gt; f := 36/(x-2)/(x^2-1)^2
+
+                36
+   ────────────────────────────
+    5     4     3     2
+   x  - 2x  - 2x  + 4x  + x - 2
+                                          Type: Fraction(Polynomial(Integer))
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org09b286f" class="outline-4">
+<h4 id="org09b286f"><span class="section-number-4">1.8.2</span> Example 2.7.2</h4>
+<div class="outline-text-4" id="text-1-8-2">
+<div class="org-src-container">
+<pre class="src src-axiom">f1 := univariate(f, x)::FRAC SUP FRAC INT;
+fullPartialFraction f1
+</pre>
+</div>
+
+<pre class="example" id="org15bf8e9">
+-&gt; f1 := univariate(f, x)::FRAC SUP FRAC INT;
+
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; fullPartialFraction f1
+
+     4       4         ──┐      - 3%I - 6
+   ───── - ───── +     &gt;        ─────────
+   ? - 2   ? + 1       ──┘              2
+                     2          (? - %I)
+                   %I  - 1 = 0
+Type: FullPartialFractionExpansion(Fraction(Integer),SparseUnivariatePolynomial(Fraction(Integer)))
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgc7665f5" class="outline-4">
+<h4 id="orgc7665f5"><span class="section-number-4">1.8.3</span> Example 2.7.3</h4>
+<div class="outline-text-4" id="text-1-8-3">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(f, x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(f, x)
+
+        2                     2
+   (- 4x  + 4)log(x + 1) + (4x  - 4)log(x - 2) + 12x + 6
+   ─────────────────────────────────────────────────────
+                            2
+                           x  - 1
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org35be5e8" class="outline-3">
+<h3 id="org35be5e8"><span class="section-number-3">1.9</span> 2.8 Rioboo's Algorithm for Real Rational Functions</h3>
+<div class="outline-text-3" id="text-1-9">
+<div class="org-src-container">
+<pre class="src src-axiom">f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4)
+g := integrate(f, x)
+n1 := integrate(f, x=1..2)
+n11 := numeric n1
+T ==&gt; MakeUnaryCompiledFunction(EXPR INT, FLOAT, FLOAT)
+n2 := simpson(compiledFunction(f, x)$T, 1.0, 2.0, 0.1, 0.1, 6, 10)
+n11 - n2.value
+</pre>
+</div>
+
+<pre class="example" id="org75e7e0b">
+-&gt; f := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4)
+
+       4     2
+      x  - 3x  + 6
+   ──────────────────
+    6     4     2
+   x  - 5x  + 5x  + 4
+                                          Type: Fraction(Polynomial(Integer))
+-&gt; g := integrate(f, x)
+
+         5     3
+        x  - 3x  + x          3
+   atan(────────────) + atan(x ) + atan(x)
+              2
+                                         Type: Union(Expression(Integer),...)
+-&gt; n1 := integrate(f, x=1..2)
+
+                                          1
+   2atan(8) + 2atan(5) + 2atan(2) + 2atan(─) - %pi
+                                          2
+   ───────────────────────────────────────────────
+                          2
+                  Type: Union(f1: OrderedCompletion(Expression(Integer)),...)
+-&gt; n11 := numeric n1
+
+   2.8198420991931510451
+                                                                  Type: Float
+-&gt; T ==&gt; MakeUnaryCompiledFunction(EXPR INT, FLOAT, FLOAT)
+                                                                    Type: Void
+-&gt; n2 := simpson(compiledFunction(f, x)$T, 1.0, 2.0, 0.1, 0.1, 6, 10)
+    Compiling function %N with type Float -&gt; Float
+
+   [value = 2.8198420916463176517, error = 0.14117860771815140533E-6,
+    totalpts = 129, success = true]
+   Type: Record(value: Float,error: Float,totalpts: Integer,success: Boolean)
+-&gt; n11 - n2.value
+
+   0.75468333933E-8
+                                                                  Type: Float
+
+</pre>
+
+<pre class="example" id="org8622842">
+Mathematica
+
+In[1]:= g = Integrate[(x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4),x]
+                 2                     2
+        x (-3 + x )           x (-3 + x )
+-ArcTan[-----------]   ArcTan[-----------]
+               2                      2
+          2 - x                 -2 + x
+-------------------- + -------------------
+         2                      2
+In[2]:= Simplify[g]
+                2
+       x (-3 + x )
+ArcTan[-----------]
+               2
+         -2 + x
+In[3]:= FullSimplify[g]
+              x
+ArcTan[x - -------]
+                 2
+           -2 + x
+
+// ALL 3 ARE NOT CONTINUOUS
+</pre>
+</div>
+
+<div id="outline-container-org31914f6" class="outline-4">
+<h4 id="org31914f6"><span class="section-number-4">1.9.1</span> Algorithm: LogToAtan(A, B)</h4>
+<div class="outline-text-4" id="text-1-9-1">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #4f97d7;">cd</span> /fricas
+grep -B4 -A15 <span style="color: #2d9574;">'^    ilog0(a'</span> src/algebra/irexpand.spad
+</pre>
+</div>
+
+<pre class="example" id="org7e34391">
+-- transforms i log((a + i b) / (a - i b)) into a sum of real
+-- arc-tangents using Rioboo's algorithm
+-- the arc-tangents will not have k in the denominator
+-- we always keep upa(k) = a  and upb(k) = b
+    ilog0(a, b, upa, upb, k) ==
+      if degree(upa) &lt; degree(upb) then
+        (upa, upb) := (-upb, upa)
+        (a, b) := (-b, a)
+      zero? degree upb =&gt; tantrick(a, b)
+      r := extendedEuclidean(upa, upb)
+      (g:= retractIfCan(r.generator)@Union(F,"failed")) case "failed" =&gt;
+        tantrick(a, b)
+      if degree(r.coef1) &gt;= degree upb then
+        qr := divide(r.coef1, upb)
+        r.coef1 := qr.remainder
+        r.coef2 := r.coef2 + qr.quotient * upa
+      aa := (r.coef2) k
+      bb := -(r.coef1) k
+      tantrick(aa * a + bb * b, g::F) + ilog0(aa, bb, r.coef2, -r.coef1, k)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5d36644" class="outline-4">
+<h4 id="org5d36644"><span class="section-number-4">1.9.2</span> Example 2.8.1</h4>
+<div class="outline-text-4" id="text-1-9-2">
+<div class="org-src-container">
+<pre class="src src-axiom">)clear all
+R ==&gt; UP(x, FRAC INT); -- SUP doesn't work here
+--  because EXPR SUP FRAC INT doesn't make sense, see mailing list
+f : FRAC R := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+monomialIntegrate(f, differentiate)$INTTR(FRAC INT, R)
+res1 := %.ir;
+complexExpand res1
+expand(res1, x)
+</pre>
+</div>
+
+<pre class="example" id="org6282987">
+-&gt; )clear all
+   All user variables and function definitions have been cleared.
+-&gt; R ==&gt; UP(x, FRAC INT); -- SUP doesn't work here
+                                                                    Type: Void
+-&gt; --  because EXPR SUP FRAC INT doesn't make sense, see mailing list
+-&gt; f : FRAC R := (x^4 - 3*x^2 + 6)/(x^6 - 5*x^4 + 5*x^2 + 4);
+
+                    Type: Fraction(UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; monomialIntegrate(f, differentiate)$INTTR(FRAC INT, R)
+
+             ──┐                 2           3
+   [ir =     &gt;        %M log((2 x  - 4)%M + x  - 3 x), specpart = 0,
+             ──┘
+           2   1
+         %M  + ─ = 0
+               4
+    polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer)))),specpart: Fraction(UnivariatePolynomial(x,Fraction(Integer))),polypart: UnivariatePolynomial(x,Fraction(Integer)))
+-&gt; res1 := %.ir;
+
+ Type: IntegrationResult(Fraction(UnivariatePolynomial(x,Fraction(Integer))))
+-&gt; complexExpand res1
+
+     1  ┌───┐      2      ┌───┐    3
+     ─ \│- 1 log((x  - 2)\│- 1  + x  - 3 x)
+     2
+   +
+       1  ┌───┐        2      ┌───┐    3
+     - ─ \│- 1 log((- x  + 2)\│- 1  + x  - 3 x)
+       2
+                                          Type: Expression(Fraction(Integer))
+-&gt; expand(res1, x)
+
+         1  5   3  3   1            3
+   [atan(─ x  - ─ x  + ─ x) + atan(x ) + atan(x)]
+         2      2      2
+                                    Type: List(Expression(Fraction(Integer)))
+
+</pre>
+
+<p>
+Although there is no equivalent algorithm that guarantees the obtention of an
+integral with no new poles for more general functions, Rioboo's algorithm has
+been used together with rectifying transformations in order to compute integrals
+of rational functions in <code>sin(x)</code> and <code>cos(x)</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org376c91d" class="outline-3">
+<h3 id="org376c91d"><span class="section-number-3">1.10</span> 2.9 In-Field Integration</h3>
+</div>
+<div id="outline-container-orgc13c8df" class="outline-3">
+<h3 id="orgc13c8df"><span class="section-number-3">1.11</span> Exercises</h3>
+<div class="outline-text-3" id="text-1-11">
+<div class="org-src-container">
+<pre class="src src-axiom">)clear all
+R ==&gt; SUP FRAC INT; x := monomial(1,1)$R;
+</pre>
+</div>
+
+<pre class="example">
+-&gt; )clear all
+   All user variables and function definitions have been cleared.
+-&gt; R ==&gt; SUP FRAC INT; x := monomial(1,1)$R;
+
+                          Type: SparseUnivariatePolynomial(Fraction(Integer))
+
+</pre>
+</div>
+
+<div id="outline-container-org5488a99" class="outline-4">
+<h4 id="org5488a99"><span class="section-number-4">1.11.1</span> Exercise 2.1</h4>
+<div class="outline-text-4" id="text-1-11-1">
+<div class="org-src-container">
+<pre class="src src-axiom">f := (x^5 - x^4 + 4*x^3 + x^2 - x + 5)/(x^4 - 2*x^3 + 5*x^2 - 4*x + 4)
+
+HermiteIntegrate(f, D)$INTHERTR(FRAC INT, R)
+
+monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+integrate(f 'x, 'x)
+</pre>
+</div>
+
+<pre class="example" id="orgea0203b">
+-&gt; f := (x^5 - x^4 + 4*x^3 + x^2 - x + 5)/(x^4 - 2*x^3 + 5*x^2 - 4*x + 4)
+
+    5    4      3    2
+   ?  - ?  + 4 ?  + ?  - ? + 5
+   ───────────────────────────
+     4      3      2
+    ?  - 2 ?  + 5 ?  - 4 ? + 4
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; HermiteIntegrate(f, D)$INTHERTR(FRAC INT, R)
+
+                4     9                   3
+              - ─ ? + ─               ? + ─
+                7     7                   7
+   [answer = ──────────, logpart = ──────────, specpart = 0, polypart = ? + 1]
+              2                     2
+             ?  - ? + 2            ?  - ? + 2
+Type: Record(answer: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),logpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+            4     9
+          - ─ ? + ─
+            7     7          ──┐                 49          31
+   [ir = ────────── +        &gt;            %Y log(── %Y + ? - ──), specpart = 0,
+          2                  ──┘                 13          13
+         ?  - ? + 2     2        128
+                      %Y  - %Y + ─── = 0
+                                 343
+    polypart = ? + 1]
+Type: Record(ir: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Integer)))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; integrate(f 'x, 'x)
+
+           2             ┌─┐     2
+       (7 x  - 7 x + 14)\│7 log(x  - x + 2)
+     +
+                                         ┌─┐
+            2                  (2 x - 1)\│7         4      3              ┌─┐
+       (26 x  - 26 x + 52)atan(─────────────) + (7 x  + 7 x  + 20 x + 18)\│7
+                                     7
+  /
+          2              ┌─┐
+     (14 x  - 14 x + 28)\│7
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7e6a8c9" class="outline-4">
+<h4 id="org7e6a8c9"><span class="section-number-4">1.11.2</span> Exercise 2.2</h4>
+<div class="outline-text-4" id="text-1-11-2">
+<div class="org-src-container">
+<pre class="src src-axiom">f:=(8*x^9+x^8-12*x^7-4*x^6-26*x^5-6*x^4+30*x^3+23*x^2-2*x-7)/(x^10-2*x^8-2*x^7-4*x^6+7*x^4+10*x^3+3*x^2-4*x-2);
+monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+integrate(f 'x, 'x)
+</pre>
+</div>
+
+<p>
+-&gt; f:=(8*x<sup>9</sup>+x<sup>8</sup>-12*x<sup>7</sup>-4*x<sup>6</sup>-26*x<sup>5</sup>-6*x<sup>4</sup>+30*x<sup>3</sup>+23*x<sup>2</sup>-2*x-7)/(x<sup>10</sup>-2*x<sup>8</sup>-2*x<sup>7</sup>-4*x<sup>6</sup>+7*x<sup>4</sup>+10*x<sup>3</sup>+3*x<sup>2</sup>-4*x-2);
+</p>
+
+<p>
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+</p>
+
+<p>
+[
+    ir
+  =
+          ──┐
+          &gt;        %Y log(- 4 %Y + ?)
+          ──┘
+        2   1
+      %Y  - ─ = 0
+            8
+</p>
+<ul class="org-ul">
+<li>──┐                       2             4      2
+       &gt;            %Y log((- 2 ?  - 2 ?)%Y + ?  + 2 ?  + ? - 1)
+       ──┘
+  2          1
+%Y  - 2 %Y + ─ = 0
+             2</li>
+</ul>
+<p>
+     ,
+    specpart = 0, polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Integer)))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; integrate(f 'x, 'x)
+</p>
+
+<p>
+      2      ┌─┐
+    (x  + 2)\│2  - 4 x
+log(──────────────────)
+           2
+          x  - 2
+</p>
+<ul class="org-ul">
+<li>┌─┐     8      5      4      3    2
+2 \│2 log(x  - 2 x  - 4 x  - 4 x  - x  + 2 x + 1)</li>
+<li>2
+<ul class="org-ul">
+<li><p>
+log
+             6      5      3      2        ┌─┐    8      5      3
+       (- 2 x  - 2 x  + 2 x  + 4 x  + 2 x)\│2  + x  - 2 x  + 4 x
+</p>
+<ul class="org-ul">
+<li>2
+3 x  + 2 x + 1</li>
+</ul>
+<p>
+/
+    8      5      4      3    2
+   x  - 2 x  - 4 x  - 4 x  - x  + 2 x + 1
+</p></li>
+</ul></li>
+</ul>
+<p>
+/
+      ┌─┐
+   2 \│2
+                                       Type: Union(Expression(Integer),&#x2026;)
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-org87fc506" class="outline-4">
+<h4 id="org87fc506"><span class="section-number-4">1.11.3</span> Exercise 2.3</h4>
+<div class="outline-text-4" id="text-1-11-3">
+<div class="org-src-container">
+<pre class="src src-axiom">f1 : FRAC SUP INT := (72*x^7+256*x^6-192*x^5-1280*x^4-312*x^3+1440*x^2+576*x-96)/(9*x^8+36*x^7-32*x^6-252*x^5-78*x^4+468*x^3+288*x^2-108*x+9)
+f : FRAC R := f1;
+
+monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+
+integrate(f 'x, 'x)
+
+integrate(f 'y, y=-2..(-2/3))
+</pre>
+</div>
+
+<p>
+-&gt; f1 : FRAC SUP INT := (72*x<sup>7</sup>+256*x<sup>6</sup>-192*x<sup>5</sup>-1280*x<sup>4</sup>-312*x<sup>3</sup>+1440*x<sup>2</sup>+576*x-96)/(9*x<sup>8</sup>+36*x<sup>7</sup>-32*x<sup>6</sup>-252*x<sup>5</sup>-78*x<sup>4</sup>+468*x<sup>3</sup>+288*x<sup>2</sup>-108*x+9)
+</p>
+
+<p>
+        7        6        5         4        3         2
+    72 ?  + 256 ?  - 192 ?  - 1280 ?  - 312 ?  + 1440 ?  + 576 ? - 96
+   ───────────────────────────────────────────────────────────────────
+      8       7       6        5       4        3        2
+   9 ?  + 36 ?  - 32 ?  - 252 ?  - 78 ?  + 468 ?  + 288 ?  - 108 ? + 9
+                          Type: Fraction(SparseUnivariatePolynomial(Integer))
+-&gt; f : FRAC R := f1;
+</p>
+
+<p>
+                Type: Fraction(SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; monomialIntegrate(f, D)$INTTR(FRAC INT, R)
+</p>
+
+<p>
+                 ──┐                     3             4      2
+   [ir =         &gt;            %Y log((2 ?  - 6 ?)%Y + ?  - 4 ?  + 1),
+                 ──┘
+           2          10
+         %Y  - 2 %Y + ── = 0
+                       9
+    specpart = 0, polypart = 0]
+Type: Record(ir: IntegrationResult(Fraction(SparseUnivariatePolynomial(Fraction(Integer)))),specpart: Fraction(SparseUnivariatePolynomial(Fraction(Integer))),polypart: SparseUnivariatePolynomial(Fraction(Integer)))
+-&gt; integrate(f 'x, 'x)
+</p>
+
+<p>
+3
+</p>
+<ul class="org-ul">
+<li>8       7       6        5       4        3        2
+log(9 x  + 36 x  - 32 x  - 252 x  - 78 x  + 468 x  + 288 x  - 108 x + 9)</li>
+</ul>
+<ul class="org-ul">
+<li>7       6       5        4       3        2
+       9 x  + 36 x  - 23 x  - 216 x  - 83 x  + 324 x  + 213 x - 36
+2 atan(───────────────────────────────────────────────────────────)
+                                    12</li>
+<li>5       4      3        2
+       9 x  + 36 x  + 4 x  - 108 x  - 53 x + 36
+2 atan(────────────────────────────────────────)
+                          12</li>
+<li>3       2
+       9 x  + 36 x  + 31 x - 18           3 x + 6
+2 atan(────────────────────────) + 2 atan(───────)
+                   6                         2</li>
+</ul>
+<p>
+  /
+     3
+                                         Type: Union(Expression(Integer),&#x2026;)
+-&gt; integrate(f 'y, y=-2..(-2/3))
+</p>
+
+<p>
+60905           35           38           5639
+</p>
+<ul class="org-ul">
+<li>3 log(97) + 3 log(─────) + 2 atan(──) - 2 atan(──) - 2 atan(────)
+729             6            9           1458</li>
+</ul>
+<ul class="org-ul">
+<li>17           379                       4
+2 atan(──) + 2 atan(───) + 2 atan(2) + 2 atan(─)
+        6           162                       3</li>
+</ul>
+<p>
+/
+   3
+                Type: Union(f1: OrderedCompletion(Expression(Integer)),&#x2026;)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb5a2fda" class="outline-4">
+<h4 id="orgb5a2fda"><span class="section-number-4">1.11.4</span> Exercise 2.4</h4>
+<div class="outline-text-4" id="text-1-11-4">
+<div class="org-src-container">
+<pre class="src src-axiom">)clear all
+integrate(1/(1+x^4), x) -- will be shorter in newer fricas
+</pre>
+</div>
+
+<pre class="example" id="org83ea6b0">
+-&gt; )clear all
+   All user variables and function definitions have been cleared.
+-&gt; integrate(1/(1+x^4), x) -- will be shorter in newer fricas
+
+            ┌─┐                      1
+       - 4 \│2 atan(───────────────────────────────────)
+                         ┌────────────────┐
+                     ┌─┐ │    ┌─┐    2          ┌─┐
+                    \│2 \│- x\│2  + x  + 1  + x\│2  - 1
+     +
+            ┌─┐                     1                     ┌─┐      ┌─┐    2
+       - 4 \│2 atan(─────────────────────────────────) + \│2 log(x\│2  + x  + 1)
+                         ┌──────────────┐
+                     ┌─┐ │  ┌─┐    2          ┌─┐
+                    \│2 \│x\│2  + x  + 1  + x\│2  + 1
+     +
+          ┌─┐        ┌─┐    2
+       - \│2 log(- x\│2  + x  + 1)
+  /
+     8
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgba1bff9" class="outline-4">
+<h4 id="orgba1bff9"><span class="section-number-4">1.11.5</span> Exercise 2.5</h4>
+<div class="outline-text-4" id="text-1-11-5">
+<p>
+See p.51, footnote 4.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-axiom">-- fixed between 1.2.7 and 1.3.0.  result too long
+integrate((x^4+x^3+x^2+x+1)/(x^5+x^4+2*x^3+2*x^2-2+4*sqrt(-1+sqrt(3))), x)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7030c20" class="outline-4">
+<h4 id="org7030c20"><span class="section-number-4">1.11.6</span> Exercise 2.7</h4>
+<div class="outline-text-4" id="text-1-11-6">
+<p>
+This simplification is not in the book, but in the FriCAS source code.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga79ec96" class="outline-4">
+<h4 id="orga79ec96"><span class="section-number-4">1.11.7</span> Exercise 2.8</h4>
+<div class="outline-text-4" id="text-1-11-7">
+<div class="org-src-container">
+<pre class="src src-axiom">integrate(3/(5-4*cos(x)), x)
+</pre>
+</div>
+
+<pre class="example">
+-&gt; integrate(3/(5-4*cos(x)), x)
+
+          5 cos(x) - 4
+   - atan(────────────)
+            3 sin(x)
+                                         Type: Union(Expression(Integer),...)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2021-03-25 Thu 17:12</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
